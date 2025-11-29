@@ -5,7 +5,7 @@ import MatchCard from "../components/MatchCard";
 import RankingSidebar from "../components/RankingSidebar";
 import UserModal from "../components/UserModal";
 import AdminModal from "../components/AdminModal";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../utils/supabaseClient";
 import "../index.css";
 
 export default function VegaScorePage() {
