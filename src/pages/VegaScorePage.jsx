@@ -11,48 +11,44 @@ export default function VegaScorePage() {
   const [matches, setMatches] = useState([]);
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
+
   const [showUserModal, setShowUserModal] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [showAdminModal, setShowAdminModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => { loadData(); }, []);
 
   const loadData = async () => {
     try {
-      const [matchesData, usersData, currentUserData] = await Promise.all([
+      const [mData, uData, cData] = await Promise.all([
         getStorage('vegascore-matches'),
         getStorage('vegascore-users'),
         getStorage('vegascore-currentUser')
       ]);
 
-      if (matchesData) setMatches(JSON.parse(matchesData.value));
-      if (usersData) setUsers(JSON.parse(usersData.value));
-      if (currentUserData) setCurrentUser(JSON.parse(currentUserData.value));
-    } catch (error) {
-      console.error('Error loading data:', error);
+      if (mData) setMatches(JSON.parse(mData.value));
+      if (uData) setUsers(JSON.parse(uData.value));
+      if (cData) setCurrentUser(JSON.parse(cData.value));
+    } catch (err) {
+      console.error('Error loading data:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const saveData = async (key, data) => {
-    try {
-      await setStorage(key, JSON.stringify(data));
-    } catch (error) {
-      console.error(`Error saving ${key}:`, error);
-    }
-  };
+  const saveData = (key, data) => setStorage(key, JSON.stringify(data));
 
   const createUser = (newUser) => {
     if (users.some(u => u.name.toLowerCase() === newUser.name.toLowerCase())) {
-      alert('Este usuario ya existe');
-      return;
+      return alert('Este usuario ya existe');
     }
-    const updatedUsers = [...users, newUser];
-    setUsers(updatedUsers);
+
+    const updated = [...users, newUser];
+    setUsers(updated);
     setCurrentUser(newUser);
-    saveData('vegascore-users', updatedUsers);
+
+    saveData('vegascore-users', updated);
     saveData('vegascore-currentUser', newUser);
   };
 
@@ -63,131 +59,143 @@ export default function VegaScorePage() {
   };
 
   const addMatch = (match) => {
-    const updatedMatches = [...matches, match];
-    setMatches(updatedMatches);
-    saveData('vegascore-matches', updatedMatches);
+    const updated = [...matches, match];
+    setMatches(updated);
+    saveData('vegascore-matches', updated);
   };
 
   const makePrediction = (matchId, homeScore, awayScore) => {
-    if (!currentUser) return alert('Por favor selecciona un usuario primero');
+    if (!currentUser) return alert('Selecciona un usuario');
 
-    const updatedMatches = matches.map(match => {
-      if (match.id === matchId) {
-        const existingPredIndex = match.predictions.findIndex(p => p.userId === currentUser.id);
-        const prediction = { userId: currentUser.id, userName: currentUser.name, homeScore, awayScore };
-        if (existingPredIndex >= 0) {
-          match.predictions[existingPredIndex] = prediction;
-        } else {
-          match.predictions.push(prediction);
-        }
-      }
+    const updated = matches.map(match => {
+      if (match.id !== matchId) return match;
+
+      const pred = { userId: currentUser.id, userName: currentUser.name, homeScore, awayScore };
+      const idx = match.predictions.findIndex(p => p.userId === currentUser.id);
+
+      if (idx >= 0) match.predictions[idx] = pred;
+      else match.predictions.push(pred);
+
       return match;
     });
 
-    setMatches(updatedMatches);
-    saveData('vegascore-matches', updatedMatches);
+    setMatches(updated);
+    saveData('vegascore-matches', updated);
   };
 
   const setMatchResult = (matchId, homeScore, awayScore) => {
-    const updatedMatches = matches.map(match => {
-      if (match.id === matchId) {
-        match.result = { homeScore, awayScore };
-        match.status = 'finished';
-      }
-      return match;
-    });
+    const updated = matches.map(m =>
+      m.id === matchId
+        ? { ...m, result: { homeScore, awayScore }, status: 'finished' }
+        : m
+    );
 
-    setMatches(updatedMatches);
-    saveData('vegascore-matches', updatedMatches);
-    calculatePoints(updatedMatches);
+    setMatches(updated);
+    saveData('vegascore-matches', updated);
+    calculatePoints(updated);
   };
 
   const calculatePoints = (matchesData) => {
-    const userPoints = {};
-    users.forEach(user => { userPoints[user.id] = { points: 0, predictions: 0, correct: 0 }; });
+    const scoreMap = {};
+    users.forEach(u => scoreMap[u.id] = { points: 0, predictions: 0, correct: 0 });
 
     matchesData.forEach(match => {
-      if (match.status === 'finished' && match.result) {
-        match.predictions.forEach(pred => {
-          if (userPoints[pred.userId]) {
-            userPoints[pred.userId].predictions++;
-            const resultOutcome = Math.sign(match.result.homeScore - match.result.awayScore);
-            const predOutcome = Math.sign(pred.homeScore - pred.awayScore);
+      if (match.status !== 'finished' || !match.result) return;
 
-            if (pred.homeScore === match.result.homeScore && pred.awayScore === match.result.awayScore) {
-              userPoints[pred.userId].points += 5;
-              userPoints[pred.userId].correct++;
-            } else if (resultOutcome === predOutcome && resultOutcome !== 0) {
-              userPoints[pred.userId].points += 3;
-              userPoints[pred.userId].correct++;
-            } else if (resultOutcome === 0 && predOutcome === 0) {
-              userPoints[pred.userId].points += 3;
-              userPoints[pred.userId].correct++;
-            }
-          }
-        });
-      }
+      match.predictions.forEach(pred => {
+        const score = scoreMap[pred.userId];
+        if (!score) return;
+
+        score.predictions++;
+
+        const resultOutcome = Math.sign(match.result.homeScore - match.result.awayScore);
+        const predOutcome = Math.sign(pred.homeScore - pred.awayScore);
+
+        if (pred.homeScore === match.result.homeScore &&
+            pred.awayScore === match.result.awayScore) {
+          score.points += 5;
+          score.correct++;
+        } else if (resultOutcome === predOutcome) {
+          score.points += 3;
+          score.correct++;
+        }
+      });
     });
 
-    const updatedUsers = users.map(user => ({
-      ...user,
-      points: userPoints[user.id]?.points || 0,
-      predictions: userPoints[user.id]?.predictions || 0,
-      correct: userPoints[user.id]?.correct || 0
+    const updatedUsers = users.map(u => ({
+      ...u,
+      ...scoreMap[u.id]
     }));
 
     setUsers(updatedUsers);
     saveData('vegascore-users', updatedUsers);
+
     if (currentUser) {
-      const updatedCurrentUser = updatedUsers.find(u => u.id === currentUser.id);
-      setCurrentUser(updatedCurrentUser);
-      saveData('vegascore-currentUser', updatedCurrentUser);
+      const updated = updatedUsers.find(u => u.id === currentUser.id);
+      setCurrentUser(updated);
+      saveData('vegascore-currentUser', updated);
     }
   };
 
-  const getUserPrediction = (match) => {
-    if (!currentUser) return null;
-    return match.predictions.find(p => p.userId === currentUser.id);
-  };
+  const getUserPrediction = (match) =>
+    currentUser ? match.predictions.find(p => p.userId === currentUser.id) : null;
 
   const sortedUsers = [...users].sort((a, b) => b.points - a.points);
 
-  const pendingMatches = matches.filter(m => m.status === 'pending').sort((a, b) => {
-    const dateA = new Date(`${a.date}T${a.time}`);
-    const dateB = new Date(`${b.date}T${b.time}`);
-    return dateA - dateB;
-  });
+  const pendingMatches = matches
+    .filter(m => m.status === 'pending')
+    .sort(
+      (a, b) =>
+        new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)
+    );
 
-  if (loading) return <div className="flex items-center justify-center min-h-screen"><div>Cargando...</div></div>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Cargando...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
       <Header
         currentUser={currentUser}
+        users={users}
         onOpenUserModal={() => setShowUserModal(true)}
         onToggleSettings={() => setShowSettings(s => !s)}
         onOpenAdmin={() => setShowAdminModal(true)}
-        users={users}
       />
 
       {showSettings && (
-        <div className="bg-white border-b border-gray-200 shadow-lg">
+        <div className="bg-white border-b shadow-sm">
           <div className="max-w-7xl mx-auto px-6 py-4">
             <div className="flex gap-3">
-              <button onClick={() => setShowAdminModal(true)} className="bg-blue-600 text-white px-4 py-2 rounded-lg">Agregar Partido</button>
-              <button onClick={() => {
-                const matchId = prompt('ID del partido a finalizar:');
-                if (matchId) {
-                  const home = prompt('Goles equipo local:');
-                  const away = prompt('Goles equipo visitante:');
-                  if (home !== null && away !== null) setMatchResult(matchId, parseInt(home), parseInt(away));
-                }
-              }} className="bg-green-600 text-white px-4 py-2 rounded-lg">Finalizar Partido</button>
+              <button className="btn-primary" onClick={() => setShowAdminModal(true)}>
+                Agregar Partido
+              </button>
+
+              <button
+                className="btn-green"
+                onClick={() => {
+                  const id = prompt('ID del partido:');
+                  if (!id) return;
+                  const h = prompt('Goles local:');
+                  const a = prompt('Goles visitante:');
+                  if (h !== null && a !== null) {
+                    setMatchResult(id, parseInt(h), parseInt(a));
+                  }
+                }}
+              >
+                Finalizar Partido
+              </button>
             </div>
 
             <div className="mt-3 text-sm text-gray-600">
-              <p><strong>Partidos pendientes:</strong></p>
-              {matches.filter(m => m.status === 'pending').map(m => (<p key={m.id}>• ID: {m.id} - {m.homeTeam} vs {m.awayTeam}</p>))}
+              <strong>Partidos pendientes:</strong>
+              {pendingMatches.map(m => (
+                <p key={m.id}>• ID: {m.id} — {m.homeTeam} vs {m.awayTeam}</p>
+              ))}
             </div>
           </div>
         </div>
@@ -195,25 +203,44 @@ export default function VegaScorePage() {
 
       <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-xl shadow p-6">
-            <h2 className="text-2xl font-bold mb-4">Próximos Partidos</h2>
-            {pendingMatches.length === 0 ? <p>No hay partidos disponibles</p> : (
+          <div className="card">
+            <h2 className="title">Próximos Partidos</h2>
+
+            {pendingMatches.length === 0 ? (
+              <p>No hay partidos disponibles</p>
+            ) : (
               <div className="space-y-4">
                 {pendingMatches.map(match => (
-                  <MatchCard key={match.id} match={match} userPred={getUserPrediction(match)} onPredict={makePrediction} />
+                  <MatchCard
+                    key={match.id}
+                    match={match}
+                    userPred={getUserPrediction(match)}
+                    onPredict={makePrediction}
+                  />
                 ))}
               </div>
             )}
           </div>
         </div>
 
-        <div className="lg:col-span-1">
-          <RankingSidebar users={sortedUsers} />
-        </div>
+        <RankingSidebar users={sortedUsers} />
       </div>
 
-      {showUserModal && <UserModal users={users} onSelect={selectUser} onCreate={createUser} onClose={() => setShowUserModal(false)} />}
-      {showAdminModal && <AdminModal onAdd={addMatch} onClose={() => setShowAdminModal(false)} />}
+      {showUserModal && (
+        <UserModal
+          users={users}
+          onSelect={selectUser}
+          onCreate={createUser}
+          onClose={() => setShowUserModal(false)}
+        />
+      )}
+
+      {showAdminModal && (
+        <AdminModal
+          onAdd={addMatch}
+          onClose={() => setShowAdminModal(false)}
+        />
+      )}
     </div>
   );
 }
