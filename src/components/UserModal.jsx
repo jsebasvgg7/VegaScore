@@ -1,42 +1,29 @@
 // src/components/UserModal.jsx
-import React, { useState } from "react";
-import "../index.css";
+import React from "react";
 
-export default function UserModal({ users = [], onSelect, onCreate, onClose }) {
-  const [newUsername, setNewUsername] = useState("");
-
-  const handleCreate = () => {
-    if (!newUsername.trim()) return;
-    const newUser = { id: Date.now().toString(), name: newUsername.trim(), points: 0, predictions: 0, correct: 0 };
-    onCreate(newUser);
-    setNewUsername("");
-  };
-
+export default function UserModal({ onClose, users, onSelect }) {
   return (
     <div className="modal-backdrop">
-      <div className="modal rounded-2xl">
-        <h3 className="modal-title">Seleccionar Usuario</h3>
+      <div className="modal card">
 
-        <div className="user-list">
+        <h2 className="modal-title">Usuarios Registrados</h2>
+
+        <ul className="modal-user-list">
           {users.map((u) => (
-            <button key={u.id} className="user-row" onClick={() => onSelect(u)}>
-              <span>{u.name}</span>
-              <span>{u.points} pts</span>
-            </button>
+            <li
+              key={u.id}
+              className="modal-user-item"
+              onClick={() => onSelect(u)}
+            >
+              <span className="user-avatar">{u.name[0]}</span>
+              <span className="user-name">{u.name}</span>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <div className="modal-body">
-          <h4>Crear Nuevo Usuario</h4>
-          <div className="row">
-            <input className="input" placeholder="Nombre" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
-            <button className="btn" onClick={handleCreate}>Crear</button>
-          </div>
-        </div>
-
-        <div className="modal-actions">
-          <button className="btn secondary" onClick={onClose}>Cerrar</button>
-        </div>
+        <button className="btn secondary" onClick={onClose}>
+          Cerrar
+        </button>
       </div>
     </div>
   );

@@ -2,12 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* src/index.css
-   GLOBAL STYLES + Figma-inspired theme
-   Header uses gradient: linear-gradient(180deg, #000 0%, #1A1A1A 100%);
-   Rounded corners: 20px (rounded-2xl) where indicated
-*/
-
+/* -------------------------------
+   GLOBAL THEME + Figma-inspired
+---------------------------------*/
 :root{
   --bg: #f5f6fa;
   --card: #ffffff;
@@ -31,7 +28,9 @@ body{
   -moz-osx-font-smoothing:grayscale;
 }
 
-/* ---------- Header ---------- */
+/* --------------------------------
+   HEADER
+----------------------------------*/
 .app-header{
   background: linear-gradient(180deg, #000 0%, #1A1A1A 100%);
   color:white;
@@ -50,7 +49,7 @@ body{
 .title-wrap .app-title{font-size:20px; margin:0}
 .title-wrap .app-sub{font-size:13px; color:rgba(255,255,255,0.75); margin-top:4px}
 
-/* Right side */
+/* Right section */
 .header-right{display:flex; gap:12px; align-items:center}
 .user-bubble{
   display:flex; gap:12px; align-items:center; background: rgba(255,255,255,0.06);
@@ -59,14 +58,15 @@ body{
 .avatar{width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.9); color:#111}
 .user-info .user-name{font-weight:600}
 .user-info .user-meta{font-size:12px; color:rgba(255,255,255,0.7)}
-
 .icon-btn{background:transparent; border:1px solid rgba(255,255,255,0.06); color:white; padding:8px 10px; border-radius:10px; cursor:pointer}
 
-/* ---------- Layout / container ---------- */
+/* --------------------------------
+   LAYOUT
+----------------------------------*/
 .container{max-width:1180px; margin:28px auto; padding:0 18px}
 .centered{display:flex; align-items:center; justify-content:center; min-height:200px}
 
-/* ---------- Stats row ---------- */
+/* Stats */
 .stats-row{display:grid; grid-template-columns: repeat(4, 1fr); gap:18px; margin-top:16px}
 .stat-card{
   background:var(--card); border-radius:var(--radius-2xl); padding:26px; box-shadow:var(--small-shadow);
@@ -75,86 +75,198 @@ body{
 .stat-label{color:var(--muted); font-size:13px}
 .stat-value{font-size:24px; margin-top:8px; font-weight:700}
 
-/* ---------- Main grid ---------- */
+/* Main grid */
 .main-grid{display:grid; grid-template-columns: 2fr 1fr; gap:24px; margin-top:24px}
-.left-col{}
 .right-col{display:flex; flex-direction:column; gap:18px}
 
-/* ---------- Cards ---------- */
 .card{background:var(--card); padding:16px; border-radius:var(--radius-2xl); box-shadow:var(--small-shadow); border:1px solid var(--border)}
 
-/* Matches area */
+/* --------------------------------
+   MATCH LIST
+----------------------------------*/
 .section-title{font-size:20px; margin-bottom:12px; display:flex; align-items:center; gap:10px}
 .matches-container{display:flex; flex-direction:column; gap:16px}
 .card-empty{padding:18px; border-radius:12px; background:#fff; color:#666}
 
-/* Match card */
-.match-card-figma{
-  padding:18px; border-radius:var(--radius-2xl); background:linear-gradient(180deg,#fbfbfb,#f3f3f3);
+/* ------------------------------
+   MATCH CARD (FIGMA)
+--------------------------------*/
+.match-card {
+  padding:18px;
+  border-radius:var(--radius-2xl);
+  background:white;
   border:1px solid rgba(0,0,0,0.04);
+  box-shadow:var(--small-shadow);
 }
-.league-tag{display:inline-block; padding:6px 12px; background:#0b0b0b; color:white; border-radius:999px; font-size:13px; margin-bottom:12px}
-.teams-rows{display:flex; flex-direction:column; gap:12px}
-.team-row{display:flex; align-items:center; justify-content:space-between}
-.team-left{display:flex; gap:12px; align-items:center}
-.team-avatar{width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:white; border:1px solid rgba(0,0,0,0.04)}
-.team-name{font-weight:600}
-.pred-score{font-weight:700; font-size:20px; color:#0b4aa3}
 
-/* footer */
-.match-footer{display:flex; gap:14px; color:var(--muted); margin-top:12px}
-
-/* prediction row */
-.prediction-row{display:flex; align-items:center; gap:12px; margin-top:14px}
-.input-small{width:64px; padding:8px; border-radius:8px; border:1px solid var(--border); text-align:center}
-.dash{font-weight:700}
-.predict-btn{background:var(--accent); color:white; padding:8px 12px; border-radius:10px; border:none; cursor:pointer}
-.edit-btn{background:#e9f2ff; border:1px solid #cfe3ff; color:#0b4aa3; padding:10px; width:100%; border-radius:12px; margin-top:10px}
-
-/* ---------- Ranking sidebar ---------- */
-.ranking-wrapper{background:linear-gradient(180deg,#0b0b0b,#141414); color:white; padding:18px; border-radius:var(--radius-2xl); box-shadow:0 16px 48px rgba(0,0,0,0.36); border:1px solid rgba(255,255,255,0.03)}
-.ranking-head{display:flex; align-items:center; justify-content:space-between; gap:12px}
-.ranking-badge{background:var(--accent); padding:10px; border-radius:12px; font-size:18px}
-.ranking-title{font-weight:700}
-.ranking-sub{font-size:13px; color:rgba(255,255,255,0.8)}
-.ranking-count{background:#232323; padding:8px 12px; border-radius:10px; font-size:13px}
-
-/* Podium */
-.podium{display:flex; align-items:end; gap:12px; margin-top:18px}
-.podium-item{flex:1; border-radius:12px; padding:10px; text-align:center; color:#111}
-.podium-item.first{background: linear-gradient(180deg,#ffd967,#ffcc3b); padding-top:20px; border-radius:14px}
-.podium-item.second{background: linear-gradient(180deg,#d5e2f7,#bfcfe8)}
-.podium-item.third{background: linear-gradient(180deg,#ffd9c1,#ffb186)}
-
-/* ranking list */
-.ranking-list{margin-top:14px}
-.ranking-item{display:flex; justify-content:space-between; padding:10px; background:rgba(255,255,255,0.03); border-radius:10px; margin-bottom:8px}
-
-/* Admin quick card */
-.admin-quick{display:flex; gap:10px; flex-direction:column}
-.btn{background:var(--accent); color:white; border:none; padding:10px 12px; border-radius:12px; cursor:pointer}
-.btn.secondary{background:#f1f1f1; color:#111; border:1px solid var(--border)}
-
-/* Modal (used by AdminModal/UserModal) */
-.modal-backdrop{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.45)}
-.modal{background:white; padding:20px; border-radius:var(--radius-2xl); width:360px; box-shadow:var(--shadow);}
-.modal-title{font-size:18px; margin-bottom:12px}
-.modal-body{display:flex; flex-direction:column; gap:10px}
-.modal-actions{display:flex; gap:10px; justify-content:flex-end; margin-top:12px}
-.user-list{display:flex; flex-direction:column; gap:8px}
-.user-row{display:flex; justify-content:space-between; padding:10px; border-radius:10px; background:#f8f8f8; border:1px solid var(--border)}
-.input{padding:10px; border-radius:10px; border:1px solid var(--border); width:100%}
-.row{display:flex; gap:8px}
-
-/* Responsive */
-@media (max-width: 900px){
-  .main-grid{grid-template-columns: 1fr; padding-bottom:18px}
-  .stats-row{grid-template-columns: repeat(2, 1fr)}
-  .ranking-cards{display:flex; gap:10px}
-  .container{padding:0 14px}
+.match-header {
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  color:var(--muted);
+  margin-bottom:12px;
 }
-/* ---------- AUTH PAGES ---------- */
 
+.teams-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.team {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  font-weight:600;
+}
+
+.team-logo {
+  font-size:32px;
+}
+
+.prediction-inputs {
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.score-input {
+  width:42px;
+  background:#f7f7f7;
+  padding:6px;
+  text-align:center;
+  border-radius:8px;
+  border:1px solid var(--border);
+  font-size:15px;
+}
+
+.vs {
+  font-weight:700;
+  font-size:18px;
+}
+
+.predict-btn {
+  margin-top:12px;
+  width:100%;
+  padding:10px 12px;
+  border:none;
+  border-radius:12px;
+  background:var(--accent);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* --------------------------------
+   RANKING SIDEBAR
+--------------------------------*/
+.ranking {
+  padding:20px;
+  background:var(--card);
+  border-radius:var(--radius-2xl);
+  border:1px solid var(--border);
+  box-shadow:var(--small-shadow);
+}
+
+.ranking-title {
+  font-size:18px;
+  margin-bottom:12px;
+  font-weight:700;
+}
+
+.ranking-list {
+  list-style:none;
+  padding:0;
+}
+
+.ranking-item {
+  display:flex;
+  justify-content:space-between;
+  padding:10px 6px;
+  border-radius:10px;
+  background:#fafafa;
+  border:1px solid var(--border);
+  margin-bottom:8px;
+}
+
+.rank-pos {
+  font-weight:700;
+  color:#0b0b0b;
+}
+
+/* --------------------------------
+   MODALS (Admin / User)
+--------------------------------*/
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal{
+  width:360px;
+  background:white;
+  padding:22px;
+  border-radius:var(--radius-2xl);
+  box-shadow:var(--shadow);
+}
+
+.modal-title{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.modal-user-list{
+  list-style:none;
+  padding:0;
+  max-height:260px;
+  overflow-y:auto;
+}
+
+.modal-user-item{
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  margin-bottom:8px;
+  cursor:pointer;
+  background:#f9f9f9;
+}
+
+.modal-user-item:hover{
+  background:#eef1f4;
+}
+
+.input{
+  padding:10px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  width:100%;
+}
+
+.btn{
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:10px 12px;
+  border-radius:12px;
+  cursor:pointer;
+  width:100%;
+  font-weight:600;
+}
+
+.btn.secondary{
+  background:#f1f1f1;
+  color:#111;
+  border:1px solid var(--border);
+}
+
+/* --------------------------------
+   AUTH PAGES
+--------------------------------*/
 .auth-wrapper {
   min-height: 100vh;
   display: flex;
@@ -178,7 +290,6 @@ body{
 
 .auth-card h2 {
   text-align: center;
-  margin-bottom: 8px;
   color: #f0f0f0;
 }
 
@@ -198,9 +309,17 @@ body{
 
 .auth-alt {
   text-align: center;
-  margin-top: 4px;
 }
 
 .auth-alt a {
   color: #6366f1;
+}
+
+/* --------------------------------
+   RESPONSIVE
+--------------------------------*/
+@media (max-width: 900px){
+  .main-grid{grid-template-columns: 1fr;}
+  .stats-row{grid-template-columns: repeat(2, 1fr)}
+  .container{padding:0 14px}
 }

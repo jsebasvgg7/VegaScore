@@ -5,6 +5,7 @@ import MatchCard from "../components/MatchCard";
 import RankingSidebar from "../components/RankingSidebar";
 import UserModal from "../components/UserModal";
 import AdminModal from "../components/AdminModal";
+import { supabase } from "../supabaseClient";
 import "../index.css";
 
 export default function VegaScorePage() {
@@ -13,151 +14,146 @@ export default function VegaScorePage() {
   const [currentUser, setCurrentUser] = useState(null);
   const [showUserModal, setShowUserModal] = useState(false);
   const [showAdminModal, setShowAdminModal] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Mock initial data if storage is empty (keeps demo look similar to Figma)
+  // Load authenticated user + Supabase data
   useEffect(() => {
-    const load = async () => {
+    const loadData = async () => {
       try {
-        const matchesRaw = localStorage.getItem("vegascore-matches");
-        const usersRaw = localStorage.getItem("vegascore-users");
-        const currentRaw = localStorage.getItem("vegascore-currentUser");
-
-        if (matchesRaw) setMatches(JSON.parse(matchesRaw));
-        else {
-          const sample = [
-            {
-              id: "m1",
-              league: "Bundesliga",
-              homeTeam: "Bayern Munich",
-              awayTeam: "Borussia Dortmund",
-              homeTeamLogo: "🏠",
-              awayTeamLogo: "✈️",
-              date: "2025-11-30",
-              time: "18:30",
-              status: "pending",
-              predictions: [],
-              result: null,
-            },
-          ];
-          setMatches(sample);
-          localStorage.setItem("vegascore-matches", JSON.stringify(sample));
+        // 1️⃣ Obtener usuario autenticado
+        const { data: authUser } = await supabase.auth.getUser();
+        if (!authUser?.user) {
+          window.location.href = "/login";
+          return;
         }
 
-        if (usersRaw) setUsers(JSON.parse(usersRaw));
-        else {
-          const sampleUsers = [
-            { id: "u1", name: "Ana García", points: 132, predictions: 0, correct: 0 },
-            { id: "u2", name: "Carlos M.", points: 145, predictions: 0, correct: 0 },
-            { id: "u3", name: "Pedro López", points: 128, predictions: 0, correct: 0 },
-            { id: "u4", name: "tian", points: 0, predictions: 0, correct: 0 },
-          ];
-          setUsers(sampleUsers);
-          localStorage.setItem("vegascore-users", JSON.stringify(sampleUsers));
-        }
+        // 2️⃣ Obtener perfil desde tabla "users"
+        const { data: profile } = await supabase
+          .from("users")
+          .select("*")
+          .eq("id", authUser.user.id)
+          .single();
 
-        if (currentRaw) setCurrentUser(JSON.parse(currentRaw));
-        else {
-          const cu = { id: "u4", name: "tian", points: 0, predictions: 0, correct: 0 };
-          setCurrentUser(cu);
-          localStorage.setItem("vegascore-currentUser", JSON.stringify(cu));
-        }
-      } catch (e) {
-        console.error(e);
+        setCurrentUser(profile);
+
+        // 3️⃣ Cargar tabla de usuarios (ranking)
+        const { data: userList } = await supabase
+          .from("users")
+          .select("*")
+          .order("points", { ascending: false });
+
+        setUsers(userList || []);
+
+        // 4️⃣ Cargar partidos
+        const { data: matchList } = await supabase
+          .from("matches")
+          .select("*, predictions(*)");
+
+        setMatches(matchList || []);
+      } catch (err) {
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
-    load();
+
+    loadData();
   }, []);
 
-  const persist = (k, v) => {
-    localStorage.setItem(k, JSON.stringify(v));
-  };
+  // --- LÓGICA ACTUALIZADA PARA SUPABASE ---
+  const makePrediction = async (matchId, homeScore, awayScore) => {
+    if (!currentUser) return;
 
-  const createUser = (newUser) => {
-    if (users.some((u) => u.name.toLowerCase() === newUser.name.toLowerCase())) {
-      alert("Este usuario ya existe");
-      return;
-    }
-    const updated = [...users, newUser];
-    setUsers(updated);
-    setCurrentUser(newUser);
-    persist("vegascore-users", updated);
-    persist("vegascore-currentUser", newUser);
-  };
-
-  const selectUser = (user) => {
-    setCurrentUser(user);
-    persist("vegascore-currentUser", user);
-    setShowUserModal(false);
-  };
-
-  const addMatch = (match) => {
-    const updated = [...matches, match];
-    setMatches(updated);
-    persist("vegascore-matches", updated);
-    setShowAdminModal(false);
-  };
-
-  const makePrediction = (matchId, homeScore, awayScore) => {
-    if (!currentUser) return alert("Selecciona un usuario primero");
-    const updated = matches.map((m) => {
-      if (m.id !== matchId) return m;
-      const idx = m.predictions.findIndex((p) => p.userId === currentUser.id);
-      const pred = { userId: currentUser.id, userName: currentUser.name, homeScore, awayScore };
-      if (idx >= 0) m.predictions[idx] = pred;
-      else m.predictions.push(pred);
-      return m;
+    await supabase.from("predictions").upsert({
+      match_id: matchId,
+      user_id: currentUser.id,
+      home_score: homeScore,
+      away_score: awayScore,
     });
-    setMatches(updated);
-    persist("vegascore-matches", updated);
+
+    // Recargar partidos
+    const { data: matchList } = await supabase
+      .from("matches")
+      .select("*, predictions(*)");
+    setMatches(matchList);
   };
 
-  const setMatchResult = (matchId, homeScore, awayScore) => {
-    const updated = matches.map((m) => (m.id === matchId ? { ...m, result: { homeScore, awayScore }, status: "finished" } : m));
-    setMatches(updated);
-    persist("vegascore-matches", updated);
-    calculatePoints(updated);
+  const addMatch = async (match) => {
+    await supabase.from("matches").insert(match);
+
+    const { data } = await supabase
+      .from("matches")
+      .select("*, predictions(*)");
+
+    setMatches(data);
   };
 
-  const calculatePoints = (matchesData) => {
-    const map = {};
-    users.forEach((u) => (map[u.id] = { points: 0, predictions: 0, correct: 0 }));
+  const setMatchResult = async (matchId, homeScore, awayScore) => {
+    await supabase
+      .from("matches")
+      .update({
+        result_home: homeScore,
+        result_away: awayScore,
+        status: "finished",
+      })
+      .eq("id", matchId);
+
+    const { data } = await supabase
+      .from("matches")
+      .select("*, predictions(*)");
+
+    setMatches(data);
+    calculatePoints(data);
+  };
+
+  const calculatePoints = async (matchesData) => {
+    const updates = {};
+
+    users.forEach((u) => {
+      updates[u.id] = { points: 0, predictions: 0, correct: 0 };
+    });
+
     matchesData.forEach((m) => {
-      if (m.status !== "finished" || !m.result) return;
+      if (m.status !== "finished") return;
       m.predictions.forEach((p) => {
-        if (!map[p.userId]) return;
-        map[p.userId].predictions++;
-        const outcome = Math.sign(m.result.homeScore - m.result.awayScore);
-        const pout = Math.sign(p.homeScore - p.awayScore);
-        if (p.homeScore === m.result.homeScore && p.awayScore === m.result.awayScore) {
-          map[p.userId].points += 5;
-          map[p.userId].correct++;
-        } else if (outcome === pout) {
-          map[p.userId].points += 3;
-          map[p.userId].correct++;
+        const user = updates[p.user_id];
+        if (!user) return;
+
+        user.predictions++;
+
+        const realDiff = Math.sign(m.result_home - m.result_away);
+        const predDiff = Math.sign(p.home_score - p.away_score);
+
+        if (p.home_score === m.result_home && p.away_score === m.result_away) {
+          user.points += 5;
+          user.correct++;
+        } else if (realDiff === predDiff) {
+          user.points += 3;
+          user.correct++;
         }
       });
     });
-    const updatedUsers = users.map((u) => ({ ...u, points: map[u.id]?.points || 0, predictions: map[u.id]?.predictions || 0, correct: map[u.id]?.correct || 0 }));
-    setUsers(updatedUsers);
-    persist("vegascore-users", updatedUsers);
-    if (currentUser) {
-      const cu = updatedUsers.find((x) => x.id === currentUser.id);
-      setCurrentUser(cu);
-      persist("vegascore-currentUser", cu);
-    }
-  };
 
-  const getUserPrediction = (match) => {
-    if (!currentUser) return null;
-    return match.predictions.find((p) => p.userId === currentUser.id) || null;
+    // Guardar en Supabase
+    for (const userId in updates) {
+      await supabase.from("users").update(updates[userId]).eq("id", userId);
+    }
+
+    // Recargar usuarios
+    const { data } = await supabase
+      .from("users")
+      .select("*")
+      .order("points", { ascending: false });
+
+    setUsers(data);
+
+    const cu = data.find((u) => u.id === currentUser.id);
+    setCurrentUser(cu);
   };
 
   const sortedUsers = [...users].sort((a, b) => b.points - a.points);
-  const pendingMatches = matches.filter((m) => m.status === "pending").sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+  const pendingMatches = matches.filter((m) => m.status === "pending");
+
   if (loading) return <div className="centered">Cargando...</div>;
 
   return (
@@ -166,60 +162,78 @@ export default function VegaScorePage() {
         currentUser={currentUser}
         users={users}
         onOpenUserModal={() => setShowUserModal(true)}
-        onToggleSettings={() => setShowSettings((s) => !s)}
         onOpenAdmin={() => setShowAdminModal(true)}
       />
 
       <main className="container">
-        {/* Stats */}
+        {/* --- Stats --- */}
         <section className="stats-row">
           <div className="stat-card">
             <div className="stat-label">Posición</div>
-            <div className="stat-value">#{sortedUsers.findIndex((u) => u.id === (currentUser?.id || "")) + 1 || 0}</div>
+            <div className="stat-value">
+              #{sortedUsers.findIndex((u) => u.id === currentUser?.id) + 1}
+            </div>
           </div>
+
           <div className="stat-card">
             <div className="stat-label">Puntos</div>
-            <div className="stat-value">{currentUser?.points ?? 0}</div>
+            <div className="stat-value">{currentUser?.points}</div>
           </div>
+
           <div className="stat-card">
             <div className="stat-label">Aciertos</div>
-            <div className="stat-value">{currentUser?.correct ?? 0}/{currentUser?.predictions ?? 0}</div>
+            <div className="stat-value">
+              {currentUser?.correct}/{currentUser?.predictions}
+            </div>
           </div>
+
           <div className="stat-card">
             <div className="stat-label">Precisión</div>
-            <div className="stat-value">{currentUser && currentUser.predictions > 0 ? Math.round((currentUser.correct / currentUser.predictions) * 100) + "%" : "0%"}</div>
+            <div className="stat-value">
+              {currentUser?.predictions > 0
+                ? Math.round((currentUser.correct / currentUser.predictions) * 100) + "%"
+                : "0%"}
+            </div>
           </div>
         </section>
 
-        {/* Main grid */}
+        {/* MAIN GRID */}
         <section className="main-grid">
           <div className="left-col">
             <h2 className="section-title">Próximos Partidos</h2>
+
             <div className="matches-container">
-              {pendingMatches.length === 0 ? <div className="card-empty">No hay partidos disponibles</div> : pendingMatches.map((m) => (
-                <MatchCard
-                  key={m.id}
-                  match={m}
-                  userPred={getUserPrediction(m)}
-                  onPredict={makePrediction}
-                />
-              ))}
+              {pendingMatches.length === 0 ? (
+                <div className="card-empty">No hay partidos disponibles</div>
+              ) : (
+                pendingMatches.map((m) => (
+                  <MatchCard
+                    key={m.id}
+                    match={m}
+                    userPred={m.predictions?.find(
+                      (p) => p.user_id === currentUser?.id
+                    )}
+                    onPredict={makePrediction}
+                  />
+                ))
+              )}
             </div>
           </div>
 
           <aside className="right-col">
             <RankingSidebar users={sortedUsers} />
-            {/* admin quick actions */}
             <div className="admin-quick card muted">
-              <button className="btn" onClick={() => setShowAdminModal(true)}>Agregar Partido</button>
+              <button className="btn" onClick={() => setShowAdminModal(true)}>
+                Agregar Partido
+              </button>
+
               <button
                 className="btn secondary"
                 onClick={() => {
                   const id = prompt("ID del partido a finalizar:");
-                  if (!id) return;
-                  const h = prompt("Goles equipo local:");
-                  const a = prompt("Goles equipo visitante:");
-                  if (h !== null && a !== null) setMatchResult(id, parseInt(h), parseInt(a));
+                  const h = prompt("Goles local:");
+                  const a = prompt("Goles visitante:");
+                  if (id && h && a) setMatchResult(id, parseInt(h), parseInt(a));
                 }}
               >
                 Finalizar Partido
@@ -229,8 +243,20 @@ export default function VegaScorePage() {
         </section>
       </main>
 
-      {showUserModal && <UserModal users={users} onSelect={selectUser} onCreate={createUser} onClose={() => setShowUserModal(false)} />}
-      {showAdminModal && <AdminModal onAdd={addMatch} onClose={() => setShowAdminModal(false)} />}
+      {showUserModal && (
+        <UserModal
+          users={users}
+          onSelect={(u) => setCurrentUser(u)}
+          onClose={() => setShowUserModal(false)}
+        />
+      )}
+
+      {showAdminModal && (
+        <AdminModal
+          onAdd={addMatch}
+          onClose={() => setShowAdminModal(false)}
+        />
+      )}
     </div>
   );
 }
