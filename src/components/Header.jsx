@@ -1,9 +1,15 @@
 // src/components/Header.jsx
 import React from "react";
+import { supabase } from "../utils/supabaseClient";
 import "../index.css";
 
-export default function Header({ currentUser, onOpenUserModal, onToggleSettings, onOpenAdmin, users = [] }) {
+export default function Header({ currentUser, users = [] }) {
   const position = currentUser ? users.findIndex((u) => u.id === currentUser.id) + 1 : 0;
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    window.location.href = "/";
+  };
 
   return (
     <header className="app-header">
@@ -16,7 +22,7 @@ export default function Header({ currentUser, onOpenUserModal, onToggleSettings,
       </div>
 
       <div className="header-right">
-        <div className="user-bubble" onClick={onOpenUserModal}>
+        <div className="user-bubble">
           <div className="avatar">👤</div>
           <div className="user-info">
             <div className="user-name">{currentUser?.name ?? "Invitado"}</div>
@@ -24,7 +30,9 @@ export default function Header({ currentUser, onOpenUserModal, onToggleSettings,
           </div>
         </div>
 
-        <button className="icon-btn" onClick={onToggleSettings} aria-label="settings">⚙️</button>
+        <button className="icon-btn" onClick={handleLogout} aria-label="Cerrar sesión">
+          🚪
+        </button>
       </div>
     </header>
   );

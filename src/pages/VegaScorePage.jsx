@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import MatchCard from "../components/MatchCard";
 import RankingSidebar from "../components/RankingSidebar";
-import UserModal from "../components/UserModal";
 import AdminModal from "../components/AdminModal";
 import { supabase } from "../utils/supabaseClient";
 import "../index.css";
@@ -12,7 +11,6 @@ export default function VegaScorePage() {
   const [matches, setMatches] = useState([]);
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
-  const [showUserModal, setShowUserModal] = useState(false);
   const [showAdminModal, setShowAdminModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -29,22 +27,49 @@ export default function VegaScorePage() {
           return;
         }
 
-        console.log("Auth User ID:", authUser.user.id); // Para debug
+        console.log("Auth User ID:", authUser.user.id);
 
         // 2️⃣ Perfil del usuario autenticado (BUSCAR POR auth_id)
         const { data: profile, error: profileError } = await supabase
           .from("users")
           .select("*")
-          .eq("auth_id", authUser.user.id)  // ✅ Cambiado: busca por auth_id
-          .single();
+          .eq("auth_id", authUser.user.id)
+          .maybeSingle();
 
         if (profileError) {
           console.error("Error al cargar perfil:", profileError);
-          throw profileError;
+          alert(`Error al cargar perfil: ${profileError.message}`);
+          return;
         }
 
-        console.log("Perfil encontrado:", profile); // Para debug
-        setCurrentUser(profile);
+        // Si no existe el perfil, crearlo automáticamente
+        if (!profile) {
+          console.log("Perfil no encontrado, creando uno nuevo...");
+          
+          const { data: newProfile, error: createError } = await supabase
+            .from("users")
+            .insert({
+              auth_id: authUser.user.id,
+              name: authUser.user.email?.split('@')[0] || "Usuario",
+              points: 0,
+              predictions: 0,
+              correct: 0
+            })
+            .select()
+            .single();
+
+          if (createError) {
+            console.error("Error al crear perfil:", createError);
+            alert(`No se pudo crear tu perfil: ${createError.message}`);
+            return;
+          }
+
+          console.log("Perfil creado:", newProfile);
+          setCurrentUser(newProfile);
+        } else {
+          console.log("Perfil encontrado:", profile);
+          setCurrentUser(profile);
+        }
 
         // 3️⃣ Listado de todos los usuarios
         const { data: userList } = await supabase
@@ -77,16 +102,15 @@ export default function VegaScorePage() {
     try {
       const { error } = await supabase.from("predictions").upsert({
         match_id: matchId,
-        user_id: currentUser.id,  // ✅ Usa el id de la tabla users (no auth_id)
+        user_id: currentUser.id,
         home_score: homeScore,
         away_score: awayScore,
       }, {
-        onConflict: 'match_id,user_id'  // Evita duplicados
+        onConflict: 'match_id,user_id'
       });
 
       if (error) throw error;
 
-      // Recargar partidos
       const { data: matchList } = await supabase
         .from("matches")
         .select("*, predictions(*)");
@@ -196,8 +220,6 @@ export default function VegaScorePage() {
       <Header
         currentUser={currentUser}
         users={users}
-        onOpenUserModal={() => setShowUserModal(true)}
-        onOpenAdmin={() => setShowAdminModal(true)}
       />
 
       <main className="container">
@@ -256,13 +278,14 @@ export default function VegaScorePage() {
 
           <aside className="right-col">
             <RankingSidebar users={sortedUsers} />
-            <div className="admin-quick card muted">
+            <div className="admin-quick card">
               <button className="btn" onClick={() => setShowAdminModal(true)}>
-                Agregar Partido
+                ➕ Agregar Partido
               </button>
 
               <button
                 className="btn secondary"
+                style={{ marginTop: '8px' }}
                 onClick={() => {
                   const id = prompt("ID del partido a finalizar:");
                   const h = prompt("Goles local:");
@@ -270,23 +293,12 @@ export default function VegaScorePage() {
                   if (id && h && a) setMatchResult(id, parseInt(h), parseInt(a));
                 }}
               >
-                Finalizar Partido
+                ✅ Finalizar Partido
               </button>
             </div>
           </aside>
         </section>
       </main>
-
-      {showUserModal && (
-        <UserModal
-          users={users}
-          onSelect={(u) => {
-            setCurrentUser(u);
-            setShowUserModal(false);
-          }}
-          onClose={() => setShowUserModal(false)}
-        />
-      )}
 
       {showAdminModal && (
         <AdminModal onAdd={addMatch} onClose={() => setShowAdminModal(false)} />
