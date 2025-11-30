@@ -67,14 +67,14 @@ export default function LeagueCard({ league, userPrediction, onPredict }) {
         <div className="prediction-field full-width">
           <label className="prediction-label">
             <Shield size={16} />
-            <span>Campeón de la Liga</span>
+            <span>Campeón de la competicion</span>
           </label>
           <input
             type="text"
             className="prediction-input champion-input"
             value={champion}
             onChange={(e) => setChampion(e.target.value)}
-            placeholder="Ej: Manchester City, Real Madrid, Bayern München"
+            placeholder="..."
             disabled={isFinished}
           />
           {isFinished && league.champion && (
@@ -101,7 +101,7 @@ export default function LeagueCard({ league, userPrediction, onPredict }) {
             className="prediction-input"
             value={topScorer}
             onChange={(e) => setTopScorer(e.target.value)}
-            placeholder="Ej: Erling Haaland"
+            placeholder="..."
             disabled={isFinished}
           />
           {isFinished && league.top_scorer && (
@@ -127,7 +127,7 @@ export default function LeagueCard({ league, userPrediction, onPredict }) {
             className="prediction-input"
             value={topAssist}
             onChange={(e) => setTopAssist(e.target.value)}
-            placeholder="Ej: Kevin De Bruyne"
+            placeholder="..."
             disabled={isFinished}
           />
           {isFinished && league.top_assist && (
@@ -153,7 +153,7 @@ export default function LeagueCard({ league, userPrediction, onPredict }) {
             className="prediction-input"
             value={mvp}
             onChange={(e) => setMvp(e.target.value)}
-            placeholder="Ej: Jude Bellingham"
+            placeholder="..."
             disabled={isFinished}
           />
           {isFinished && league.mvp_player && (
