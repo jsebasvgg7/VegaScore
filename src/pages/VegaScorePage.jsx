@@ -1,6 +1,6 @@
 // src/pages/VegaScorePage.jsx
 import React, { useEffect, useState } from "react";
-import { Trophy, TrendingUp, Target, Percent, Plus, CheckCircle, Shield } from "lucide-react";
+import { Trophy, TrendingUp, Target, Percent, Plus, CheckCircle, Shield, Settings, Zap } from "lucide-react";
 import Header from "../components/Header";
 import MatchCard from "../components/MatchCard";
 import RankingSidebar from "../components/RankingSidebar";
@@ -338,46 +338,136 @@ export default function VegaScorePage() {
           <aside className="right-col">
             <RankingSidebar users={sortedUsers} />
             
-            {/* Panel de administración - Solo visible para admins */}
+            {/* Panel de administración Premium */}
             {currentUser?.is_admin && (
-              <div className="admin-quick card">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                  <Shield size={18} color="#ff8a00" />
-                  <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>Panel Admin</h3>
+              <div className="admin-panel-premium">
+                {/* Header del panel */}
+                <div className="admin-header">
+                  <div className="admin-title-section">
+                    <div className="admin-icon-wrapper">
+                      <Shield size={20} />
+                    </div>
+                    <div>
+                      <h3 className="admin-title">Panel Admin</h3>
+                      <p className="admin-subtitle">Gestión de partidos</p>
+                    </div>
+                  </div>
+                  <div className="admin-badge-active">
+                    <Zap size={14} />
+                    <span>Activo</span>
+                  </div>
                 </div>
-                
-                <button className="btn" onClick={() => setShowAdminModal(true)}>
-                  <Plus size={18} style={{ marginRight: '8px' }} />
-                  Agregar Partido
-                </button>
 
-                <button
-                  className="btn secondary"
-                  style={{ marginTop: '8px' }}
-                  onClick={() => {
-                    const id = prompt("ID del partido a finalizar:");
-                    if (!id) return;
-                    
-                    const h = prompt("Goles equipo local:");
-                    if (h === null) return;
-                    
-                    const a = prompt("Goles equipo visitante:");
-                    if (a === null) return;
-                    
-                    const homeScore = parseInt(h);
-                    const awayScore = parseInt(a);
-                    
-                    if (isNaN(homeScore) || isNaN(awayScore)) {
-                      alert("Por favor ingresa números válidos");
-                      return;
-                    }
-                    
-                    setMatchResult(id, homeScore, awayScore);
-                  }}
-                >
-                  <CheckCircle size={18} style={{ marginRight: '8px' }} />
-                  Finalizar Partido
-                </button>
+                {/* Estadísticas rápidas del admin */}
+                <div className="admin-stats-grid">
+                  <div className="admin-stat-item">
+                    <div className="admin-stat-icon pending">
+                      <Settings size={16} />
+                    </div>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Pendientes</span>
+                      <span className="admin-stat-value">
+                        {matches.filter(m => m.status === 'pending').length}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="admin-stat-item">
+                    <div className="admin-stat-icon finished">
+                      <CheckCircle size={16} />
+                    </div>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Finalizados</span>
+                      <span className="admin-stat-value">
+                        {matches.filter(m => m.status === 'finished').length}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Botones de acción */}
+                <div className="admin-actions">
+                  <button 
+                    className="admin-btn primary"
+                    onClick={() => setShowAdminModal(true)}
+                  >
+                    <Plus size={18} />
+                    <span>Agregar Partido</span>
+                    <div className="btn-shine"></div>
+                  </button>
+
+                  <button
+                    className="admin-btn secondary"
+                    onClick={() => {
+                      const id = prompt("ID del partido a finalizar:");
+                      if (!id) return;
+                      
+                      const h = prompt("Goles equipo local:");
+                      if (h === null) return;
+                      
+                      const a = prompt("Goles equipo visitante:");
+                      if (a === null) return;
+                      
+                      const homeScore = parseInt(h);
+                      const awayScore = parseInt(a);
+                      
+                      if (isNaN(homeScore) || isNaN(awayScore)) {
+                        alert("Por favor ingresa números válidos");
+                        return;
+                      }
+                      
+                      setMatchResult(id, homeScore, awayScore);
+                    }}
+                  >
+                    <CheckCircle size={18} />
+                    <span>Finalizar Partido</span>
+                  </button>
+                </div>
+
+                {/* Lista rápida de partidos pendientes */}
+                <div className="admin-quick-matches">
+                  <div className="admin-section-title">
+                    <span>Acciones Rápidas</span>
+                  </div>
+                  {matches.filter(m => m.status === 'pending').slice(0, 3).map(match => (
+                    <div key={match.id} className="admin-match-quick">
+                      <div className="admin-match-info">
+                        <span className="admin-match-teams">
+                          {match.home_team_logo} vs {match.away_team_logo}
+                        </span>
+                        <span className="admin-match-id">{match.id}</span>
+                      </div>
+                      <button
+                        className="admin-quick-btn"
+                        onClick={() => {
+                          const h = prompt(`Goles ${match.home_team}:`);
+                          if (h === null) return;
+                          
+                          const a = prompt(`Goles ${match.away_team}:`);
+                          if (a === null) return;
+                          
+                          const homeScore = parseInt(h);
+                          const awayScore = parseInt(a);
+                          
+                          if (isNaN(homeScore) || isNaN(awayScore)) {
+                            alert("Por favor ingresa números válidos");
+                            return;
+                          }
+                          
+                          setMatchResult(match.id, homeScore, awayScore);
+                        }}
+                      >
+                        <CheckCircle size={16} />
+                      </button>
+                    </div>
+                  ))}
+
+                  {matches.filter(m => m.status === 'pending').length === 0 && (
+                    <div className="admin-empty-state">
+                      <span>No hay partidos pendientes</span>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </aside>

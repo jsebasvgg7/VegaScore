@@ -1,6 +1,5 @@
-// src/components/AdminModal.jsx
 import React, { useState } from "react";
-import { X, Plus, Calendar, Clock, Shield } from "lucide-react";
+import { X, Plus, Calendar, Clock, Shield, Zap, Home, Plane } from "lucide-react";
 
 export default function AdminModal({ onAdd, onClose }) {
   const [form, setForm] = useState({
@@ -33,146 +32,171 @@ export default function AdminModal({ onAdd, onClose }) {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h2 className="modal-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Plus size={20} />
-            Agregar Partido
-          </h2>
-          <button 
-            onClick={onClose} 
-            style={{ 
-              background: 'transparent', 
-              border: 'none', 
-              cursor: 'pointer',
-              padding: '4px',
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
+    <div className="modal-backdrop-premium">
+      <div className="modal-premium">
+        {/* Header con gradiente */}
+        <div className="modal-header-premium">
+          <div className="modal-title-section">
+            <div className="modal-icon-wrapper">
+              <Plus size={20} />
+            </div>
+            <div>
+              <h2 className="modal-title-premium">Agregar Nuevo Partido</h2>
+              <p className="modal-subtitle-premium">Completa la información del partido</p>
+            </div>
+          </div>
+          <button onClick={onClose} className="modal-close-btn">
             <X size={20} />
           </button>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <div>
-            <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block' }}>
-              ID del partido
+        {/* Formulario con diseño mejorado */}
+        <div className="modal-body-premium">
+          {/* ID del partido */}
+          <div className="form-group-premium">
+            <label className="form-label-premium">
+              <Zap size={14} />
+              <span>ID del Partido</span>
+              <span className="required">*</span>
             </label>
             <input 
-              className="input" 
+              className="form-input-premium" 
               name="id" 
-              placeholder="match-001" 
+              placeholder="Ej: match-001" 
               value={form.id}
-              onChange={handleChange} 
+              onChange={handleChange}
             />
+            <span className="form-hint">Identificador único del partido</span>
           </div>
-          
-          <div>
-            <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+
+          {/* Liga */}
+          <div className="form-group-premium">
+            <label className="form-label-premium">
               <Shield size={14} />
-              Liga
+              <span>Liga o Competición</span>
+              <span className="required">*</span>
             </label>
             <input 
-              className="input" 
+              className="form-input-premium" 
               name="league" 
-              placeholder="Premier League" 
+              placeholder="Ej: Premier League, La Liga, UEFA Champions League" 
               value={form.league}
-              onChange={handleChange} 
-            />
-          </div>
-          
-          <div>
-            <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block' }}>
-              Equipo Local
-            </label>
-            <input 
-              className="input" 
-              name="home_team" 
-              placeholder="Manchester United" 
-              value={form.home_team}
-              onChange={handleChange} 
-            />
-          </div>
-          
-          <div>
-            <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block' }}>
-              Equipo Visitante
-            </label>
-            <input 
-              className="input" 
-              name="away_team" 
-              placeholder="Liverpool" 
-              value={form.away_team}
-              onChange={handleChange} 
+              onChange={handleChange}
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-            <div>
-              <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block' }}>
-                Logo Local
+          {/* Equipos en grid */}
+          <div className="teams-grid-premium">
+            <div className="form-group-premium">
+              <label className="form-label-premium">
+                <Home size={14} />
+                <span>Equipo Local</span>
+                <span className="required">*</span>
               </label>
               <input 
-                className="input" 
-                name="home_team_logo" 
-                placeholder="🏠" 
-                value={form.home_team_logo}
+                className="form-input-premium" 
+                name="home_team" 
+                placeholder="Manchester United" 
+                value={form.home_team}
                 onChange={handleChange}
-                maxLength={2}
               />
             </div>
-            
-            <div>
-              <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block' }}>
-                Logo Visitante
+
+            <div className="form-group-premium">
+              <label className="form-label-premium">
+                <Plane size={14} />
+                <span>Equipo Visitante</span>
+                <span className="required">*</span>
               </label>
               <input 
-                className="input" 
-                name="away_team_logo" 
-                placeholder="✈️" 
-                value={form.away_team_logo}
+                className="form-input-premium" 
+                name="away_team" 
+                placeholder="Liverpool" 
+                value={form.away_team}
                 onChange={handleChange}
-                maxLength={2}
               />
             </div>
           </div>
 
-          <div>
-            <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <Calendar size={14} />
-              Fecha
-            </label>
-            <input 
-              className="input" 
-              name="date" 
-              type="date" 
-              value={form.date}
-              onChange={handleChange} 
-            />
-          </div>
-          
-          <div>
-            <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <Clock size={14} />
-              Hora
-            </label>
-            <input 
-              className="input" 
-              name="time" 
-              type="time" 
-              value={form.time}
-              onChange={handleChange} 
-            />
+          {/* Logos */}
+          <div className="logos-grid-premium">
+            <div className="form-group-premium">
+              <label className="form-label-premium">
+                <span>Logo Local</span>
+              </label>
+              <div className="logo-input-wrapper">
+                <input 
+                  className="form-input-premium logo-input" 
+                  name="home_team_logo" 
+                  placeholder="🏠" 
+                  value={form.home_team_logo}
+                  onChange={handleChange}
+                  maxLength={2}
+                />
+                <span className="logo-preview">{form.home_team_logo}</span>
+              </div>
+            </div>
+
+            <div className="form-group-premium">
+              <label className="form-label-premium">
+                <span>Logo Visitante</span>
+              </label>
+              <div className="logo-input-wrapper">
+                <input 
+                  className="form-input-premium logo-input" 
+                  name="away_team_logo" 
+                  placeholder="✈️" 
+                  value={form.away_team_logo}
+                  onChange={handleChange}
+                  maxLength={2}
+                />
+                <span className="logo-preview">{form.away_team_logo}</span>
+              </div>
+            </div>
           </div>
 
-          <button className="btn" onClick={submit}>
-            <Plus size={18} style={{ marginRight: '6px', display: 'inline' }} />
-            Agregar Partido
+          {/* Fecha y hora */}
+          <div className="datetime-grid-premium">
+            <div className="form-group-premium">
+              <label className="form-label-premium">
+                <Calendar size={14} />
+                <span>Fecha</span>
+                <span className="required">*</span>
+              </label>
+              <input 
+                className="form-input-premium" 
+                name="date" 
+                type="date" 
+                value={form.date}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-group-premium">
+              <label className="form-label-premium">
+                <Clock size={14} />
+                <span>Hora</span>
+                <span className="required">*</span>
+              </label>
+              <input 
+                className="form-input-premium" 
+                name="time" 
+                type="time" 
+                value={form.time}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Footer con botones */}
+        <div className="modal-footer-premium">
+          <button className="modal-btn-premium secondary" onClick={onClose}>
+            Cancelar
           </button>
-          <button className="btn secondary" onClick={onClose}>
-            Cerrar
+          <button className="modal-btn-premium primary" onClick={submit}>
+            <Plus size={18} />
+            <span>Agregar Partido</span>
           </button>
         </div>
       </div>
