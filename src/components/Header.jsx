@@ -18,8 +18,8 @@ export default function Header({ currentUser, users = [] }) {
           <Trophy size={28} />
         </div>
         <div className="title-wrap">
-          <h1 className="app-title">Predicciones de Fútbol</h1>
-          <div className="app-sub">Compite y demuestra tu conocimiento</div>
+          <h1 className="app-title">Vega Score</h1>
+          <div className="app-sub">Inicio</div>
         </div>
       </div>
 
