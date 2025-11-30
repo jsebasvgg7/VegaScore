@@ -1,0 +1,961 @@
+/* ============================================
+   RESPONSIVE GLOBAL - MOBILE & TABLETS
+============================================ */
+
+/* ============================================
+   TABLETS (max-width: 1024px)
+============================================ */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 100%;
+    padding: 0 16px;
+    margin: 20px auto;
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .right-col {
+    order: -1; /* Ranking y admin primero en mobile */
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+}
+
+/* ============================================
+   MOBILE (max-width: 768px)
+============================================ */
+@media (max-width: 768px) {
+  /* --- HEADER --- */
+  .app-header {
+    padding: 16px;
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .header-left {
+    gap: 12px;
+  }
+
+  .logo-box {
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+  }
+
+  .title-wrap .app-title {
+    font-size: 18px;
+  }
+
+  .title-wrap .app-sub {
+    font-size: 12px;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .user-bubble {
+    flex: 1;
+    padding: 10px 12px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .user-info .user-name {
+    font-size: 14px;
+  }
+
+  .user-info .user-meta {
+    font-size: 11px;
+  }
+
+  /* --- STATS --- */
+  .stats-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 18px 14px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+    margin-top: 6px;
+  }
+
+  .stat-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* --- CONTAINER --- */
+  .container {
+    padding: 0 12px;
+    margin: 16px auto;
+  }
+
+  .main-grid {
+    gap: 16px;
+  }
+
+  /* --- MATCH CARDS --- */
+  .match-card-premium {
+    border-radius: 20px;
+  }
+
+  .match-header-premium {
+    padding: 14px 16px;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .match-datetime {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .teams-premium {
+    padding: 20px 16px;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .team-premium {
+    justify-content: center !important;
+    flex-direction: row !important;
+  }
+
+  .team-premium.away {
+    flex-direction: row !important;
+  }
+
+  .team-info {
+    align-items: center !important;
+  }
+
+  .team-logo-container {
+    width: 56px;
+    height: 56px;
+  }
+
+  .team-logo-premium {
+    font-size: 36px;
+  }
+
+  .team-name-premium {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .score-section {
+    order: 2;
+  }
+
+  .score-inputs-premium {
+    gap: 10px;
+  }
+
+  .score-input-premium {
+    width: 52px;
+    height: 52px;
+    font-size: 20px;
+  }
+
+  .predict-btn-premium {
+    margin: 0 16px 20px;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  /* --- RANKING --- */
+  .ranking-premium {
+    border-radius: 20px;
+  }
+
+  .ranking-header-premium {
+    padding: 16px 18px;
+  }
+
+  .ranking-title-premium h3 {
+    font-size: 18px;
+  }
+
+  .ranking-subtitle {
+    font-size: 12px;
+  }
+
+  .podium-container {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .podium-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .podium-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .podium-name {
+    font-size: 14px;
+  }
+
+  .podium-points {
+    font-size: 12px;
+  }
+
+  .ranking-list-premium {
+    padding: 0 18px 18px;
+  }
+
+  .ranking-item-premium {
+    grid-template-columns: 35px 1fr 60px;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .rank-number {
+    font-size: 14px;
+  }
+
+  .rank-avatar-small {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .rank-name-text {
+    font-size: 13px;
+  }
+
+  .rank-stats-text {
+    font-size: 10px;
+  }
+
+  .points-number {
+    font-size: 16px;
+  }
+
+  .ranking-footer {
+    padding: 14px 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* --- ADMIN PANEL --- */
+  .admin-panel-premium {
+    border-radius: 20px;
+  }
+
+  .admin-header {
+    padding: 16px 18px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .admin-title {
+    font-size: 16px;
+  }
+
+  .admin-subtitle {
+    font-size: 11px;
+  }
+
+  .admin-stats-grid {
+    padding: 16px 18px;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .admin-stat-item {
+    padding: 12px;
+  }
+
+  .admin-stat-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .admin-stat-value {
+    font-size: 18px;
+  }
+
+  .admin-actions {
+    padding: 0 18px 18px;
+  }
+
+  .admin-btn {
+    padding: 12px 18px;
+    font-size: 13px;
+  }
+
+  .admin-quick-matches {
+    padding: 0 18px 18px;
+  }
+
+  .admin-match-quick {
+    padding: 10px;
+  }
+
+  .admin-match-teams {
+    font-size: 14px;
+  }
+
+  .admin-match-id {
+    font-size: 10px;
+  }
+
+  /* --- MODAL --- */
+  .modal-backdrop-premium {
+    padding: 12px;
+  }
+  
+  .modal-premium {
+    max-height: 95vh;
+    border-radius: 20px;
+  }
+  
+  .modal-header-premium {
+    padding: 20px;
+  }
+
+  .modal-icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .modal-title-premium {
+    font-size: 18px;
+  }
+
+  .modal-subtitle-premium {
+    font-size: 12px;
+  }
+
+  .modal-close-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .modal-body-premium {
+    padding: 20px;
+  }
+
+  .form-group-premium {
+    margin-bottom: 16px;
+  }
+
+  .form-label-premium {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  .form-input-premium {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .teams-grid-premium,
+  .logos-grid-premium,
+  .datetime-grid-premium {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .modal-footer-premium {
+    padding: 16px 18px;
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  
+  .modal-btn-premium {
+    width: 100%;
+    justify-content: center;
+    padding: 11px 20px;
+    font-size: 13px;
+  }
+
+  /* --- MATCHES SECTION --- */
+  .matches-section-premium {
+    border-radius: 20px;
+  }
+
+  .matches-header-premium {
+    padding: 16px 18px;
+  }
+
+  .matches-icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  .matches-title-premium {
+    font-size: 18px;
+  }
+
+  .matches-subtitle-premium {
+    font-size: 12px;
+  }
+
+  .matches-badge {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .matches-container {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .matches-empty-state {
+    padding: 36px 18px;
+  }
+
+  .matches-empty-icon {
+    font-size: 40px;
+  }
+
+  .matches-empty-text {
+    font-size: 15px;
+  }
+
+  .matches-empty-subtext {
+    font-size: 12px;
+  }
+
+  /* --- AUTH PAGES --- */
+  .auth-card {
+    padding: 40px 28px;
+  }
+  
+  .auth-card h2 {
+    font-size: 28px;
+    margin-bottom: 28px;
+  }
+  
+  .auth-card input {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+  
+  .auth-card .btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  /* --- TOAST --- */
+  .toast-container {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+  }
+
+  .toast-notification {
+    min-width: auto;
+    max-width: none;
+  }
+
+  /* --- LOADING --- */
+  .loading-overlay-content {
+    padding: 24px 36px;
+  }
+
+  .skeleton-team-name {
+    width: 120px;
+  }
+
+  .skeleton-badge {
+    width: 100px;
+    height: 22px;
+  }
+
+  .skeleton-datetime {
+    width: 130px;
+  }
+}
+
+/* ============================================
+   MOBILE PEQUEÑO (max-width: 480px)
+============================================ */
+@media (max-width: 480px) {
+  /* --- HEADER --- */
+  .app-header {
+    padding: 14px;
+  }
+
+  .header-left {
+    gap: 10px;
+  }
+
+  .logo-box {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+    border-radius: 10px;
+  }
+
+  .title-wrap .app-title {
+    font-size: 16px;
+  }
+
+  .title-wrap .app-sub {
+    font-size: 11px;
+  }
+
+  .user-bubble {
+    padding: 8px 10px;
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .user-info .user-name {
+    font-size: 13px;
+  }
+
+  .user-info .user-meta {
+    font-size: 10px;
+  }
+
+  .icon-btn {
+    padding: 6px 8px;
+  }
+
+  /* --- STATS --- */
+  .stats-row {
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 14px 10px;
+    border-radius: 16px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+
+  /* --- CONTAINER --- */
+  .container {
+    padding: 0 10px;
+    margin: 12px auto;
+  }
+
+  .main-grid {
+    gap: 12px;
+  }
+
+  /* --- MATCH CARDS --- */
+  .match-card-premium {
+    border-radius: 18px;
+  }
+
+  .match-header-premium {
+    padding: 12px 14px;
+  }
+
+  .league-badge {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  .datetime-item {
+    font-size: 11px;
+  }
+
+  .teams-premium {
+    padding: 18px 14px;
+    gap: 16px;
+  }
+
+  .team-logo-container {
+    width: 52px;
+    height: 52px;
+  }
+
+  .team-logo-premium {
+    font-size: 32px;
+  }
+
+  .team-name-premium {
+    font-size: 14px;
+  }
+
+  .team-label {
+    font-size: 10px;
+  }
+
+  .score-input-premium {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+    border-radius: 12px;
+  }
+
+  .vs-premium {
+    font-size: 12px;
+  }
+
+  .prediction-badge {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .predict-btn-premium {
+    margin: 0 14px 16px;
+    padding: 11px 18px;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+
+  /* --- RANKING --- */
+  .ranking-premium,
+  .admin-panel-premium,
+  .matches-section-premium {
+    border-radius: 18px;
+  }
+
+  .podium-container {
+    padding: 14px;
+  }
+
+  .podium-card {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .podium-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .podium-name {
+    font-size: 13px;
+  }
+
+  .top-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .ranking-list-premium {
+    padding: 0 14px 14px;
+  }
+
+  .ranking-item-premium {
+    padding: 8px;
+    border-radius: 10px;
+  }
+
+  .rank-avatar-small {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  /* --- ADMIN PANEL --- */
+  .admin-header {
+    padding: 14px;
+  }
+
+  .admin-icon-wrapper {
+    width: 36px;
+    height: 36px;
+  }
+
+  .admin-title {
+    font-size: 15px;
+  }
+
+  .admin-stats-grid {
+    padding: 14px;
+  }
+
+  .admin-actions {
+    padding: 0 14px 14px;
+  }
+
+  .admin-btn {
+    padding: 11px 16px;
+  }
+
+  .admin-quick-matches {
+    padding: 0 14px 14px;
+  }
+
+  /* --- MODAL --- */
+  .modal-backdrop-premium {
+    padding: 10px;
+  }
+  
+  .modal-premium {
+    border-radius: 18px;
+  }
+  
+  .modal-header-premium {
+    padding: 16px;
+  }
+  
+  .modal-body-premium {
+    padding: 16px;
+  }
+  
+  .modal-footer-premium {
+    padding: 14px 16px;
+  }
+
+  /* --- AUTH PAGES --- */
+  .auth-card {
+    padding: 36px 24px;
+    border-radius: 24px;
+  }
+
+  .auth-card h2 {
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+
+  .auth-card input {
+    padding: 13px 15px;
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+
+  .auth-card .btn {
+    padding: 13px;
+    font-size: 14px;
+  }
+
+  .auth-alt {
+    font-size: 13px;
+    margin-top: 20px;
+  }
+}
+
+/* ============================================
+   MOBILE EXTRA PEQUEÑO (max-width: 375px)
+============================================ */
+@media (max-width: 375px) {
+  .stats-row {
+    gap: 6px;
+  }
+
+  .stat-card {
+    padding: 12px 8px;
+  }
+
+  .stat-value {
+    font-size: 16px;
+  }
+
+  .team-name-premium {
+    font-size: 13px;
+  }
+
+  .score-input-premium {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .predict-btn-premium {
+    font-size: 12px;
+    padding: 10px 16px;
+  }
+}
+
+/* ============================================
+   LANDSCAPE MÓVILES (altura pequeña)
+============================================ */
+@media (max-height: 600px) and (orientation: landscape) {
+  .app-header {
+    padding: 12px 16px;
+  }
+
+  .logo-box {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .stat-card {
+    padding: 12px 8px;
+  }
+
+  .stat-value {
+    font-size: 16px;
+  }
+
+  .modal-premium {
+    max-height: 90vh;
+  }
+
+  .auth-card {
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .teams-premium {
+    padding: 16px 14px;
+  }
+}
+
+/* ============================================
+   TABLETS LANDSCAPE (1024px - 1366px)
+============================================ */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+  .container {
+    max-width: 1100px;
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .main-grid {
+    grid-template-columns: 1.8fr 1fr;
+  }
+}
+
+/* ============================================
+   iPHONE SE / MINI (320px - 375px)
+============================================ */
+@media (max-width: 375px) {
+  .user-bubble {
+    padding: 6px 8px;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .user-info .user-name {
+    font-size: 12px;
+  }
+
+  .user-info .user-meta {
+    font-size: 9px;
+  }
+}
+
+/* ============================================
+   PANTALLAS MUY GRANDES (min-width: 1920px)
+============================================ */
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  .stats-row {
+    gap: 24px;
+  }
+
+  .stat-card {
+    padding: 32px;
+  }
+
+  .stat-value {
+    font-size: 28px;
+  }
+}
+
+/* ============================================
+   TOUCH DEVICES - MEJORAS DE USABILIDAD
+============================================ */
+@media (hover: none) and (pointer: coarse) {
+  /* Áreas táctiles más grandes */
+  .icon-btn,
+  .modal-close-btn,
+  .toast-close {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .admin-quick-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Eliminar efectos hover en touch */
+  .match-card-premium:hover,
+  .ranking-item-premium:hover,
+  .admin-stat-item:hover,
+  .admin-match-quick:hover {
+    transform: none;
+    box-shadow: inherit;
+  }
+
+  /* Feedback táctil */
+  .predict-btn-premium:active,
+  .admin-btn:active,
+  .modal-btn-premium:active,
+  .auth-card .btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+/* ============================================
+   MODO OSCURO (si el sistema lo prefiere)
+============================================ */
+@media (prefers-color-scheme: dark) {
+  /* Opcional: agregar estilos para modo oscuro */
+  /* Descomenta si quieres implementarlo
+  :root {
+    --bg: #111;
+    --card: #1a1a1a;
+    --text: #f5f5f5;
+  }
+  */
+}
+
+/* ============================================
+   REDUCIR MOVIMIENTO (accesibilidad)
+============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
