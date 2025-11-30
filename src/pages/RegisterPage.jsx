@@ -109,6 +109,9 @@ export default function RegisterPage() {
         <p className="auth-alt">
           ¿Ya tienes cuenta? <Link to="/">Iniciar sesión</Link>
         </p>
+        <p className="auth-alt2" >
+          Al registrarte revisa tu correo electrónico para activar tu cuenta.
+          </p>
       </form>
     </div>
   );
