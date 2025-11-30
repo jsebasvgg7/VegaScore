@@ -1,6 +1,6 @@
 // src/pages/VegaScorePage.jsx
 import React, { useEffect, useState } from "react";
-import { Trophy, TrendingUp, Target, Percent, Plus, CheckCircle } from "lucide-react";
+import { Trophy, TrendingUp, Target, Percent, Plus, CheckCircle, Shield } from "lucide-react";
 import Header from "../components/Header";
 import MatchCard from "../components/MatchCard";
 import RankingSidebar from "../components/RankingSidebar";
@@ -337,40 +337,49 @@ export default function VegaScorePage() {
 
           <aside className="right-col">
             <RankingSidebar users={sortedUsers} />
-            <div className="admin-quick card">
-              <button className="btn" onClick={() => setShowAdminModal(true)}>
-                <Plus size={18} style={{ marginRight: '8px' }} />
-                Agregar Partido
-              </button>
+            
+            {/* Panel de administración - Solo visible para admins */}
+            {currentUser?.is_admin && (
+              <div className="admin-quick card">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                  <Shield size={18} color="#ff8a00" />
+                  <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>Panel Admin</h3>
+                </div>
+                
+                <button className="btn" onClick={() => setShowAdminModal(true)}>
+                  <Plus size={18} style={{ marginRight: '8px' }} />
+                  Agregar Partido
+                </button>
 
-              <button
-                className="btn secondary"
-                style={{ marginTop: '8px' }}
-                onClick={() => {
-                  const id = prompt("ID del partido a finalizar:");
-                  if (!id) return;
-                  
-                  const h = prompt("Goles equipo local:");
-                  if (h === null) return;
-                  
-                  const a = prompt("Goles equipo visitante:");
-                  if (a === null) return;
-                  
-                  const homeScore = parseInt(h);
-                  const awayScore = parseInt(a);
-                  
-                  if (isNaN(homeScore) || isNaN(awayScore)) {
-                    alert("Por favor ingresa números válidos");
-                    return;
-                  }
-                  
-                  setMatchResult(id, homeScore, awayScore);
-                }}
-              >
-                <CheckCircle size={18} style={{ marginRight: '8px' }} />
-                Finalizar Partido
-              </button>
-            </div>
+                <button
+                  className="btn secondary"
+                  style={{ marginTop: '8px' }}
+                  onClick={() => {
+                    const id = prompt("ID del partido a finalizar:");
+                    if (!id) return;
+                    
+                    const h = prompt("Goles equipo local:");
+                    if (h === null) return;
+                    
+                    const a = prompt("Goles equipo visitante:");
+                    if (a === null) return;
+                    
+                    const homeScore = parseInt(h);
+                    const awayScore = parseInt(a);
+                    
+                    if (isNaN(homeScore) || isNaN(awayScore)) {
+                      alert("Por favor ingresa números válidos");
+                      return;
+                    }
+                    
+                    setMatchResult(id, homeScore, awayScore);
+                  }}
+                >
+                  <CheckCircle size={18} style={{ marginRight: '8px' }} />
+                  Finalizar Partido
+                </button>
+              </div>
+            )}
           </aside>
         </section>
       </main>
