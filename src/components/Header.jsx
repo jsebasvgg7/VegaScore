@@ -26,29 +26,14 @@ export default function Header({ currentUser, users = [], onProfileClick }) { //
 
      <div className="header-right">
         {/* Botón de perfil */}
-        <button 
-          className="icon-btn profile-btn" 
-          onClick={onProfileClick}
-          aria-label="Ver perfil"
-        >
+        <button className="icon-btn profile-btn" onClick={onProfileClick} aria-label="Ver perfil">
           <User2 size={18} />
         </button>
-        
-        {/* =========================== */}
-
-        <div className="user-bubble">
-          <div className="avatar">
-            <User size={20} />
-          </div>
-          <div className="user-info">
-            <div className="user-name">{currentUser?.name ?? "Invitado"}</div>
-            <div className="user-meta">{currentUser?.points ?? 0} pts • #{position} de {users.length}</div>
-          </div>
-        </div>
 
         <button className="icon-btn" onClick={handleLogout} aria-label="Cerrar sesión">
           <LogOut size={18} />
         </button>
+        
       </div>
     </header>
   );
