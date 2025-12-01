@@ -720,6 +720,146 @@ export default function ProfilePage({ currentUser, onBack }) {
           </div>
         </div>
 
+        {/* SECCIÓN MEDIA: Formulario de Edición */}
+        <div className="profile-bottom-section">
+          {/* Formulario de Edición */}
+          {isEditing && (
+            <div className="edit-form-card">
+              <div className="form-header">
+                <h3>Editar Información Personal</h3>
+                <button 
+                  className="cancel-edit-button"
+                  onClick={() => {
+                    setIsEditing(false);
+                    loadUserData();
+                  }}
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <div className="form-grid">
+                <div className="form-group">
+                  <label className="form-label">
+                    <User size={16} />
+                    <span>Nombre Completo</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={userData.name}
+                    onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+                    placeholder="Tu nombre"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">
+                    <Trophy size={16} />
+                    <span>Equipo Favorito</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={userData.favorite_team}
+                    onChange={(e) => setUserData({ ...userData, favorite_team: e.target.value })}
+                    placeholder="Ej: Real Madrid"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">
+                    <Heart size={16} />
+                    <span>Jugador Favorito</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={userData.favorite_player}
+                    onChange={(e) => setUserData({ ...userData, favorite_player: e.target.value })}
+                    placeholder="Ej: Lionel Messi"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">
+                    <User size={16} />
+                    <span>Género</span>
+                  </label>
+                  <select
+                    className="form-input"
+                    value={userData.gender}
+                    onChange={(e) => setUserData({ ...userData, gender: e.target.value })}
+                  >
+                    <option value="">Seleccionar...</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                    <option value="Prefiero no decir">Prefiero no decir</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">
+                    <Flag size={16} />
+                    <span>Nacionalidad</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={userData.nationality}
+                    onChange={(e) => setUserData({ ...userData, nationality: e.target.value })}
+                    placeholder="Ej: Colombia"
+                  />
+                </div>
+
+                <div className="form-group full-width">
+                  <label className="form-label">
+                    <Star size={16} />
+                    <span>Biografía</span>
+                  </label>
+                  <textarea
+                    className="form-textarea"
+                    value={userData.bio}
+                    onChange={(e) => setUserData({ ...userData, bio: e.target.value })}
+                    placeholder="Cuéntanos sobre ti..."
+                    rows={3}
+                  />
+                </div>
+              </div>
+              
+              <div className="form-actions">
+                <button 
+                  className="save-button"
+                  onClick={handleSave}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <Activity size={16} className="spinner" />
+                      <span>Guardando...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Save size={16} />
+                      <span>Guardar Cambios</span>
+                    </>
+                  )}
+                </button>
+                <button 
+                  className="cancel-button-secondary"
+                  onClick={() => {
+                    setIsEditing(false);
+                    loadUserData();
+                  }}
+                >
+                  <X size={16} />
+                  <span>Cancelar</span>
+                </button>
+              </div>
+            </div>
+          )}
+
         {/* ========== SECCIÓN DE TÍTULOS Y LOGROS ========== */}
         <div className="titles-achievements-section">
           {/* Título Activo */}
@@ -926,147 +1066,8 @@ export default function ProfilePage({ currentUser, onBack }) {
             )}
           </div>
         </div>
-
-        {/* SECCIÓN INFERIOR: Formulario de Edición e Historial */}
-        <div className="profile-bottom-section">
-          {/* Formulario de Edición */}
-          {isEditing && (
-            <div className="edit-form-card">
-              <div className="form-header">
-                <h3>Editar Información Personal</h3>
-                <button 
-                  className="cancel-edit-button"
-                  onClick={() => {
-                    setIsEditing(false);
-                    loadUserData();
-                  }}
-                >
-                  <X size={20} />
-                </button>
-              </div>
-              
-              <div className="form-grid">
-                <div className="form-group">
-                  <label className="form-label">
-                    <User size={16} />
-                    <span>Nombre Completo</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={userData.name}
-                    onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-                    placeholder="Tu nombre"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">
-                    <Trophy size={16} />
-                    <span>Equipo Favorito</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={userData.favorite_team}
-                    onChange={(e) => setUserData({ ...userData, favorite_team: e.target.value })}
-                    placeholder="Ej: Real Madrid"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">
-                    <Heart size={16} />
-                    <span>Jugador Favorito</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={userData.favorite_player}
-                    onChange={(e) => setUserData({ ...userData, favorite_player: e.target.value })}
-                    placeholder="Ej: Lionel Messi"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">
-                    <User size={16} />
-                    <span>Género</span>
-                  </label>
-                  <select
-                    className="form-input"
-                    value={userData.gender}
-                    onChange={(e) => setUserData({ ...userData, gender: e.target.value })}
-                  >
-                    <option value="">Seleccionar...</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                    <option value="Otro">Otro</option>
-                    <option value="Prefiero no decir">Prefiero no decir</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">
-                    <Flag size={16} />
-                    <span>Nacionalidad</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={userData.nationality}
-                    onChange={(e) => setUserData({ ...userData, nationality: e.target.value })}
-                    placeholder="Ej: Colombia"
-                  />
-                </div>
-
-                <div className="form-group full-width">
-                  <label className="form-label">
-                    <Star size={16} />
-                    <span>Biografía</span>
-                  </label>
-                  <textarea
-                    className="form-textarea"
-                    value={userData.bio}
-                    onChange={(e) => setUserData({ ...userData, bio: e.target.value })}
-                    placeholder="Cuéntanos sobre ti..."
-                    rows={3}
-                  />
-                </div>
-              </div>
-              
-              <div className="form-actions">
-                <button 
-                  className="save-button"
-                  onClick={handleSave}
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <>
-                      <Activity size={16} className="spinner" />
-                      <span>Guardando...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Save size={16} />
-                      <span>Guardar Cambios</span>
-                    </>
-                  )}
-                </button>
-                <button 
-                  className="cancel-button-secondary"
-                  onClick={() => {
-                    setIsEditing(false);
-                    loadUserData();
-                  }}
-                >
-                  <X size={16} />
-                  <span>Cancelar</span>
-                </button>
-              </div>
-            </div>
-          )}
-
+        {/* SECCIÓN INFERIOR: Historial de Predicciones */}
+        <div className="history-section">
           {/* Historial de Predicciones */}
           <div className="history-card">
             <div className="history-header">
@@ -1166,4 +1167,4 @@ export default function ProfilePage({ currentUser, onBack }) {
       </div>
     </div>
   );
-}
+</div> )}
