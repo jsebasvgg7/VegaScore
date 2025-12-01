@@ -461,82 +461,116 @@ export default function ProfilePage({ currentUser, onBack }) {
       <div className="profile-container">
         {/* SECCIÓN SUPERIOR: Información y Stats */}
         <div className="profile-top-section">
-          {/* Card de Avatar y Info Básica */}
-          <div className="avatar-card">
-            <div className="avatar-wrapper">
-              {isEditing ? (
-                <AvatarUpload
-                  currentUrl={userData.avatar_url}
-                  userId={currentUser.id}
-                  onUploadComplete={handleAvatarUpload}
-                />
-              ) : (
-                <div className="avatar-display">
-                  {userData.avatar_url ? (
-                    <img 
-                      src={userData.avatar_url} 
-                      alt={userData.name}
-                      className="avatar-image"
-                    />
-                  ) : (
-                    <div className="avatar-placeholder">
-                      {userData.name.charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                  <div className="avatar-badge">
-                    <Crown size={16} />
-                    <span>Nivel {userData.level}</span>
-                  </div>
-                </div>
-              )}
-            </div>
-            
-            <div className="avatar-info">
-              <h2 className="user-name">{userData.name}</h2>
-              <div className="user-meta">
-                <span className="user-email">{userData.email}</span>
+          {/* Card de Avatar y Info Básica - REDISEÑADO */}
+            <div className="avatar-card premium-layout">
+              {/* Banner Decorativo de Fondo */}
+              <div className="card-banner">
+                <div className="banner-pattern"></div>
               </div>
-              
-              <div className="user-favorites">
-                {userData.favorite_team && (
-                  <div className="favorite-item">
-                    <Trophy size={16} />
-                    <span>{userData.favorite_team}</span>
-                  </div>
-                )}
-                {userData.favorite_player && (
-                  <div className="favorite-item">
-                    <Heart size={16} />
-                    <span>{userData.favorite_player}</span>
-                  </div>
-                )}
-                <div className="user-joined">
-                  <Calendar size={14} />
-                  <span>{formatDate(userData.joined_date)}</span>
-                </div>
-              </div>
-              
+
+              {/* Botón de Edición Flotante (Solo Icono) */}
               <button 
-                className="edit-profile-button"
+                className="edit-icon-btn"
                 onClick={() => isEditing ? handleSave() : setIsEditing(true)}
                 disabled={loading}
+                title={isEditing ? "Guardar" : "Editar Perfil"}
               >
                 {loading ? (
-                  <Activity size={16} className="spinner" />
+                  <Activity size={20} className="spinner" />
                 ) : isEditing ? (
-                  <>
-                    <Save size={16} />
-                    <span>Guardar Cambios</span>
-                  </>
+                  <Save size={20} />
                 ) : (
-                  <>
-                    <Edit2 size={16} />
-                    <span>Editar Perfil</span>
-                  </>
+                  <Edit2 size={20} />
                 )}
               </button>
+
+              <div className="card-content-wrapper">
+                {/* Sección del Avatar */}
+                <div className="avatar-section-new">
+                  <div className="avatar-container-new">
+                    {isEditing ? (
+                      <AvatarUpload
+                        currentUrl={userData.avatar_url}
+                        userId={currentUser.id}
+                        onUploadComplete={handleAvatarUpload}
+                      />
+                    ) : (
+                      <div className="avatar-display-new">
+                        {userData.avatar_url ? (
+                          <img 
+                            src={userData.avatar_url} 
+                            alt={userData.name}
+                            className="avatar-image"
+                          />
+                        ) : (
+                          <div className="avatar-placeholder">
+                            {userData.name.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {/* Nivel Badge Flotante */}
+                    <div className="level-badge-floating">
+                      <Crown size={14} fill="currentColor" />
+                      <span>Lvl {userData.level}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Sección de Info */}
+                <div className="user-info-new">
+                  <div className="name-header">
+                    <h2 className="user-name-new">{userData.name}</h2>
+                    <span className="user-email-new">{userData.email}</span>
+                  </div>
+                  
+                  {/* Bio corta si existe */}
+                  {userData.bio && (
+                    <p className="user-bio-new">{userData.bio}</p>
+                  )}
+                  
+                  <div className="user-badges-grid">
+                    {userData.favorite_team && (
+                      <div className="info-badge team">
+                        <div className="badge-icon"><Trophy size={14} /></div>
+                        <div className="badge-text">
+                          <span className="badge-label">Equipo</span>
+                          <span className="badge-value">{userData.favorite_team}</span>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {userData.favorite_player && (
+                      <div className="info-badge player">
+                        <div className="badge-icon"><Heart size={14} /></div>
+                        <div className="badge-text">
+                          <span className="badge-label">Ídolo</span>
+                          <span className="badge-value">{userData.favorite_player}</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {userData.nationality && (
+                      <div className="info-badge nation">
+                        <div className="badge-icon"><Globe size={14} /></div>
+                        <div className="badge-text">
+                          <span className="badge-label">País</span>
+                          <span className="badge-value">{userData.nationality}</span>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="info-badge joined">
+                      <div className="badge-icon"><Calendar size={14} /></div>
+                      <div className="badge-text">
+                        <span className="badge-label">Miembro desde</span>
+                        <span className="badge-value">{formatDate(userData.joined_date)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
 
           {/* Card de Estadísticas Principales */}
           <div className="stats-card">
