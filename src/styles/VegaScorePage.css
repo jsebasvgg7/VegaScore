@@ -13,9 +13,11 @@
 .right-col {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
 }
-
+.navigation-tabs-two {
+  padding: 8px; /* ⬅️ Cambiar de 7px a 8px */
+}
 /* Stats Section */
 .stats-row {
   display: grid;
