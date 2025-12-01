@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { 
   User, Calendar, Trophy, TrendingUp, Target, Flame, 
   Star, Award, Edit2, Save, X, ArrowLeft, Activity, Percent,
-  CheckCircle2, XCircle, Clock, Medal, Globe, Heart, Zap
+  CheckCircle2, XCircle, Clock, Medal, Globe, Heart, Zap,
+  Crown, Shield, Rocket, Sparkles, TrendingDown, BarChart3,
+  Gamepad2, Award as AwardIcon, Target as TargetIcon,
+  Clock as ClockIcon, Users, MapPin, Flag
 } from 'lucide-react';
 import { supabase } from '../utils/supabaseClient';
 import AvatarUpload from '../components/AvatarUpload';
@@ -95,7 +98,8 @@ export default function ProfilePage({ currentUser, onBack }) {
           )
         `)
         .eq('user_id', currentUser.id)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(10);
 
       if (error) throw error;
       setPredictionHistory(data || []);
@@ -274,444 +278,515 @@ export default function ProfilePage({ currentUser, onBack }) {
       </div>
 
       <div className="profile-container">
-        {/* SECCIÓN SUPERIOR: INFO PERSONAL Y LOGROS */}
-        <div className="profile-top-grid">
-          {/* Información Personal */}
-          <div className="profile-card personal-info">
-            <div className="profile-card-header">
-              <h2 className="card-title">
-                <User size={20} />
-                Información Personal
-              </h2>
+        {/* SECCIÓN SUPERIOR: Información y Stats */}
+        <div className="profile-top-section">
+          {/* Card de Avatar y Info Básica */}
+          <div className="avatar-card">
+            <div className="avatar-wrapper">
+              {isEditing ? (
+                <AvatarUpload
+                  currentUrl={userData.avatar_url}
+                  userId={currentUser.id}
+                  onUploadComplete={handleAvatarUpload}
+                />
+              ) : (
+                <div className="avatar-display">
+                  {userData.avatar_url ? (
+                    <img 
+                      src={userData.avatar_url} 
+                      alt={userData.name}
+                      className="avatar-image"
+                    />
+                  ) : (
+                    <div className="avatar-placeholder">
+                      {userData.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                  <div className="avatar-badge">
+                    <Crown size={16} />
+                    <span>Nivel {userData.level}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            <div className="avatar-info">
+              <h2 className="user-name">{userData.name}</h2>
+              <div className="user-meta">
+                <span className="user-email">{userData.email}</span>
+                <div className="user-joined">
+                  <Calendar size={14} />
+                  <span>{formatDate(userData.joined_date)}</span>
+                </div>
+              </div>
+              
+              <div className="user-favorites">
+                {userData.favorite_team && (
+                  <div className="favorite-item">
+                    <Trophy size={16} />
+                    <span>{userData.favorite_team}</span>
+                  </div>
+                )}
+                {userData.favorite_player && (
+                  <div className="favorite-item">
+                    <Heart size={16} />
+                    <span>{userData.favorite_player}</span>
+                  </div>
+                )}
+              </div>
+              
               <button 
-                className={`edit-button ${isEditing ? 'active' : ''}`}
+                className="edit-profile-button"
                 onClick={() => isEditing ? handleSave() : setIsEditing(true)}
                 disabled={loading}
               >
                 {loading ? (
-                  <Activity size={18} className="spinner" />
+                  <Activity size={16} className="spinner" />
                 ) : isEditing ? (
                   <>
-                    <Save size={18} />
-                    <span>Guardar</span>
+                    <Save size={16} />
+                    <span>Guardar Cambios</span>
                   </>
                 ) : (
                   <>
-                    <Edit2 size={18} />
-                    <span>Editar</span>
+                    <Edit2 size={16} />
+                    <span>Editar Perfil</span>
                   </>
                 )}
               </button>
-              {isEditing && (
+            </div>
+          </div>
+
+          {/* Card de Estadísticas Principales */}
+          <div className="stats-card">
+            <div className="stats-header">
+              <BarChart3 size={24} />
+              <h3>Estadísticas Principales</h3>
+            </div>
+            
+            <div className="stats-grid">
+              <div className="stat-item primary">
+                <div className="stat-icon">
+                  <TrendingUp size={20} />
+                </div>
+                <div className="stat-info">
+                  <div className="stat-label">Puntos Totales</div>
+                  <div className="stat-value">{currentUser?.points || 0}</div>
+                </div>
+              </div>
+
+              <div className="stat-item success">
+                <div className="stat-icon">
+                  <Target size={20} />
+                </div>
+                <div className="stat-info">
+                  <div className="stat-label">Precisión</div>
+                  <div className="stat-value">{accuracy}%</div>
+                </div>
+              </div>
+
+              <div className="stat-item warning">
+                <div className="stat-icon">
+                  <Flame size={20} />
+                </div>
+                <div className="stat-info">
+                  <div className="stat-label">Racha Actual</div>
+                  <div className="stat-value">{streakData.current_streak}</div>
+                </div>
+              </div>
+
+              <div className="stat-item accent">
+                <div className="stat-icon">
+                  <Medal size={20} />
+                </div>
+                <div className="stat-info">
+                  <div className="stat-label">Mejor Racha</div>
+                  <div className="stat-value">{streakData.best_streak}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SECCIÓN MEDIA: Nivel, Logros y Rachas */}
+        <div className="profile-middle-section">
+          {/* Card de Progreso de Nivel */}
+          <div className="level-card">
+            <div className="level-header">
+              <div className="level-title-section">
+                <Zap size={24} className="level-icon" />
+                <div>
+                  <h3 className="level-title">Nivel {userData.level}</h3>
+                  <p className="level-subtitle">Progreso hacia el siguiente nivel</p>
+                </div>
+              </div>
+              <div className="level-points">
+                <span className="current-points">{currentPoints} pts</span>
+                <span className="next-level-points">Siguiente: {nextLevelPoints} pts</span>
+              </div>
+            </div>
+            
+            <div className="progress-container">
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill"
+                  style={{ width: `${levelProgress}%` }}
+                >
+                  <div className="progress-glow"></div>
+                </div>
+              </div>
+              <div className="progress-label">
+                <span>{pointsInLevel}/20 puntos</span>
+                <span>{pointsToNextLevel} pts restantes</span>
+              </div>
+            </div>
+
+            {/* Mini Logros dentro de la misma card */}
+            <div className="mini-achievements-section">
+              <div className="section-header">
+                <AwardIcon size={20} />
+                <h4>Logros Destacados</h4>
+              </div>
+              
+              <div className="mini-achievements-grid">
+                <div className="mini-achievement">
+                  <div className="achievement-icon">
+                    <TargetIcon size={18} />
+                  </div>
+                  <div className="achievement-info">
+                    <div className="achievement-label">Aciertos</div>
+                    <div className="achievement-value">
+                      {currentUser?.correct || 0}/{currentUser?.predictions || 0}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mini-achievement">
+                  <div className="achievement-icon">
+                    <ClockIcon size={18} />
+                  </div>
+                  <div className="achievement-info">
+                    <div className="achievement-label">Tiempo Activo</div>
+                    <div className="achievement-value">{formatDate(userData.joined_date)}</div>
+                  </div>
+                </div>
+
+                <div className="mini-achievement">
+                  <div className="achievement-icon">
+                    <Users size={18} />
+                  </div>
+                  <div className="achievement-info">
+                    <div className="achievement-label">Ranking</div>
+                    <div className="achievement-value">#{(currentUser?.rank || '--')}</div>
+                  </div>
+                </div>
+
+                <div className="mini-achievement">
+                  <div className="achievement-icon">
+                    <Rocket size={18} />
+                  </div>
+                  <div className="achievement-info">
+                    <div className="achievement-label">Consistencia</div>
+                    <div className="achievement-value">{streakData.current_streak}d</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card de Rachas */}
+          <div className="streaks-card">
+            <div className="streaks-header">
+              <Flame size={24} />
+              <h3>Tus Rachas</h3>
+            </div>
+            
+            <div className="streaks-content">
+              <div className="streak-item current-streak">
+                <div className="streak-icon">
+                  <Flame size={32} />
+                </div>
+                <div className="streak-info">
+                  <div className="streak-label">Racha Actual</div>
+                  <div className="streak-value">{streakData.current_streak}</div>
+                  <div className="streak-subtext">predicciones consecutivas</div>
+                </div>
+                {streakData.current_streak > 0 && (
+                  <div className="streak-badge">
+                    <Sparkles size={14} />
+                    <span>Activa</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="streak-item best-streak">
+                <div className="streak-icon">
+                  <Crown size={32} />
+                </div>
+                <div className="streak-info">
+                  <div className="streak-label">Récord Personal</div>
+                  <div className="streak-value">{streakData.best_streak}</div>
+                  <div className="streak-subtext">tu mejor marca</div>
+                </div>
+                {streakData.best_streak > 10 && (
+                  <div className="record-badge">
+                    <Shield size={14} />
+                    <span>Épico</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SECCIÓN INFERIOR: Formulario de Edición e Historial */}
+        <div className="profile-bottom-section">
+          {/* Formulario de Edición (solo visible en modo edición) */}
+          {isEditing && (
+            <div className="edit-form-card">
+              <div className="form-header">
+                <h3>Editar Información Personal</h3>
                 <button 
-                  className="cancel-button"
+                  className="cancel-edit-button"
                   onClick={() => {
                     setIsEditing(false);
                     loadUserData();
                   }}
                 >
-                  <X size={18} />
+                  <X size={20} />
                 </button>
-              )}
-            </div>
-
-            <div className="personal-info-content">
-              {/* Avatar */}
-              <div className="avatar-section">
-                {isEditing ? (
-                  <AvatarUpload
-                    currentUrl={userData.avatar_url}
-                    userId={currentUser.id}
-                    onUploadComplete={handleAvatarUpload}
-                  />
-                ) : (
-                  <div className="profile-avatar-display">
-                    {userData.avatar_url ? (
-                      <img 
-                        src={userData.avatar_url} 
-                        alt={userData.name}
-                        className="avatar-image"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.nextSibling.style.display = 'flex';
-                        }}
-                      />
-                    ) : null}
-                    <div 
-                      className="avatar-placeholder"
-                      style={{ display: userData.avatar_url ? 'none' : 'flex' }}
-                    >
-                      {userData.name.charAt(0).toUpperCase()}
-                    </div>
-                  </div>
-                )}
               </div>
-
-              {/* Campos de información */}
-              <div className="profile-fields-grid">
-                <div className="profile-field">
-                  <label className="profile-label">
+              
+              <div className="form-grid">
+                <div className="form-group">
+                  <label className="form-label">
                     <User size={16} />
-                    <span>Nombre</span>
+                    <span>Nombre Completo</span>
                   </label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      className="profile-input"
-                      value={userData.name}
-                      onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-                      placeholder="Tu nombre"
-                    />
-                  ) : (
-                    <div className="profile-value">{userData.name}</div>
-                  )}
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={userData.name}
+                    onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+                    placeholder="Tu nombre"
+                  />
                 </div>
 
-                <div className="profile-field">
-                  <label className="profile-label">
+                <div className="form-group">
+                  <label className="form-label">
                     <Trophy size={16} />
                     <span>Equipo Favorito</span>
                   </label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      className="profile-input"
-                      value={userData.favorite_team}
-                      onChange={(e) => setUserData({ ...userData, favorite_team: e.target.value })}
-                      placeholder="Ej: Real Madrid"
-                    />
-                  ) : (
-                    <div className="profile-value">
-                      {userData.favorite_team || 'No especificado'}
-                    </div>
-                  )}
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={userData.favorite_team}
+                    onChange={(e) => setUserData({ ...userData, favorite_team: e.target.value })}
+                    placeholder="Ej: Real Madrid"
+                  />
                 </div>
 
-                <div className="profile-field">
-                  <label className="profile-label">
+                <div className="form-group">
+                  <label className="form-label">
                     <Heart size={16} />
                     <span>Jugador Favorito</span>
                   </label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      className="profile-input"
-                      value={userData.favorite_player}
-                      onChange={(e) => setUserData({ ...userData, favorite_player: e.target.value })}
-                      placeholder="Ej: Lionel Messi"
-                    />
-                  ) : (
-                    <div className="profile-value">
-                      {userData.favorite_player || 'No especificado'}
-                    </div>
-                  )}
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={userData.favorite_player}
+                    onChange={(e) => setUserData({ ...userData, favorite_player: e.target.value })}
+                    placeholder="Ej: Lionel Messi"
+                  />
                 </div>
 
-                <div className="profile-field">
-                  <label className="profile-label">
+                <div className="form-group">
+                  <label className="form-label">
                     <User size={16} />
                     <span>Género</span>
                   </label>
-                  {isEditing ? (
-                    <select
-                      className="profile-input"
-                      value={userData.gender}
-                      onChange={(e) => setUserData({ ...userData, gender: e.target.value })}
-                    >
-                      <option value="">Seleccionar...</option>
-                      <option value="Masculino">Masculino</option>
-                      <option value="Femenino">Femenino</option>
-                      <option value="Otro">Otro</option>
-                      <option value="Prefiero no decir">Prefiero no decir</option>
-                    </select>
-                  ) : (
-                    <div className="profile-value">
-                      {userData.gender || 'No especificado'}
-                    </div>
-                  )}
+                  <select
+                    className="form-input"
+                    value={userData.gender}
+                    onChange={(e) => setUserData({ ...userData, gender: e.target.value })}
+                  >
+                    <option value="">Seleccionar...</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                    <option value="Prefiero no decir">Prefiero no decir</option>
+                  </select>
                 </div>
 
-                <div className="profile-field">
-                  <label className="profile-label">
-                    <Globe size={16} />
+                <div className="form-group">
+                  <label className="form-label">
+                    <Flag size={16} />
                     <span>Nacionalidad</span>
                   </label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      className="profile-input"
-                      value={userData.nationality}
-                      onChange={(e) => setUserData({ ...userData, nationality: e.target.value })}
-                      placeholder="Ej: Colombia"
-                    />
-                  ) : (
-                    <div className="profile-value">
-                      {userData.nationality || 'No especificado'}
-                    </div>
-                  )}
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={userData.nationality}
+                    onChange={(e) => setUserData({ ...userData, nationality: e.target.value })}
+                    placeholder="Ej: Colombia"
+                  />
                 </div>
 
-                <div className="profile-field full-width">
-                  <label className="profile-label">
+                <div className="form-group full-width">
+                  <label className="form-label">
                     <Star size={16} />
                     <span>Biografía</span>
                   </label>
-                  {isEditing ? (
-                    <textarea
-                      className="profile-textarea"
-                      value={userData.bio}
-                      onChange={(e) => setUserData({ ...userData, bio: e.target.value })}
-                      placeholder="Cuéntanos sobre ti..."
-                      rows={3}
-                    />
-                  ) : (
-                    <div className="profile-value">
-                      {userData.bio || 'Sin descripción'}
-                    </div>
-                  )}
-                </div>
-
-                <div className="profile-field">
-                  <label className="profile-label">
-                    <Calendar size={16} />
-                    <span>Miembro desde</span>
-                  </label>
-                  <div className="profile-value">{formatDate(userData.joined_date)}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Nivel y Logros */}
-          <div className="profile-achievements-card">
-            {/* Nivel */}
-            <div className="level-section">
-              <div className="level-header">
-                <Zap size={24} style={{ color: '#f59e0b' }} />
-                <div>
-                  <h3 className="level-title">Nivel {userData.level}</h3>
-                  <p className="level-subtitle">{pointsToNextLevel} pts para nivel {userData.level + 1}</p>
+                  <textarea
+                    className="form-textarea"
+                    value={userData.bio}
+                    onChange={(e) => setUserData({ ...userData, bio: e.target.value })}
+                    placeholder="Cuéntanos sobre ti..."
+                    rows={3}
+                  />
                 </div>
               </div>
               
-              <div className="level-progress-bar">
-                <div 
-                  className="level-progress-fill" 
-                  style={{ width: `${levelProgress}%` }}
-                ></div>
-              </div>
-
-              <div className="level-points-info">
-                <span>{currentPoints} pts</span>
-                <span>{nextLevelPoints} pts</span>
-              </div>
-            </div>
-
-            {/* Mini logros destacados */}
-            <div className="profile-stats-grid">
-          <div className="profile-stat-card primary">
-            <div className="stat-icon-wrapper">
-              <TrendingUp size={16} />
-            </div>
-                <div className="mini-achievement-info">
-                  <span className="mini-achievement-label">Total Puntos</span>
-                  <span className="mini-achievement-value">{currentUser?.points || 0}</span>
-                </div>
-              </div>
-
-              <div className="mini-achievement-item">
-                <div className="mini-achievement-icon">🎯</div>
-                <div className="mini-achievement-info">
-                  <span className="mini-achievement-label">Aciertos</span>
-                  <span className="mini-achievement-value">
-                    {currentUser?.correct || 0}/{currentUser?.predictions || 0}
-                  </span>
-                </div>
-              </div>
-
-              <div className="mini-achievement-item">
-                <div className="mini-achievement-icon">📊</div>
-                <div className="mini-achievement-info">
-                  <span className="mini-achievement-label">Precisión</span>
-                  <span className="mini-achievement-value">{accuracy}%</span>
-                </div>
-              </div>
-
-              <div className="mini-achievement-item">
-                <div className="mini-achievement-icon">🔥</div>
-                <div className="mini-achievement-info">
-                  <span className="mini-achievement-label">Mejor Racha</span>
-                  <span className="mini-achievement-value">{streakData.best_streak}</span>
-                </div>
+              <div className="form-actions">
+                <button 
+                  className="save-button"
+                  onClick={handleSave}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <Activity size={16} className="spinner" />
+                      <span>Guardando...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Save size={16} />
+                      <span>Guardar Cambios</span>
+                    </>
+                  )}
+                </button>
+                <button 
+                  className="cancel-button-secondary"
+                  onClick={() => {
+                    setIsEditing(false);
+                    loadUserData();
+                  }}
+                >
+                  <X size={16} />
+                  <span>Cancelar</span>
+                </button>
               </div>
             </div>
+          )}
+
+          {/* Historial de Predicciones */}
+          <div className="history-card">
+            <div className="history-header">
+              <div className="history-title-section">
+                <Activity size={24} />
+                <h3>Historial Reciente</h3>
+              </div>
+              <button className="view-all-button">
+                <span>Ver Todo</span>
+                <ArrowLeft size={16} className="rotate-180" />
+              </button>
+            </div>
+
+            {historyLoading ? (
+              <div className="history-loading">
+                <Activity size={32} className="spinner" />
+                <p>Cargando historial...</p>
+              </div>
+            ) : predictionHistory.length === 0 ? (
+              <div className="history-empty">
+                <Gamepad2 size={48} />
+                <p>Aún no has hecho predicciones</p>
+                <span>¡Comienza a predecir resultados para ver tu historial!</span>
+              </div>
+            ) : (
+              <div className="history-list">
+                {predictionHistory.map((pred) => {
+                  const result = getPredictionResult(pred);
+                  const match = pred.matches;
+
+                  return (
+                    <div key={pred.id} className={`history-item ${result.status}`}>
+                      <div className="match-info">
+                        <div className="league-badge">{match?.league}</div>
+                        <div className="teams">
+                          <div className="team home-team">
+                            <span className="team-name">{match?.home_team}</span>
+                            {match?.home_team_logo && (
+                              <span className="team-logo">{match?.home_team_logo}</span>
+                            )}
+                          </div>
+                          <div className="vs">vs</div>
+                          <div className="team away-team">
+                            {match?.away_team_logo && (
+                              <span className="team-logo">{match?.away_team_logo}</span>
+                            )}
+                            <span className="team-name">{match?.away_team}</span>
+                          </div>
+                        </div>
+                        <div className="match-time">
+                          <Clock size={14} />
+                          <span>{match?.date} • {match?.time}</span>
+                        </div>
+                      </div>
+
+                      <div className="prediction-result">
+                        <div className="scores">
+                          <div className="score-section">
+                            <div className="score-label">Tu predicción</div>
+                            <div className="score-value">
+                              {pred.home_score} - {pred.away_score}
+                            </div>
+                          </div>
+                          
+                          {match?.status === 'finished' && (
+                            <div className="score-section">
+                              <div className="score-label">Resultado</div>
+                              <div className="score-value">
+                                {match.result_home} - {match.result_away}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className={`result-status ${result.status}`}>
+                          <div className="status-icon">
+                            {result.status === 'exact' && <CheckCircle2 size={18} />}
+                            {result.status === 'correct' && <CheckCircle2 size={18} />}
+                            {result.status === 'wrong' && <XCircle size={18} />}
+                            {result.status === 'pending' && <Clock size={18} />}
+                          </div>
+                          <div className="status-info">
+                            <span className="status-label">{result.label}</span>
+                            {result.points > 0 && (
+                              <span className="status-points">+{result.points} pts</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Estadísticas completas */}
-        <div className="profile-stats-grid">
-          <div className="profile-stat-card primary">
-            <div className="stat-icon-wrapper">
-              <TrendingUp size={24} />
-            </div>
-            <div className="stat-content">
-              <div className="stat-label">Puntos Totales</div>
-              <div className="stat-value">{currentUser?.points || 0}</div>
-            </div>
-          </div>
-
-          <div className="profile-stat-card success">
-            <div className="stat-icon-wrapper">
-              <Target size={24} />
-            </div>
-            <div className="stat-content">
-              <div className="stat-label">Aciertos</div>
-              <div className="stat-value">
-                {currentUser?.correct || 0}/{currentUser?.predictions || 0}
-              </div>
-            </div>
-          </div>
-
-          <div className="profile-stat-card warning">
-            <div className="stat-icon-wrapper">
-              <Percent size={24} />
-            </div>
-            <div className="stat-content">
-              <div className="stat-label">Precisión</div>
-              <div className="stat-value">{accuracy}%</div>
-            </div>
-          </div>
-
-          <div className="profile-stat-card fire">
-            <div className="stat-icon-wrapper">
-              <Flame size={24} />
-            </div>
-            <div className="stat-content">
-              <div className="stat-label">Racha Actual</div>
-              <div className="stat-value">{streakData.current_streak}</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Rachas */}
-        <div className="streaks-section">
-          <h2 className="section-title">
-            <Flame size={22} />
-            Rachas
-          </h2>
-          <div className="streaks-grid">
-            <div className="streak-card current">
-              <div className="streak-icon">
-                <Flame size={32} />
-              </div>
-              <div className="streak-info">
-                <div className="streak-label">Racha Actual</div>
-                <div className="streak-value">{streakData.current_streak}</div>
-                <div className="streak-sublabel">predicciones seguidas</div>
-              </div>
-            </div>
-
-            <div className="streak-card best">
-              <div className="streak-icon">
-                <Medal size={32} />
-              </div>
-              <div className="streak-info">
-                <div className="streak-label">Mejor Racha</div>
-                <div className="streak-value">{streakData.best_streak}</div>
-                <div className="streak-sublabel">tu récord personal</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Logros y Títulos */}
+        {/* Componente de Logros Completos */}
         <AchievementsSection 
           userId={currentUser.id}
           userStats={{
             points: currentUser?.points || 0,
             predictions: currentUser?.predictions || 0,
             correct: currentUser?.correct || 0,
-            best_streak: streakData.best_streak
+            best_streak: streakData.best_streak,
+            accuracy: accuracy
           }}
         />
-
-        {/* Historial de Predicciones */}
-        <div className="history-section">
-          <h2 className="section-title">
-            <Activity size={22} />
-            Historial de Predicciones
-          </h2>
-
-          {historyLoading ? (
-            <div className="history-loading">
-              <Activity size={32} className="spinner" />
-              <p>Cargando historial...</p>
-            </div>
-          ) : predictionHistory.length === 0 ? (
-            <div className="history-empty">
-              <Target size={48} />
-              <p>Aún no has hecho predicciones</p>
-              <span>¡Comienza a predecir resultados para ver tu historial!</span>
-            </div>
-          ) : (
-            <div className="history-list">
-              {predictionHistory.map((pred) => {
-                const result = getPredictionResult(pred);
-                const match = pred.matches;
-
-                return (
-                  <div key={pred.id} className={`history-item ${result.status}`}>
-                    <div className="history-match-info">
-                      <div className="history-league">{match?.league}</div>
-                      <div className="history-teams">
-                        <span className="history-team">
-                          {match?.home_team_logo} {match?.home_team}
-                        </span>
-                        <span className="history-vs">vs</span>
-                        <span className="history-team">
-                          {match?.away_team} {match?.away_team_logo}
-                        </span>
-                      </div>
-                      <div className="history-date">
-                        <Clock size={14} />
-                        {match?.date} • {match?.time}
-                      </div>
-                    </div>
-
-                    <div className="history-prediction">
-                      <div className="history-label">Tu predicción</div>
-                      <div className="history-score">
-                        {pred.home_score} - {pred.away_score}
-                      </div>
-                    </div>
-
-                    {match?.status === 'finished' && (
-                      <div className="history-result-box">
-                        <div className="history-label">Resultado final</div>
-                        <div className="history-score">
-                          {match.result_home} - {match.result_away}
-                        </div>
-                      </div>
-                    )}
-
-                    <div className={`history-status ${result.status}`}>
-                      {result.status === 'exact' && <CheckCircle2 size={18} />}
-                      {result.status === 'correct' && <CheckCircle2 size={18} />}
-                      {result.status === 'wrong' && <XCircle size={18} />}
-                      {result.status === 'pending' && <Clock size={18} />}
-                      <div className="status-content">
-                        <span className="status-label">{result.label}</span>
-                        {result.points > 0 && (
-                          <span className="status-points">+{result.points} pts</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );
