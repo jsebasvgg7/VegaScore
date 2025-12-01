@@ -1954,3 +1954,88 @@ to{box-shadow: 0 0 30px rgba(124, 58, 237, 0.2);}
     right: 16px;
   }
 }
+
+/* ==========================================================
+   BADGE ALIGNMENT FIX (Funciona perfectamente en Móvil)
+   ========================================================== */
+
+.info-badge {
+  display: flex;
+  align-items: center; /* **CLAVE:** Centrado vertical estricto para toda la fila */
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: white;
+  border: 1px solid #F3F4F6;
+  transition: all 0.2s ease;
+  min-height: 56px;
+}
+
+.info-badge:hover {
+  border-color: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.badge-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #F3F4F6;
+  color: #6B7280;
+  line-height: 0; /* **CLAVE:** Elimina cualquier altura de línea residual que desplace el icono */
+}
+
+/* Colores específicos para iconos (mantener) */
+.info-badge.team .badge-icon { background: rgba(139, 92, 246, 0.1); color: var(--primary-purple); }
+.info-badge.player .badge-icon { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+.info-badge.nation .badge-icon { background: rgba(59, 130, 246, 0.1); color: var(--info); }
+.info-badge.joined .badge-icon { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+
+.badge-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* **CLAVE:** Centra el texto verticalmente dentro de su contenedor */
+  flex: 1;
+  /* Espaciado más controlado usando gap, en lugar de margin-bottom */
+  gap: 2px; 
+}
+
+.badge-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #9CA3AF;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin: 0; /* Asegurar que no haya márgenes verticales */
+  line-height: 1.2;
+}
+
+.badge-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0; /* Asegurar que no haya márgenes verticales */
+  line-height: 1.2;
+}
+
+
+/* ------------------------------------------------------------------
+   REFORZAMIENTO MÓVIL (Añade o modifica esto dentro del media query)
+   ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  /* ... (otros estilos móviles) ... */
+
+  .info-badge {
+    /* Refuerza la alineación central en móviles */
+    align-items: center; 
+    padding: 8px 10px; /* Ajuste de padding para pantallas pequeñas */
+  }
+}

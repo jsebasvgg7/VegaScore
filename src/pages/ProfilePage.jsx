@@ -523,7 +523,12 @@ export default function ProfilePage({ currentUser, onBack }) {
                     <h2 className="user-name-new">{userData.name}</h2>
                     <span className="user-email-new">{userData.email}</span>
                   </div>
-    
+                  
+                  {/* Bio corta si existe */}
+                  {userData.bio && (
+                    <p className="user-bio-new">{userData.bio}</p>
+                  )}
+                  
                   <div className="user-badges-grid">
                     {userData.favorite_team && (
                       <div className="info-badge team">
@@ -562,10 +567,6 @@ export default function ProfilePage({ currentUser, onBack }) {
                         <span className="badge-value">{formatDate(userData.joined_date)}</span>
                       </div>
                     </div>
-                    {/* Bio corta si existe */}
-                    {userData.bio && (
-                    <p className="user-bio-new">{userData.bio}</p>
-                     )}
                   </div>
                 </div>
               </div>
