@@ -117,14 +117,6 @@ export default function RankingPage({ currentUser, users, onBack }) {
   return (
     <div className="ranking-page">
       {/* Header */}
-      <Header 
-        currentUser={currentUser}
-        users={users}
-        onProfileClick={() => {
-          // Navegar a perfil si es necesario
-          window.location.href = '/app';
-        }}
-      />
       <div className="ranking-page-header">
         <h1 className="ranking-page-title">
           <Trophy size={36} />
