@@ -11,7 +11,8 @@ import RegisterPage from "./pages/RegisterPage";
 import MainLayout from "./components/MainLayout";
 import Dashboard from "./pages/Dashboard"; // La antigua VegaScorePage limpia
 import RankingPage from "./pages/Ranking";  // Nueva página de Ranking (Paso 6A)
-import AdminPanel from "./pages/AdminPanel"; // Nueva página de Administración (Paso 6B)
+import AdminPanel from "./pages/AdminPanel";
+import ProfilePage from "./pages/ProfilePage"; // Nueva página de Administración (Paso 6B)
 
 // Componente para proteger rutas
 const ProtectedRoute = ({ children }) => {
@@ -50,6 +51,9 @@ export default function App() {
             
             {/* 3. PANEL DE ADMINISTRACIÓN DEDICADO */}
             <Route path="/admin" element={<AdminPanel />} />
+
+            {/* 4. PÁGINA DE PERFIL */}
+            <Route path="/profile" element={<ProfilePage />} />
             
           </Route>
           {/* ---------------------------------------------------- */}
