@@ -684,3 +684,50 @@
 .icon-btn.profile-btn {
   /* Estilo especial si lo quieres diferente */
 }
+/* src/styles/Header.css - Agrega/Modifica estos bloques */
+
+/* ===============================
+   AJUSTES DE NAVEGACIÓN PRINCIPAL
+================================ */
+
+.main-nav {
+  display: flex;
+  gap: 10px; /* Espacio entre los botones */
+  margin-left: 25px; /* Separación del logo */
+  align-items: center; /* Centrar verticalmente */
+}
+
+/* IMPORTANTE: Sobreescribir los estilos de texto/línea 
+   que se aplicaban antes a .main-nav .nav-link,
+   ya que ahora usaremos la clase base .icon-btn.
+*/
+
+/* Reset para los enlaces */
+.main-nav .icon-btn {
+  /* Restablecer el color del icono si es necesario, pero icon-btn ya lo maneja */
+  color: #c0c0c0; 
+  padding: 8px; /* Asegura que sean cuadrados */
+  border-radius: 8px; /* Hazlos cuadrados con esquinas suaves */
+}
+
+/* Estilo para el botón activo */
+.main-nav .icon-btn.active {
+  background-color: rgba(147, 112, 219, 0.2); /* Fondo morado suave para el activo */
+  color: #9370db; /* Icono morado */
+}
+
+/* Hover general (Asegúrate que el icon-btn base ya lo tiene) */
+.icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Reset de la línea inferior antigua (si existía) */
+.main-nav .icon-btn::after {
+  content: none !important; 
+}
+
+/* Alineación de la izquierda (logo + navegación) */
+.header-left {
+  display: flex;
+  align-items: center;
+}

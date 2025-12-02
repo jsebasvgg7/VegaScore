@@ -1,14 +1,14 @@
-// src/components/Header.jsx (Actualizado)
-
 import React from "react";
-import { Link, useLocation } from "react-router-dom"; // <-- AGREGAR Link y useLocation
-import { Trophy, LogOut, User2, Award as AwardIcon, TrendingUp } from "lucide-react"; 
+import { Link, useLocation } from "react-router-dom"; 
+import { 
+    Trophy, LogOut, User2, Home, BarChart3, Crown // Home (Dashboard), BarChart3 (Ranking), Crown (Admin)
+} from "lucide-react"; 
 import { supabase } from "../utils/supabaseClient";
 import "../styles/Header.css";
 
 // Recibimos isAdmin como prop
 export default function Header({ currentUser, isAdmin }) { 
-  const location = useLocation(); // Para saber qué ruta está activa
+  const location = useLocation();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -16,7 +16,8 @@ export default function Header({ currentUser, isAdmin }) {
   };
 
   const getNavLinkClass = (path) => 
-    `nav-link ${location.pathname === path || (path === '/app' && location.pathname === '/') ? 'active' : ''}`;
+    `icon-btn ${location.pathname === path || (path === '/app' && location.pathname === '/') ? 'active' : ''}`;
+    // Usamos icon-btn como clase base
 
   return (
     <header className="app-header">
@@ -24,36 +25,41 @@ export default function Header({ currentUser, isAdmin }) {
         <div className="logo-box">
           <Trophy size={28} />
         </div>
-        <div className="title-wrap">
-          <h1 className="app-title">Vega Score</h1>
-          <div className="app-sub">
-             {/* Navegación Principal */}
-             <nav className="main-nav">
-                <Link to="/app" className={getNavLinkClass('/app')}>
-                    <span className="link-text">Dashboard</span>
+        
+        {/* Agrupamos la navegación principal a la izquierda */}
+        <nav className="main-nav">
+            {/* 1. DASHBOARD (Casa) */}
+            <Link to="/app" className={getNavLinkClass('/app')} title="Dashboard">
+                <Home size={18} />
+            </Link>
+            
+            {/* 2. RANKING (Trofeo/BarChart) */}
+            <Link to="/ranking" className={getNavLinkClass('/ranking')} title="Ranking">
+                <BarChart3 size={18} /> 
+            </Link>
+            
+            {/* 3. ADMIN (Corona) */}
+            {isAdmin && (
+                <Link to="/admin" className={getNavLinkClass('/admin')} title="Admin">
+                    <Crown size={18} />
                 </Link>
-                <Link to="/ranking" className={getNavLinkClass('/ranking')}>
-                    <span className="link-text">Ranking</span>
-                </Link>
-                {/* Botón de Admin Condicional */}
-                {isAdmin && (
-                    <Link to="/admin" className={getNavLinkClass('/admin')}>
-                        <span className="link-text">Admin</span>
-                    </Link>
-                )}
-             </nav>
-          </div>
-        </div>
+            )}
+        </nav>
+        
+        {/* El título puede ir opcionalmente aquí si hay espacio */}
+        {/* <div className="title-wrap"><h1 className="app-title">Vega Score</h1></div> */}
       </div>
 
      <div className="header-right">
+        {/* El nombre de usuario se mantiene */}
         <span className="user-name-display">{currentUser?.name}</span>
 
-        {/* Botón de perfil (Ahora navega a la ruta /profile) */}
+        {/* Botón de perfil (Ya es icon-btn) */}
         <Link to="/profile" className="icon-btn profile-btn" aria-label="Ver perfil">
           <User2 size={18} />
         </Link>
 
+        {/* Botón de Logout (Ya es icon-btn) */}
         <button className="icon-btn" onClick={handleLogout} aria-label="Cerrar sesión">
           <LogOut size={18} />
         </button>
