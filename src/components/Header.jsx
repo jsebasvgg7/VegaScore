@@ -41,6 +41,17 @@ export default function Header({ currentUser, users = [], onProfileClick }) {
           <Award size={18} />
           {position > 0 && <span className="position-badge">#{position}</span>}
         </button>
+        {/* Botón de admin si es admin */}
+        {currentUser?.is_admin && (
+        <button 
+          className="icon-btn admin-btn" 
+          onClick={() => navigate('/admin')} 
+          aria-label="Panel de administración"
+          title="Panel de Administración"
+        >
+          <Shield size={18} />
+        </button>
+        )}
 
         {/* Botón de perfil */}
         <button 

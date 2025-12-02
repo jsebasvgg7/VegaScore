@@ -326,3 +326,18 @@
     border-radius: 10px;
   }
 }
+.icon-btn.admin-btn {
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  border-color: transparent;
+  color: white;
+}
+
+.icon-btn.admin-btn:hover {
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.icon-btn.admin-btn:active {
+  transform: translateY(0) scale(0.98);
+}
