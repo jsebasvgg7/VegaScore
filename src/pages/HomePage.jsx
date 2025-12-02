@@ -1,7 +1,9 @@
+// src/pages/HomePage.jsx
+import { useEffect, useState } from "react";
+import { supabase } from "../utils/supabaseClient";
 import useMatches from "../hooks/useMatches";
 import useLeagues from "../hooks/useLeagues";
 import useAwards from "../hooks/useAwards";
-import useAchievements from "../hooks/useAchievements";
 
 import MatchCard from "../components/MatchCard";
 import LeagueCard from "../components/LeagueCard";
@@ -11,10 +13,42 @@ import AchievementsSection from "../components/AchievementsSection";
 import "../styles/HomePage.css";
 
 export default function HomePage() {
-  const { matches, loadingMatches } = useMatches();
-  const { leagues, loadingLeagues } = useLeagues();
-  const { awards, loadingAwards } = useAwards();
-  const { achievements } = useAchievements();
+  const { matches, loading: loadingMatches } = useMatches();
+  const { leagues, loading: loadingLeagues } = useLeagues();
+  const { awards, loading: loadingAwards } = useAwards();
+  
+  const [currentUser, setCurrentUser] = useState(null);
+  const [userStats, setUserStats] = useState(null);
+
+  useEffect(() => {
+    loadCurrentUser();
+  }, []);
+
+  const loadCurrentUser = async () => {
+    try {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      
+      if (!authUser) return;
+
+      const { data: userData } = await supabase
+        .from('users')
+        .select('*')
+        .eq('auth_id', authUser.id)
+        .single();
+
+      if (userData) {
+        setCurrentUser(userData);
+        setUserStats({
+          points: userData.points || 0,
+          predictions: userData.predictions || 0,
+          correct: userData.correct || 0,
+          best_streak: userData.best_streak || 0
+        });
+      }
+    } catch (error) {
+      console.error('Error loading user:', error);
+    }
+  };
 
   return (
     <div className="home-wrapper">
@@ -22,7 +56,10 @@ export default function HomePage() {
       {/* ==================== STATS / ACHIEVEMENTS ==================== */}
       <section className="home-section">
         <h2 className="home-title">Estadísticas</h2>
-        <AchievementsSection achievements={achievements} />
+        <AchievementsSection 
+          userId={currentUser?.id} 
+          userStats={userStats}
+        />
       </section>
 
       {/* ==================== PARTIDOS ==================== */}

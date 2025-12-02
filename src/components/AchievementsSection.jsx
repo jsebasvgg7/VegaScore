@@ -1,3 +1,4 @@
+// src/components/AchievementsSection.jsx
 import React, { useState, useEffect } from 'react';
 import { Trophy, Award, Lock, Star, TrendingUp } from 'lucide-react';
 import { supabase } from '../utils/supabaseClient';
@@ -8,10 +9,17 @@ export default function AchievementsSection({ userId, userStats }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadAchievementsAndTitles();
+    if (userId) {
+      loadAchievementsAndTitles();
+    }
   }, [userId, userStats]);
 
   const loadAchievementsAndTitles = async () => {
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
     try {
       // Cargar logros disponibles
       const { data: availableAchievements } = await supabase
@@ -34,11 +42,19 @@ export default function AchievementsSection({ userId, userStats }) {
       const unlockedAchievements = userData?.achievements || [];
       const unlockedTitles = userData?.titles || [];
 
+      // Crear stats con valores por defecto
+      const stats = {
+        points: userStats?.points || 0,
+        predictions: userStats?.predictions || 0,
+        correct: userStats?.correct || 0,
+        best_streak: userStats?.best_streak || 0
+      };
+
       // Verificar y desbloquear nuevos logros
       const newUnlocks = [];
-      availableAchievements?.forEach(achievement => {
+      (availableAchievements || []).forEach(achievement => {
         const isUnlocked = unlockedAchievements.includes(achievement.id);
-        const meetsRequirement = checkRequirement(achievement, userStats);
+        const meetsRequirement = checkRequirement(achievement, stats);
         
         if (!isUnlocked && meetsRequirement) {
           newUnlocks.push(achievement.id);
@@ -55,21 +71,23 @@ export default function AchievementsSection({ userId, userStats }) {
       }
 
       // Marcar logros como desbloqueados o bloqueados
-      const processedAchievements = availableAchievements?.map(achievement => ({
+      const processedAchievements = (availableAchievements || []).map(achievement => ({
         ...achievement,
         unlocked: unlockedAchievements.includes(achievement.id) || newUnlocks.includes(achievement.id),
-        progress: calculateProgress(achievement, userStats)
-      })) || [];
+        progress: calculateProgress(achievement, stats)
+      }));
 
-      const processedTitles = availableTitles?.map(title => ({
+      const processedTitles = (availableTitles || []).map(title => ({
         ...title,
         unlocked: unlockedTitles.includes(title.id)
-      })) || [];
+      }));
 
       setAchievements(processedAchievements);
       setTitles(processedTitles);
     } catch (error) {
       console.error('Error loading achievements:', error);
+      setAchievements([]);
+      setTitles([]);
     } finally {
       setLoading(false);
     }
@@ -80,13 +98,13 @@ export default function AchievementsSection({ userId, userStats }) {
     
     switch (requirement_type) {
       case 'points':
-        return stats.points >= requirement_value;
+        return (stats.points || 0) >= requirement_value;
       case 'predictions':
-        return stats.predictions >= requirement_value;
+        return (stats.predictions || 0) >= requirement_value;
       case 'correct':
-        return stats.correct >= requirement_value;
+        return (stats.correct || 0) >= requirement_value;
       case 'streak':
-        return stats.best_streak >= requirement_value;
+        return (stats.best_streak || 0) >= requirement_value;
       default:
         return false;
     }
@@ -98,16 +116,16 @@ export default function AchievementsSection({ userId, userStats }) {
 
     switch (requirement_type) {
       case 'points':
-        current = stats.points;
+        current = stats.points || 0;
         break;
       case 'predictions':
-        current = stats.predictions;
+        current = stats.predictions || 0;
         break;
       case 'correct':
-        current = stats.correct;
+        current = stats.correct || 0;
         break;
       case 'streak':
-        current = stats.best_streak;
+        current = stats.best_streak || 0;
         break;
     }
 
@@ -119,6 +137,14 @@ export default function AchievementsSection({ userId, userStats }) {
       <div className="achievements-loading">
         <div className="spinner"></div>
         <p>Cargando logros...</p>
+      </div>
+    );
+  }
+
+  if (!userId) {
+    return (
+      <div className="achievements-loading">
+        <p>Inicia sesión para ver tus logros</p>
       </div>
     );
   }
@@ -422,38 +448,42 @@ export default function AchievementsSection({ userId, userStats }) {
           </span>
         </div>
 
-        <div className="achievements-grid">
-          {achievements.map(achievement => (
-            <div 
-              key={achievement.id} 
-              className={`achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'}`}
-            >
-              <div className="achievement-icon">
-                {achievement.icon}
-                {!achievement.unlocked && (
-                  <div className="lock-overlay">
-                    <Lock size={16} />
+        {achievements.length === 0 ? (
+          <p style={{ textAlign: 'center', color: '#999' }}>No hay logros disponibles</p>
+        ) : (
+          <div className="achievements-grid">
+            {achievements.map(achievement => (
+              <div 
+                key={achievement.id} 
+                className={`achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'}`}
+              >
+                <div className="achievement-icon">
+                  {achievement.icon}
+                  {!achievement.unlocked && (
+                    <div className="lock-overlay">
+                      <Lock size={16} />
+                    </div>
+                  )}
+                </div>
+                
+                <div className="achievement-info">
+                  <div className="achievement-category">{achievement.category}</div>
+                  <div className="achievement-name">{achievement.name}</div>
+                  <div className="achievement-description">{achievement.description}</div>
+                </div>
+
+                {!achievement.unlocked && achievement.progress < 100 && (
+                  <div className="achievement-progress">
+                    <div 
+                      className="achievement-progress-bar" 
+                      style={{ width: `${achievement.progress}%` }}
+                    ></div>
                   </div>
                 )}
               </div>
-              
-              <div className="achievement-info">
-                <div className="achievement-category">{achievement.category}</div>
-                <div className="achievement-name">{achievement.name}</div>
-                <div className="achievement-description">{achievement.description}</div>
-              </div>
-
-              {!achievement.unlocked && achievement.progress < 100 && (
-                <div className="achievement-progress">
-                  <div 
-                    className="achievement-progress-bar" 
-                    style={{ width: `${achievement.progress}%` }}
-                  ></div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Sección de Títulos */}
@@ -466,26 +496,30 @@ export default function AchievementsSection({ userId, userStats }) {
           </span>
         </div>
 
-        <div className="titles-grid">
-          {titles.map(title => (
-            <div 
-              key={title.id} 
-              className={`title-card ${title.unlocked ? 'unlocked' : 'locked'}`}
-            >
-              <div className="title-icon-wrapper">
-                {title.unlocked ? <Star size={24} /> : <Lock size={24} />}
-              </div>
-              
-              <div className="title-info">
-                <div className="title-name">{title.name}</div>
-                <div className="title-description">{title.description}</div>
-                <div className="title-badge">
-                  {title.unlocked ? 'Desbloqueado' : 'Bloqueado'}
+        {titles.length === 0 ? (
+          <p style={{ textAlign: 'center', color: '#999' }}>No hay títulos disponibles</p>
+        ) : (
+          <div className="titles-grid">
+            {titles.map(title => (
+              <div 
+                key={title.id} 
+                className={`title-card ${title.unlocked ? 'unlocked' : 'locked'}`}
+              >
+                <div className="title-icon-wrapper">
+                  {title.unlocked ? <Star size={24} /> : <Lock size={24} />}
+                </div>
+                
+                <div className="title-info">
+                  <div className="title-name">{title.name}</div>
+                  <div className="title-description">{title.description}</div>
+                  <div className="title-badge">
+                    {title.unlocked ? 'Desbloqueado' : 'Bloqueado'}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
