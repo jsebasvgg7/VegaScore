@@ -8,37 +8,8 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(null); // Datos de tu tabla 'users' (puntos, admin)
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // 1. Obtener sesión actual
-    const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        await fetchProfile(session.user.id);
-      } else {
-        setLoading(false);
-      }
-    };
-
-    getSession();
-
-    // 2. Escuchar cambios (Login/Logout)
-    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        await fetchProfile(session.user.id);
-      } else {
-        setProfile(null);
-        setLoading(false);
-      }
-    });
-
-    return () => listener.subscription.unsubscribe();
-  }, []);
-
   // Función auxiliar para traer el perfil extendido
-  const fetchProfile = async (userId, userEmail) => {
+  const fetchProfile = async (userId, userEmail) => { // <-- userEmail necesario aquí
     try {
       // 1. Intentar cargar el perfil
       let { data: profile, error: profileError } = await supabase
@@ -57,10 +28,11 @@ export function AuthProvider({ children }) {
           .insert({
             auth_id: userId,
             name: userEmail?.split('@')[0] || "Usuario",
-            email: userEmail,
+            email: userEmail, // <-- ¡Se usa userEmail aquí!
             points: 0,
             predictions: 0,
             correct: 0
+            // Asegúrate de incluir 'is_admin: false' si es un campo NOT NULL
           })
           .select()
           .single();
@@ -78,6 +50,41 @@ export function AuthProvider({ children }) {
       setLoading(false);
     }
   };
+
+
+  useEffect(() => {
+    // 1. Obtener sesión actual
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      const authUser = session?.user ?? null;
+      setUser(authUser);
+      
+      if (authUser) {
+        // CORRECCIÓN 1: Pasar user.email
+        await fetchProfile(authUser.id, authUser.email); 
+      } else {
+        setLoading(false);
+      }
+    };
+
+    getSession();
+
+    // 2. Escuchar cambios (Login/Logout)
+    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const authUser = session?.user ?? null;
+      setUser(authUser);
+      
+      if (authUser) {
+        // CORRECCIÓN 2: Pasar user.email
+        await fetchProfile(authUser.id, authUser.email); 
+      } else {
+        setProfile(null);
+        setLoading(false);
+      }
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []); // Dependencias: []
 
   return (
     <AuthContext.Provider value={{ user, profile, loading, isAdmin: profile?.is_admin }}>

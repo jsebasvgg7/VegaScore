@@ -570,3 +570,117 @@
 .icon-btn.profile-btn {
   animation: profile-btn-appear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
 }
+/* ===============================
+   ESTILOS EXISTENTES DEL HEADER
+================================ */
+
+.app-header {
+  /* ... (Tus estilos de app-header) ... */
+  background: linear-gradient(135deg, #1e202c 0%, #31323e 100%);
+  color: white;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(96, 81, 155, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  /* overflow: hidden; */ /* Descomentar si es necesario */
+}
+
+/* ... (Tus estilos para header-left, logo-box, title-wrap, etc.) ... */
+
+/* Estilo para el nombre de usuario */
+.header-right .user-name-display {
+  font-weight: 600;
+  color: #c0c0c0; /* Un color más sutil */
+  margin-right: 15px;
+  white-space: nowrap;
+}
+
+/* ===============================
+   NUEVOS ESTILOS DE NAVEGACIÓN
+================================ */
+
+.app-sub {
+  /* Asegura que la navegación se muestre correctamente */
+  margin-top: 5px; /* Pequeño espacio debajo del título si lo necesitas */
+}
+
+.main-nav {
+  display: flex;
+  gap: 20px; /* Espacio entre los enlaces */
+  margin-left: 20px; /* Separación si está al lado del título */
+}
+
+.main-nav .nav-link {
+  color: #c0c0c0; /* Color base del texto */
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 5px 0;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Hover effect */
+.main-nav .nav-link:hover {
+  color: #fff; /* Texto blanco en hover */
+}
+
+/* Indicador de ruta activa */
+.main-nav .nav-link.active {
+  color: #9370db; /* Color principal de la marca (Morado) */
+  font-weight: 600;
+}
+
+/* Línea o indicador de ruta activa (Diseño moderno) */
+.main-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #9370db; /* Color de resaltado */
+  transition: width 0.3s ease;
+}
+
+/* Mostrar la línea solo en el enlace activo */
+.main-nav .nav-link.active::after {
+  width: 100%;
+}
+
+
+/* ===============================
+   ADAPTACIONES DE ICON-BUTTONS
+================================ */
+
+/* Asegúrate de que los botones de la derecha estén bien alineados */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo del botón de perfil (profile-btn) y logout */
+.icon-btn {
+  background: none;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px; /* Espacio entre botones */
+}
+
+.icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.icon-btn.profile-btn {
+  /* Estilo especial si lo quieres diferente */
+}
