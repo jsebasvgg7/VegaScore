@@ -60,38 +60,9 @@ export default function Dashboard() {
     makeAwardPrediction(awardId, predictedWinner, setAwards);
   };
 
-  // --- RENDERIZADO DEL DASHBOARD DE USUARIO ---
+
   return (
     <>
-      <section className="stats-row">
-        {dataLoading ? (
-          <StatCardSkeleton count={4} />
-        ) : (
-          <>
-            <div className="stat-card">
-              <Trophy size={24} className="icon-main" />
-              <h3>{currentUser.points}</h3>
-              <p>Puntos Acumulados</p>
-            </div>
-            <div className="stat-card">
-              <Percent size={24} className="icon-main" />
-              <h3>{currentUser.predictions > 0 ? ((currentUser.correct / currentUser.predictions) * 100).toFixed(1) : 0}%</h3>
-              <p>Efectividad</p>
-            </div>
-            {/* ... otros stat-cards que tenías ... */}
-            
-            {/* BOTÓN DE PERFIL: Ahora usa navigate para ir a /profile */}
-            <div className="stat-card" onClick={() => navigate('/profile')}> 
-              <div className="avatar-placeholder">
-                <p>{currentUser.name?.charAt(0) || 'U'}</p>
-              </div>
-              <h3>{currentUser.name}</h3>
-              <p>Ver Perfil</p>
-            </div>
-          </>
-        )}
-      </section>
-
       <section className="main-grid">
         <div className="left-col">
           <NavigationTabs activeTab={activeTab} onTabChange={setActiveTab} />
@@ -158,11 +129,6 @@ export default function Dashboard() {
               )}
             </div>
           )}
-        </div>
-
-        {/* Columna derecha vacía o con información ligera */}
-        <div className="right-col">
-           <p className="sidebar-note">Usa la barra de navegación superior para ver el Ranking y el Panel Admin.</p>
         </div>
       </section>
       
