@@ -1,23 +1,13 @@
 /* ============================================
-   VEGA SCORE PAGE - Purple Theme
+   VEGA SCORE PAGE - Purple Theme (Full Width)
 ============================================ */
-.main-grid{display:grid; grid-template-columns: 2fr 1fr; gap:24px; margin-top:24px}
-.right-col{display:grid; grid-template-columns: 1fr 1fr; gap:18px;}
-.right-col.single-column {grid-template-columns: 1fr;}
 
 .vega-root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-.right-col {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-.navigation-tabs-two {
-  padding: 8px; /* ⬅️ Cambiar de 7px a 8px */
-}
+
 /* Stats Section */
 .stats-row {
   display: grid;
@@ -60,12 +50,13 @@
   color: #60519b;
 }
 
-.section-title {
-  font-size: 20px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* Main Content - Full Width */
+.main-content-full {
+  margin-top: 24px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 /* Matches Section */
@@ -192,14 +183,7 @@
   color: #999;
 }
 
-.card-empty {
-  padding: 18px;
-  border-radius: 12px;
-  background: #fff;
-  color: #666;
-}
-
-/* Responsive Global */
+/* Responsive */
 @media (max-width: 1024px) {
   .container {
     max-width: 100%;
@@ -207,19 +191,14 @@
     margin: 20px auto;
   }
 
-  .main-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .right-col {
-    order: -1;
-  }
-
   .stats-row {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     margin-top: 12px;
+  }
+
+  .main-content-full {
+    padding: 0 16px;
   }
 }
 
@@ -253,8 +232,9 @@
     margin: 16px auto;
   }
 
-  .main-grid {
-    gap: 16px;
+  .main-content-full {
+    margin-top: 16px;
+    padding: 0 12px;
   }
 
   .matches-header-premium {
@@ -328,8 +308,8 @@
     margin: 12px auto;
   }
 
-  .main-grid {
-    gap: 12px;
+  .main-content-full {
+    padding: 0 10px;
   }
 
   .matches-section-premium {
@@ -356,34 +336,5 @@
   .matches-container {
     padding: 14px;
     gap: 12px;
-  }
-}
-
-@media (max-height: 600px) and (orientation: landscape) {
-  .stats-row {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-top: 10px;
-  }
-
-  .stat-card {
-    padding: 12px 8px;
-  }
-
-  .stat-value {
-    font-size: 16px;
-  }
-}
-/* Main grid */
-
-@media (max-width: 1024px) {
-  .main-grid {
-    grid-template-columns: 1fr;
-  }
-  .right-col {
-    order: -1;
-  }
-  .right-col.single-column {
-    grid-template-columns: 1fr;
   }
 }
