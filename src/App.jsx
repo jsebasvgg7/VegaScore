@@ -18,34 +18,53 @@ function AppRoutes() {
 
   useEffect(() => {
     // Obtener sesión inicial
-    supabase.auth.getSession().then(async ({ data }) => {
-      setSession(data?.session || null);
-      
-      // Si hay sesión, cargar datos del usuario
-      if (data?.session) {
-        const { data: userData } = await supabase
-          .from("users")
-          .select("*")
-          .eq("auth_id", data.session.user.id)
-          .single();
+    const initSession = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
         
-        setCurrentUser(userData);
-      }
-      
-      setLoading(false);
-    });
+        if (error) {
+          console.error("Error al obtener sesión:", error);
+          setLoading(false);
+          return;
+        }
 
-    // Escuchar cambios de sesión
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
         setSession(session);
         
-        if (session) {
+        // Si hay sesión, cargar datos del usuario
+        if (session?.user) {
+          const { data: userData, error: userError } = await supabase
+            .from("users")
+            .select("*")
+            .eq("auth_id", session.user.id)
+            .maybeSingle();
+          
+          if (userError) {
+            console.error("Error al cargar usuario:", userError);
+          } else if (userData) {
+            setCurrentUser(userData);
+          }
+        }
+      } catch (err) {
+        console.error("Error en initSession:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initSession();
+
+    // Escuchar cambios de sesión
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (_event, session) => {
+        console.log("Auth state changed:", _event, session?.user?.id);
+        setSession(session);
+        
+        if (session?.user) {
           const { data: userData } = await supabase
             .from("users")
             .select("*")
             .eq("auth_id", session.user.id)
-            .single();
+            .maybeSingle();
           
           setCurrentUser(userData);
         } else {
@@ -56,7 +75,7 @@ function AppRoutes() {
 
     // Limpiar el listener al desmontar
     return () => {
-      listener.subscription.unsubscribe();
+      subscription.unsubscribe();
     };
   }, []);
 
@@ -75,19 +94,25 @@ function AppRoutes() {
       {/* Si está logueado → redirigir a /app */}
       <Route
         path="/"
-        element={session ? <Navigate to="/app" /> : <LoginPage />}
+        element={session ? <Navigate to="/app" replace /> : <LoginPage />}
       />
 
       {/* Si está logueado → no mostrar registro */}
       <Route
         path="/register"
-        element={session ? <Navigate to="/app" /> : <RegisterPage />}
+        element={session ? <Navigate to="/app" replace /> : <RegisterPage />}
       />
 
       {/* Página principal protegida */}
       <Route
         path="/app"
-        element={session ? <VegaScorePage /> : <Navigate to="/" />}
+        element={
+          session ? (
+            <VegaScorePage />
+          ) : (
+            <Navigate to="/" replace />
+          )
+        }
       />
 
       {/* Página de Ranking */}
@@ -100,7 +125,7 @@ function AppRoutes() {
               onBack={() => navigate('/app')} 
             />
           ) : (
-            <Navigate to="/" />
+            <Navigate to="/" replace />
           )
         }
       />
@@ -109,16 +134,23 @@ function AppRoutes() {
       <Route
         path="/admin"
         element={
-          session && currentUser?.is_admin ? (
-            <AdminPage 
-              currentUser={currentUser} 
-              onBack={() => navigate('/app')} 
-            />
+          session ? (
+            currentUser?.is_admin ? (
+              <AdminPage 
+                currentUser={currentUser} 
+                onBack={() => navigate('/app')} 
+              />
+            ) : (
+              <Navigate to="/app" replace />
+            )
           ) : (
-            <Navigate to="/" />
+            <Navigate to="/" replace />
           )
         }
       />
+
+      {/* Ruta catch-all para URLs no encontradas */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
