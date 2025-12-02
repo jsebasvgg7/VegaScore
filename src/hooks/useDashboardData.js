@@ -1,3 +1,5 @@
+// src/hooks/useDashboardData.js (Versión Final y Funcional)
+
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { useAuth } from "../context/AuthContext";
@@ -12,18 +14,17 @@ export function useDashboardData() {
 
   const [loading, setLoading] = useState(true);
 
-  // Mapea la predicción del usuario logueado en la propiedad 'prediction' del objeto principal
+  // Función de mapeo para inyectar la predicción del usuario
   const mapPredictions = (data, predictionKey, userId) => {
     return data.map(item => {
-      // item[predictionKey] contiene el array de predicciones de ese partido/liga/premio
-      const userPrediction = item[predictionKey].find(
-        (pred) => pred.user_id === userId // Asumimos 'user_id' es la columna de vínculo
+      const userPrediction = item[predictionKey]?.find(
+        // NOTA: Usamos optional chaining (?) por si el array es nulo
+        (pred) => pred.user_id === userId 
       );
 
       return {
         ...item,
         prediction: userPrediction || null,
-        // Eliminamos el array completo de predicciones para evitar datos redundantes
         [predictionKey]: undefined, 
       };
     });
@@ -40,30 +41,29 @@ export function useDashboardData() {
 
     try {
       
-      // ---- A. PARTIDOS ----
-      // Eliminamos el !left para que Supabase infiera la relación directamente por el nombre de la tabla.
+      // ---- A. PARTIDOS (Tabla: predictions) ----
       const { data: matchesData, error: matchesError } = await supabase
         .from('matches')
         .select(`
           *,
-          match_predictions( 
+          predictions!predictions_match_id_fkey( 
             id, user_id, home_score_pred, away_score_pred, status, points
           )
         `)
         .order('date', { ascending: true });
 
       if (matchesError) throw matchesError;
-      const processedMatches = mapPredictions(matchesData, 'match_predictions', userId);
+      const processedMatches = mapPredictions(matchesData, 'predictions', userId); 
       setMatches(processedMatches);
 
 
-      // ---- B. LIGAS ----
+      // ---- B. LIGAS (Tabla: league_predictions) ----
       const { data: leaguesData, error: leaguesError } = await supabase
         .from('leagues')
         .select(`
           *,
-          league_predictions( 
-            id, user_id, champion_pred, topscorer_pred, topassist_pred, mvp_pred, status, points
+          league_predictions!league_predictions_league_id_fkey( 
+            id, user_id, predicted_champion, predicted_top_scorer, predicted_top_assist, predicted_mvp, points_earned
           )
         `)
         .order('name', { ascending: true });
@@ -73,12 +73,12 @@ export function useDashboardData() {
       setLeagues(processedLeagues);
 
 
-      // ---- C. PREMIOS ----
+      // ---- C. PREMIOS (Tabla: award_predictions) ----
       const { data: awardsData, error: awardsError } = await supabase
         .from('awards')
         .select(`
           *,
-          award_predictions( 
+          award_predictions!award_predictions_award_id_fkey( 
             id, user_id, winner_pred, status, points
           )
         `)
@@ -100,15 +100,16 @@ export function useDashboardData() {
 
 
     } catch (error) {
-      // Aquí verás el error de la DB
       console.error("Error al cargar los datos del Dashboard y Predicciones:", error);
+      // Mantener throw error para ver claramente cualquier otro fallo.
+      throw error; 
     } finally {
       setLoading(false);
     }
   }, []); 
 
   
-  // EFECTO PRINCIPAL
+  // EFECTO PRINCIPAL y retorno
   useEffect(() => {
     if (currentUser?.id) { 
       fetchAllData(currentUser.id);
