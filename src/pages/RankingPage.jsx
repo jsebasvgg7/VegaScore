@@ -108,10 +108,6 @@ export default function RankingPage({ currentUser, onBack }) {
     <div className="ranking-page">
       {/* Header */}
       <div className="ranking-page-header">
-        <button className="back-button" onClick={onBack}>
-          <ArrowLeft size={20} />
-          Volver
-        </button>
         <h1 className="ranking-page-title">
           <Trophy size={32} />
           Ranking Global
@@ -205,7 +201,143 @@ export default function RankingPage({ currentUser, onBack }) {
           </div>
         )}
 
+        {/* PODIO TOP 3 */}
+        {users.length >= 3 && (
+          <div className="podium-container">
+            <div className="podium-title-section">
+              <Award size={28} className="podium-title-icon" />
+              <h2 className="podium-title">Top 3 - Hall of Fame</h2>
+            </div>
+            
+            <div className="podium-wrapper">
+              {/* 2do Lugar */}
+              <div className="podium-place second">
+                <div className="podium-rank-badge silver-badge">
+                  <Medal size={32} />
+                  <span className="rank-text">2°</span>
+                </div>
+                <div className="podium-card">
+                  <div className="podium-avatar-container silver-glow">
+                    <div className="podium-avatar">
+                      {users[1].avatar_url ? (
+                        <img src={users[1].avatar_url} alt={users[1].name} />
+                      ) : (
+                        <span>{users[1].name.charAt(0).toUpperCase()}</span>
+                      )}
+                    </div>
+                    <div className="avatar-ring silver-ring"></div>
+                  </div>
+                  <div className="podium-user-name">{users[1].name}</div>
+                  <div className="podium-stats-container">
+                    <div className="podium-stat-item">
+                      <Zap size={16} className="stat-icon-gold" />
+                      <span className="podium-stat-value">{users[1].points}</span>
+                      <span className="podium-stat-label">pts</span>
+                    </div>
+                    <div className="podium-divider"></div>
+                    <div className="podium-stat-item">
+                      <Target size={16} className="stat-icon-green" />
+                      <span className="podium-stat-value">
+                        {users[1].predictions > 0 
+                          ? Math.round((users[1].correct / users[1].predictions) * 100) 
+                          : 0}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 1er Lugar */}
+              <div className="podium-place first">
+                <div className="podium-rank-badge gold-badge">
+                  <Crown size={40} />
+                  <span className="rank-text champion">1°</span>
+                </div>
+                <div className="podium-card champion-card">
+                  <div className="podium-avatar-container gold-glow">
+                    <div className="podium-avatar champion-avatar">
+                      {users[0].avatar_url ? (
+                        <img src={users[0].avatar_url} alt={users[0].name} />
+                      ) : (
+                        <span>{users[0].name.charAt(0).toUpperCase()}</span>
+                      )}
+                    </div>
+                    <div className="avatar-ring gold-ring"></div>
+                    <div className="champion-sparkles">
+                      <Star className="sparkle sparkle-1" size={16} />
+                      <Star className="sparkle sparkle-2" size={12} />
+                      <Star className="sparkle sparkle-3" size={14} />
+                    </div>
+                  </div>
+                  <div className="podium-user-name champion-name">{users[0].name}</div>
+                  <div className="champion-badge-label">CAMPEÓN</div>
+                  <div className="podium-stats-container">
+                    <div className="podium-stat-item">
+                      <Zap size={18} className="stat-icon-gold" />
+                      <span className="podium-stat-value champion-value">{users[0].points}</span>
+                      <span className="podium-stat-label">pts</span>
+                    </div>
+                    <div className="podium-divider"></div>
+                    <div className="podium-stat-item">
+                      <Target size={18} className="stat-icon-green" />
+                      <span className="podium-stat-value champion-value">
+                        {users[0].predictions > 0 
+                          ? Math.round((users[0].correct / users[0].predictions) * 100) 
+                          : 0}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3er Lugar */}
+              <div className="podium-place third">
+                <div className="podium-rank-badge bronze-badge">
+                  <Medal size={32} />
+                  <span className="rank-text">3°</span>
+                </div>
+                <div className="podium-card">
+                  <div className="podium-avatar-container bronze-glow">
+                    <div className="podium-avatar">
+                      {users[2].avatar_url ? (
+                        <img src={users[2].avatar_url} alt={users[2].name} />
+                      ) : (
+                        <span>{users[2].name.charAt(0).toUpperCase()}</span>
+                      )}
+                    </div>
+                    <div className="avatar-ring bronze-ring"></div>
+                  </div>
+                  <div className="podium-user-name">{users[2].name}</div>
+                  <div className="podium-stats-container">
+                    <div className="podium-stat-item">
+                      <Zap size={16} className="stat-icon-gold" />
+                      <span className="podium-stat-value">{users[2].points}</span>
+                      <span className="podium-stat-label">pts</span>
+                    </div>
+                    <div className="podium-divider"></div>
+                    <div className="podium-stat-item">
+                      <Target size={16} className="stat-icon-green" />
+                      <span className="podium-stat-value">
+                        {users[2].predictions > 0 
+                          ? Math.round((users[2].correct / users[2].predictions) * 100) 
+                          : 0}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Filters and Search */}
+        <div className="ranking-controls">
+          <div className="table-title-section">
+            <BarChart3 size={24} />
+            <h2 className="table-title">Tabla de Posiciones</h2>
+          </div>
+        </div>
+
         <div className="ranking-controls">
           <div className="search-bar">
             <Search size={18} />
