@@ -40,7 +40,7 @@ export default function MatchCard({ match, userPred, onPredict }) {
         </div>
       </div>
 
-      {/* Equipos en Layout Horizontal */}
+      {/* Equipos con Marcador Integrado */}
       <div className="match-teams-container">
         {/* Equipo Local */}
         <div className="team-box team-home">
@@ -52,35 +52,35 @@ export default function MatchCard({ match, userPred, onPredict }) {
               <span className="team-label">Local</span>
             </div>
           </div>
-        </div>
-
-        {/* Marcador Central */}
-        <div className="score-center">
           <input
             type="number"
             min="0"
             max="20"
-            className="score-input"
+            className="score-input-inline"
             value={homeScore}
             onChange={(e) => setHomeScore(e.target.value)}
             placeholder="?"
             disabled={isDisabled}
           />
-          <span className="vs-text">:</span>
+        </div>
+
+        {/* VS Divisor */}
+        <div className="vs-divider">
+          <span className="vs-text">VS</span>
+        </div>
+
+        {/* Equipo Visitante */}
+        <div className="team-box team-away">
           <input
             type="number"
             min="0"
             max="20"
-            className="score-input"
+            className="score-input-inline"
             value={awayScore}
             onChange={(e) => setAwayScore(e.target.value)}
             placeholder="?"
             disabled={isDisabled}
           />
-        </div>
-
-        {/* Equipo Visitante */}
-        <div className="team-box team-away">
           <div className="team-content">
             <div className="team-details">
               <span className="team-name">{match.away_team}</span>
