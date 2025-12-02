@@ -16,6 +16,7 @@ import AdminAwardModal from "../components/AdminAwardModal";
 import FinishLeagueModal from "../components/FinishLeagueModal";
 import FinishAwardModal from "../components/FinishAwardModal";
 import ProfilePage from "./ProfilePage";
+import RankingPage from "./RankingPage";
 import { PageLoader, LoadingOverlay } from "../components/LoadingStates";
 import { ToastContainer, useToast } from "../components/Toast";
 
@@ -32,6 +33,7 @@ import "../styles/AdminPanel.css";
 export default function VegaScorePage() {
   // ========== STATE MANAGEMENT ==========
   const [showProfile, setShowProfile] = useState(false);
+  const [showRanking, setShowRanking] = useState(false);
   const [activeTab, setActiveTab] = useState('matches');
   const [rightTab, setRightTab] = useState('ranking');
 
@@ -278,6 +280,19 @@ export default function VegaScorePage() {
     );
   }
 
+  // Mostrar ranking
+  if (showRanking) {
+    return (
+      <>
+        <RankingPage 
+          currentUser={currentUser} 
+          onBack={() => setShowRanking(false)}
+        />
+        <ToastContainer toasts={toast.toasts} removeToast={toast.removeToast} />
+      </>
+    );
+  }
+
   const sortedUsers = [...users].sort((a, b) => b.points - a.points);
   const pendingMatches = matches.filter((m) => m.status === "pending");
   const activeLeagues = leagues.filter((l) => l.status === "active");
@@ -291,6 +306,7 @@ export default function VegaScorePage() {
           currentUser={currentUser}
           users={sortedUsers}
           onProfileClick={() => setShowProfile(true)}
+          onRankingClick={() => setShowRanking(true)}
         />
 
         <main className="container">

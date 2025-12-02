@@ -447,6 +447,167 @@
   transition: opacity 0.3s;
   animation: profile-gradient 3s ease infinite;
 }
+/* ===============================================
+   HEADER - Ranking Button Styles (Agregar a Header.css)
+=============================================== */
+
+/* Botón de ranking con badge de posición */
+.icon-btn.ranking-btn {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  border-color: transparent;
+  color: white;
+  position: relative;
+  overflow: visible;
+}
+
+.icon-btn.ranking-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #F59E0B, #D97706, #F59E0B);
+  background-size: 200% 200%;
+  border-radius: 14px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+  animation: ranking-gradient 3s ease infinite;
+}
+
+@keyframes ranking-gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.icon-btn.ranking-btn:hover::before {
+  opacity: 1;
+}
+
+.icon-btn.ranking-btn:hover {
+  background: linear-gradient(135deg, #DC8E08 0%, #B45309 100%);
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.icon-btn.ranking-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Badge de posición en el botón */
+.position-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #EF4444, #DC2626);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
+  border: 2px solid white;
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% { 
+    transform: scale(1); 
+  }
+  50% { 
+    transform: scale(1.1); 
+  }
+}
+
+/* Efecto de brillo al pasar el mouse */
+.icon-btn.ranking-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.icon-btn.ranking-btn:hover::after {
+  transform: translateX(100%);
+}
+
+/* Tooltip para el botón de ranking */
+.icon-btn.ranking-btn[title]::before {
+  content: attr(title);
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: #1e202c;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  z-index: 1000;
+}
+
+.icon-btn.ranking-btn:hover[title]::before {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Responsive para botón de ranking */
+@media (max-width: 768px) {
+  .icon-btn.ranking-btn {
+    padding: 10px 11px;
+  }
+
+  .position-badge {
+    font-size: 9px;
+    padding: 2px 5px;
+    top: -6px;
+    right: -6px;
+  }
+
+  /* Ocultar tooltip en móvil */
+  .icon-btn.ranking-btn[title]::before {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .icon-btn.ranking-btn {
+    padding: 9px 10px;
+  }
+
+  .position-badge {
+    font-size: 8px;
+    padding: 1px 4px;
+  }
+}
+
+/* Animación de entrada del botón */
+@keyframes ranking-btn-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotate(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.icon-btn.ranking-btn {
+  animation: ranking-btn-appear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
+}
+
+/* Estado activo cuando estás en la página de ranking */
+.icon-btn.ranking-btn.active {
+  background: linear-gradient(135deg, #DC8E08 0%, #B45309 100%);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.6), 0 0 0 4px rgba(245, 158, 11, 0.2);
+}
 
 @keyframes profile-gradient {
   0%, 100% { background-position: 0% 50%; }
