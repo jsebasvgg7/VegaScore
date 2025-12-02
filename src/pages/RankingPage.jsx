@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/RankingPage.css";
+import "../styles/RankingSidebar.css";
 import useRanking from "../hooks/useRanking";
 import RankingSidebar from "../components/RankingSidebar";
 
