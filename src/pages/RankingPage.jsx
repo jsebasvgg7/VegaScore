@@ -12,8 +12,8 @@ export default function RankingPage({ currentUser, onBack }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('all'); // all, top10, friends
-  const [sortBy, setSortBy] = useState('points'); // points, accuracy, predictions
+  const [filterType, setFilterType] = useState('all');
+  const [sortBy, setSortBy] = useState('points');
 
   useEffect(() => {
     loadUsers();
@@ -89,19 +89,10 @@ export default function RankingPage({ currentUser, onBack }) {
 
   // Helper para obtener icono de posición
   const getRankIcon = (position) => {
-    if (position === 1) return <Crown size={24} className="rank-icon gold" />;
-    if (position === 2) return <Medal size={24} className="rank-icon silver" />;
-    if (position === 3) return <Medal size={24} className="rank-icon bronze" />;
+    if (position === 1) return <Crown size={20} className="rank-icon gold" />;
+    if (position === 2) return <Medal size={20} className="rank-icon silver" />;
+    if (position === 3) return <Medal size={20} className="rank-icon bronze" />;
     return null;
-  };
-
-  // Helper para calcular diferencia con posición anterior
-  const getPositionChange = (position) => {
-    // Simulado - podrías guardar histórico en BD
-    const change = Math.floor(Math.random() * 5) - 2;
-    if (change > 0) return <ChevronUp size={16} className="position-up" />;
-    if (change < 0) return <ChevronDown size={16} className="position-down" />;
-    return <Minus size={16} className="position-same" />;
   };
 
   if (loading) {
@@ -117,8 +108,12 @@ export default function RankingPage({ currentUser, onBack }) {
     <div className="ranking-page">
       {/* Header */}
       <div className="ranking-page-header">
+        <button className="back-button" onClick={onBack}>
+          <ArrowLeft size={20} />
+          Volver
+        </button>
         <h1 className="ranking-page-title">
-          <Trophy size={36} />
+          <Trophy size={32} />
           Ranking Global
         </h1>
       </div>
@@ -128,7 +123,7 @@ export default function RankingPage({ currentUser, onBack }) {
         <div className="ranking-stats-grid">
           <div className="ranking-stat-card">
             <div className="stat-icon-wrapper users">
-              <Users size={24} />
+              <Users size={20} />
             </div>
             <div className="stat-content">
               <div className="stat-label">Competidores</div>
@@ -138,30 +133,30 @@ export default function RankingPage({ currentUser, onBack }) {
 
           <div className="ranking-stat-card">
             <div className="stat-icon-wrapper predictions">
-              <Target size={24} />
+              <Target size={20} />
             </div>
             <div className="stat-content">
-              <div className="stat-label">Predicciones Totales</div>
+              <div className="stat-label">Predicciones</div>
               <div className="stat-value">{globalStats.totalPredictions}</div>
             </div>
           </div>
 
           <div className="ranking-stat-card">
             <div className="stat-icon-wrapper points">
-              <Zap size={24} />
+              <Zap size={20} />
             </div>
             <div className="stat-content">
-              <div className="stat-label">Puntos Distribuidos</div>
+              <div className="stat-label">Puntos</div>
               <div className="stat-value">{globalStats.totalPoints}</div>
             </div>
           </div>
 
           <div className="ranking-stat-card">
             <div className="stat-icon-wrapper accuracy">
-              <BarChart3 size={24} />
+              <BarChart3 size={20} />
             </div>
             <div className="stat-content">
-              <div className="stat-label">Precisión Promedio</div>
+              <div className="stat-label">Precisión</div>
               <div className="stat-value">{globalStats.avgAccuracy}%</div>
             </div>
           </div>
@@ -171,7 +166,7 @@ export default function RankingPage({ currentUser, onBack }) {
         {currentUserData && (
           <div className="your-position-card">
             <div className="your-position-header">
-              <Shield size={24} />
+              <Shield size={20} />
               <h2>Tu Posición</h2>
             </div>
             <div className="your-position-content">
@@ -181,14 +176,14 @@ export default function RankingPage({ currentUser, onBack }) {
               </div>
               <div className="position-stats">
                 <div className="position-stat">
-                  <Zap size={18} />
+                  <Zap size={16} />
                   <div>
                     <div className="position-stat-value">{currentUserData.points}</div>
                     <div className="position-stat-label">Puntos</div>
                   </div>
                 </div>
                 <div className="position-stat">
-                  <Target size={18} />
+                  <Target size={16} />
                   <div>
                     <div className="position-stat-value">
                       {currentUserData.predictions > 0 
@@ -199,7 +194,7 @@ export default function RankingPage({ currentUser, onBack }) {
                   </div>
                 </div>
                 <div className="position-stat">
-                  <Flame size={18} />
+                  <Flame size={16} />
                   <div>
                     <div className="position-stat-value">{currentUserData.predictions}</div>
                     <div className="position-stat-label">Predicciones</div>
@@ -213,7 +208,7 @@ export default function RankingPage({ currentUser, onBack }) {
         {/* Filters and Search */}
         <div className="ranking-controls">
           <div className="search-bar">
-            <Search size={20} />
+            <Search size={18} />
             <input
               type="text"
               placeholder="Buscar usuario..."
@@ -227,14 +222,14 @@ export default function RankingPage({ currentUser, onBack }) {
               className={`filter-btn ${filterType === 'all' ? 'active' : ''}`}
               onClick={() => setFilterType('all')}
             >
-              <Users size={16} />
+              <Users size={14} />
               Todos
             </button>
             <button 
               className={`filter-btn ${filterType === 'top10' ? 'active' : ''}`}
               onClick={() => setFilterType('top10')}
             >
-              <Trophy size={16} />
+              <Trophy size={14} />
               Top 10
             </button>
           </div>
@@ -244,21 +239,21 @@ export default function RankingPage({ currentUser, onBack }) {
               className={`sort-btn ${sortBy === 'points' ? 'active' : ''}`}
               onClick={() => setSortBy('points')}
             >
-              <Zap size={16} />
+              <Zap size={14} />
               Puntos
             </button>
             <button 
               className={`sort-btn ${sortBy === 'accuracy' ? 'active' : ''}`}
               onClick={() => setSortBy('accuracy')}
             >
-              <Target size={16} />
+              <Target size={14} />
               Precisión
             </button>
             <button 
               className={`sort-btn ${sortBy === 'predictions' ? 'active' : ''}`}
               onClick={() => setSortBy('predictions')}
             >
-              <BarChart3 size={16} />
+              <BarChart3 size={14} />
               Actividad
             </button>
           </div>
@@ -272,11 +267,10 @@ export default function RankingPage({ currentUser, onBack }) {
             <div className="table-header-cell points">Puntos</div>
             <div className="table-header-cell predictions">Predicciones</div>
             <div className="table-header-cell accuracy">Precisión</div>
-            <div className="table-header-cell trend">Tendencia</div>
           </div>
 
           <div className="ranking-table-body">
-            {filteredUsers.map((user, index) => {
+            {filteredUsers.map((user) => {
               const position = users.findIndex(u => u.id === user.id) + 1;
               const accuracy = user.predictions > 0 
                 ? Math.round((user.correct / user.predictions) * 100) 
@@ -292,7 +286,7 @@ export default function RankingPage({ currentUser, onBack }) {
                     <div className="position-wrapper">
                       {getRankIcon(position)}
                       <span className={`position-number ${position <= 3 ? 'highlight' : ''}`}>
-                        {position}
+                        #{position}
                       </span>
                     </div>
                   </div>
@@ -320,7 +314,7 @@ export default function RankingPage({ currentUser, onBack }) {
 
                   <div className="table-cell points">
                     <div className="points-cell">
-                      <Zap size={16} />
+                      <Zap size={14} />
                       <span className="points-value">{user.points}</span>
                     </div>
                   </div>
@@ -339,10 +333,6 @@ export default function RankingPage({ currentUser, onBack }) {
                       </div>
                       <span className="accuracy-value">{accuracy}%</span>
                     </div>
-                  </div>
-
-                  <div className="table-cell trend">
-                    {getPositionChange(position)}
                   </div>
                 </div>
               );
