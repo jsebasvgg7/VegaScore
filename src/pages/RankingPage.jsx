@@ -1,4 +1,3 @@
-import "../styles/RankingPage.css";
 import useRanking from "../hooks/useRanking";
 import RankingSidebar from "../components/RankingSidebar";
 import { useState } from "react";
