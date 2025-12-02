@@ -35,17 +35,7 @@ export default function Header({ currentUser, users = [], onProfileClick }) {
       </div>
 
       <div className="header-right">
-        {/* Botón de ranking con badge de posición */}
-        <button 
-          className="icon-btn ranking-btn" 
-          onClick={handleRankingClick} 
-          aria-label="Ver ranking"
-          title="Ver Ranking Global"
-        >
-          <Award size={18} />
-          {position > 0 && <span className="position-badge">#{position}</span>}
-        </button>
-
+        
         {/* Botón de admin - Solo si es administrador */}
         {currentUser?.is_admin && (
           <button 
@@ -57,6 +47,18 @@ export default function Header({ currentUser, users = [], onProfileClick }) {
             <Shield size={18} />
           </button>
         )}
+        
+        {/* Botón de ranking con badge de posición */}
+        <button 
+          className="icon-btn ranking-btn" 
+          onClick={handleRankingClick} 
+          aria-label="Ver ranking"
+          title="Ver Ranking Global"
+        >
+          <Award size={18} />
+          {position > 0 && <span className="position-badge">#{position}</span>}
+        </button>
+
 
         {/* Botón de perfil */}
         <button 
