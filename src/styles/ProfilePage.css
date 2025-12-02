@@ -2115,3 +2115,93 @@ to{box-shadow: 0 0 30px rgba(124, 58, 237, 0.2);}
   color: #ffffff !important;
   stroke: #ffffff !important;
 }
+/* ========== ADMIN CONTROLS ========== */
+.admin-action-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.admin-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4);
+}
+
+.admin-edit-btn-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--primary-purple);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.admin-edit-btn-small:hover {
+  background: var(--primary-gradient);
+  color: white;
+  border-color: transparent;
+  transform: scale(1.1);
+}
+
+.admin-locked {
+  position: relative;
+}
+
+.admin-locked-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(107, 114, 128, 0.1);
+  color: #6B7280;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.title-card.admin-locked::after,
+.achievement-card.admin-locked::after {
+  content: '🔒';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Responsive Admin Controls */
+@media (max-width: 768px) {
+  .admin-action-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .admin-edit-btn-small {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .admin-locked-badge {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+}

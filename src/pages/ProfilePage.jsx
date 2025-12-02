@@ -14,6 +14,8 @@ import {
 import { supabase } from '../utils/supabaseClient';
 import AvatarUpload from '../components/AvatarUpload';
 import AchievementsSection from '../components/AchievementsSection';
+import AdminAchievementsModal from '../components/AdminAchievementsModal';
+import AdminTitlesModal from '../components/AdminTitlesModal';
 import '../styles/ProfilePage.css';
 
 export default function ProfilePage({ currentUser, onBack }) {
@@ -46,6 +48,10 @@ export default function ProfilePage({ currentUser, onBack }) {
   const [availableAchievements, setAvailableAchievements] = useState([]);
   const [availableTitles, setAvailableTitles] = useState([]);
   const [achievementsLoading, setAchievementsLoading] = useState(true);
+  const [showAdminAchievementsModal, setShowAdminAchievementsModal] = useState(false);
+  const [showAdminTitlesModal, setShowAdminTitlesModal] = useState(false);
+  const [editingAchievement, setEditingAchievement] = useState(null);
+  const [editingTitle, setEditingTitle] = useState(null);
   const [userRanking, setUserRanking] = useState({
     position: 0,
     totalUsers: 0,
@@ -425,6 +431,94 @@ export default function ProfilePage({ currentUser, onBack }) {
     
     return sortedTitles[0];
   };
+  // ========== FUNCIONES CRUD PARA ADMIN ==========
+const handleSaveAchievement = async (achievementData) => {
+  try {
+    const { error } = await supabase
+      .from('available_achievements')
+      .upsert(achievementData, { onConflict: 'id' });
+
+    if (error) throw error;
+
+    showNotification('¡Logro guardado exitosamente!', 'success');
+    
+    // Recargar logros
+    const { data } = await supabase
+      .from('available_achievements')
+      .select('*')
+      .order('requirement_value', { ascending: true });
+    setAvailableAchievements(data || []);
+  } catch (err) {
+    console.error('Error saving achievement:', err);
+    showNotification('Error al guardar el logro', 'error');
+  }
+};
+
+const handleDeleteAchievement = async (achievementId) => {
+  try {
+    const { error } = await supabase
+      .from('available_achievements')
+      .delete()
+      .eq('id', achievementId);
+
+    if (error) throw error;
+
+    showNotification('Logro eliminado correctamente', 'success');
+    
+    // Recargar logros
+    const { data } = await supabase
+      .from('available_achievements')
+      .select('*')
+      .order('requirement_value', { ascending: true });
+    setAvailableAchievements(data || []);
+  } catch (err) {
+    console.error('Error deleting achievement:', err);
+    showNotification('Error al eliminar el logro', 'error');
+  }
+};
+
+const handleSaveTitle = async (titleData) => {
+  try {
+    const { error } = await supabase
+      .from('available_titles')
+      .upsert(titleData, { onConflict: 'id' });
+
+    if (error) throw error;
+
+    showNotification('¡Título guardado exitosamente!', 'success');
+    
+    // Recargar títulos
+    const { data } = await supabase
+      .from('available_titles')
+      .select('*');
+    setAvailableTitles(data || []);
+  } catch (err) {
+    console.error('Error saving title:', err);
+    showNotification('Error al guardar el título', 'error');
+  }
+};
+
+const handleDeleteTitle = async (titleId) => {
+  try {
+    const { error } = await supabase
+      .from('available_titles')
+      .delete()
+      .eq('id', titleId);
+
+    if (error) throw error;
+
+    showNotification('Título eliminado correctamente', 'success');
+    
+    // Recargar títulos
+    const { data } = await supabase
+      .from('available_titles')
+      .select('*');
+    setAvailableTitles(data || []);
+  } catch (err) {
+    console.error('Error deleting title:', err);
+    showNotification('Error al eliminar el título', 'error');
+  }
+};
 
   const accuracy = currentUser?.predictions > 0 
     ? Math.round((currentUser.correct / currentUser.predictions) * 100) 
@@ -949,13 +1043,29 @@ export default function ProfilePage({ currentUser, onBack }) {
             <div className="titles-header">
               <div className="section-header">
                 <Layers size={20} />
-                <h3>Títulos Obtenidos</h3>
-                <span className="count-badge">{userTitles.length}</span>
+                <h3>Títulos {currentUser?.is_admin ? 'Disponibles' : 'Obtenidos'}</h3>
+                <span className="count-badge">
+                  {currentUser?.is_admin ? availableTitles.length : userTitles.length}
+                </span>
               </div>
-              <button className="view-all-btn">
-                <span>Ver Todos</span>
-                <ArrowLeft size={16} className="rotate-180" />
-              </button>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                {currentUser?.is_admin && (
+                  <button 
+                    className="admin-action-btn"
+                    onClick={() => {
+                      setEditingTitle(null);
+                      setShowAdminTitlesModal(true);
+                    }}
+                    title="Crear nuevo título"
+                  >
+                    <Plus size={16} />
+                  </button>
+                )}
+                <button className="view-all-btn">
+                  <span>Ver Todos</span>
+                  <ArrowLeft size={16} className="rotate-180" />
+                </button>
+              </div>
             </div>
             
             {achievementsLoading ? (
@@ -963,95 +1073,140 @@ export default function ProfilePage({ currentUser, onBack }) {
                 <Activity size={24} className="spinner" />
                 <span>Cargando títulos...</span>
               </div>
-            ) : userTitles.length === 0 ? (
+            ) : (currentUser?.is_admin ? availableTitles : userTitles).length === 0 ? (
               <div className="empty-titles">
                 <div className="empty-icon">
                   <TrophyIcon size={32} />
                 </div>
                 <div className="empty-text">
-                  <h4>Sin títulos</h4>
-                  <p>Completa logros para desbloquear títulos</p>
+                  <h4>{currentUser?.is_admin ? 'No hay títulos creados' : 'Sin títulos'}</h4>
+                  <p>{currentUser?.is_admin ? 'Crea títulos para los usuarios' : 'Completa logros para desbloquear títulos'}</p>
                 </div>
               </div>
             ) : (
               <div className="titles-grid">
-                {userTitles.slice(0, 4).map((title, index) => (
-                  <div 
-                    key={title.id} 
-                    className={`title-card ${title.id === activeTitle?.id ? 'active' : ''}`}
-                    style={{ 
-                      borderLeft: `4px solid ${title.color || '#8B5CF6'}`,
-                      background: title.id === activeTitle?.id 
-                        ? `linear-gradient(135deg, ${title.color}15, transparent)` 
-                        : 'var(--card-gradient)'
-                    }}
-                  >
-                    <div className="title-card-header">
-                      <div className="title-icon-small" style={{ color: title.color }}>
-                        <Crown size={18} />
+                {(currentUser?.is_admin ? availableTitles : userTitles).slice(0, 4).map((title) => {
+                  const isUnlocked = userTitles.some(ut => ut.id === title.id);
+                  return (
+                    <div 
+                      key={title.id} 
+                      className={`title-card ${title.id === activeTitle?.id ? 'active' : ''} ${!isUnlocked && currentUser?.is_admin ? 'admin-locked' : ''}`}
+                      style={{ 
+                        borderLeft: `4px solid ${title.color || '#8B5CF6'}`,
+                        background: title.id === activeTitle?.id 
+                          ? `linear-gradient(135deg, ${title.color}15, transparent)` 
+                          : 'var(--card-gradient)',
+                        opacity: !isUnlocked && currentUser?.is_admin ? 0.6 : 1
+                      }}
+                    >
+                      <div className="title-card-header">
+                        <div className="title-icon-small" style={{ color: title.color }}>
+                          <Crown size={18} />
+                        </div>
+                        <div className="title-card-info">
+                          <h4 className="title-card-name" style={{ color: title.color }}>
+                            {title.name}
+                          </h4>
+                          <p className="title-card-desc">{title.description}</p>
+                        </div>
                       </div>
-                      <div className="title-card-info">
-                        <h4 className="title-card-name" style={{ color: title.color }}>
-                          {title.name}
-                        </h4>
-                        <p className="title-card-desc">{title.description}</p>
-                      </div>
+                      {title.id === activeTitle?.id && (
+                        <div className="title-active-indicator">
+                          <BadgeCheck size={14} />
+                          <span>Activo</span>
+                        </div>
+                      )}
+                      {currentUser?.is_admin && (
+                        <button 
+                          className="admin-edit-btn-small"
+                          onClick={() => {
+                            setEditingTitle(title);
+                            setShowAdminTitlesModal(true);
+                          }}
+                          title="Editar título"
+                        >
+                          <Edit2 size={14} />
+                        </button>
+                      )}
+                      {!isUnlocked && currentUser?.is_admin && (
+                        <div className="admin-locked-badge">
+                          <Shield size={12} />
+                          <span>Bloqueado</span>
+                        </div>
+                      )}
                     </div>
-                    {title.id === activeTitle?.id && (
-                      <div className="title-active-indicator">
-                        <BadgeCheck size={14} />
-                        <span>Activo</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
 
           {/* Logros Obtenidos */}
-          <div className="achievements-container">
-            <div className="achievements-header">
-              <div className="section-header">
-                <AwardIcon size={20} />
-                <h3>Logros Obtenidos</h3>
-                <span className="count-badge">
-                  {userAchievements.length}/{availableAchievements.length}
-                </span>
-              </div>
-              <div className="progress-indicator">
-                <div className="progress-bar-small">
-                  <div 
-                    className="progress-fill-small" 
-                    style={{ 
-                      width: availableAchievements.length > 0 
-                        ? `${(userAchievements.length / availableAchievements.length) * 100}%` 
-                        : '0%' 
-                    }}
-                  ></div>
-                </div>
-              </div>
+        <div className="achievements-container">
+          <div className="achievements-header">
+            <div className="section-header">
+              <AwardIcon size={20} />
+              <h3>Logros {currentUser?.is_admin ? 'Disponibles' : 'Obtenidos'}</h3>
+              <span className="count-badge">
+                {currentUser?.is_admin 
+                  ? availableAchievements.length 
+                  : `${userAchievements.length}/${availableAchievements.length}`
+                }
+              </span>
             </div>
-            
-            {achievementsLoading ? (
-              <div className="loading-achievements">
-                <Activity size={24} className="spinner" />
-                <span>Cargando logros...</span>
-              </div>
-            ) : (
-              <div className="achievements-grid">
-                {userAchievements.slice(0, 8).map((achievement, index) => (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {currentUser?.is_admin && (
+                <button 
+                  className="admin-action-btn"
+                  onClick={() => {
+                    setEditingAchievement(null);
+                    setShowAdminAchievementsModal(true);
+                  }}
+                  title="Crear nuevo logro"
+                >
+                  <Plus size={16} />
+                </button>
+              )}
+              {!currentUser?.is_admin && (
+                <div className="progress-indicator">
+                  <div className="progress-bar-small">
+                    <div 
+                      className="progress-fill-small" 
+                      style={{ 
+                        width: availableAchievements.length > 0 
+                          ? `${(userAchievements.length / availableAchievements.length) * 100}%` 
+                          : '0%' 
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {achievementsLoading ? (
+            <div className="loading-achievements">
+              <Activity size={24} className="spinner" />
+              <span>Cargando logros...</span>
+            </div>
+          ) : (
+            <div className="achievements-grid">
+              {(currentUser?.is_admin ? availableAchievements : userAchievements).slice(0, 8).map((achievement, index) => {
+                const isUnlocked = userAchievements.some(ua => ua.id === achievement.id);
+                return (
                   <div 
                     key={achievement.id} 
-                    className="achievement-card"
+                    className={`achievement-card ${!isUnlocked && currentUser?.is_admin ? 'admin-locked' : ''}`}
                     style={{ 
                       borderColor: getCategoryColor(achievement.category),
-                      background: `linear-gradient(135deg, ${getCategoryColor(achievement.category)}10, transparent)`
+                      background: `linear-gradient(135deg, ${getCategoryColor(achievement.category)}10, transparent)`,
+                      opacity: !isUnlocked && currentUser?.is_admin ? 0.6 : 1,
+                      position: 'relative'
                     }}
                   >
                     <div className="achievement-icon-wrapper">
                       <div className="achievement-emoji">{getIconEmoji(achievement.icon)}</div>
-                      {index < 3 && (
+                      {index < 3 && isUnlocked && (
                         <div className="achievement-new-badge">
                           <Sparkles size={12} />
                         </div>
@@ -1064,36 +1219,42 @@ export default function ProfilePage({ currentUser, onBack }) {
                         {achievement.category}
                       </div>
                     </div>
+                    {currentUser?.is_admin && (
+                      <button 
+                        className="admin-edit-btn-small"
+                        onClick={() => {
+                          setEditingAchievement(achievement);
+                          setShowAdminAchievementsModal(true);
+                        }}
+                        title="Editar logro"
+                        style={{ position: 'absolute', top: '8px', right: '8px' }}
+                      >
+                        <Edit2 size={14} />
+                      </button>
+                    )}
+                    {!isUnlocked && currentUser?.is_admin && (
+                      <div className="admin-locked-badge" style={{ position: 'absolute', bottom: '8px', right: '8px' }}>
+                        <Shield size={10} />
+                        <span>Bloqueado</span>
+                      </div>
+                    )}
                   </div>
-                ))}
-                
-                {userAchievements.length === 0 && (
-                  <div className="no-achievements">
-                    <div className="no-achievements-icon">
-                      <TargetLucide size={40} />
-                    </div>
-                    <div className="no-achievements-text">
-                      <h4>Sin logros aún</h4>
-                      <p>Comienza a hacer predicciones para desbloquear logros</p>
-                    </div>
+                );
+              })}
+              
+              {(currentUser?.is_admin ? availableAchievements : userAchievements).length === 0 && (
+                <div className="no-achievements">
+                  <div className="no-achievements-icon">
+                    <TargetLucide size={40} />
                   </div>
-                )}
-                
-                {/* Mostrar logros no obtenidos */}
-                {userAchievements.length < availableAchievements.length && (
-                  <div className="locked-achievements-info">
-                    <div className="locked-icon">
-                      <XCircle size={20} />
-                    </div>
-                    <div className="locked-text">
-                      <span>{availableAchievements.length - userAchievements.length} logros por desbloquear</span>
-                      <small>Sigue participando para desbloquear más</small>
-                    </div>
+                  <div className="no-achievements-text">
+                    <h4>{currentUser?.is_admin ? 'No hay logros creados' : 'Sin logros aún'}</h4>
+                    <p>{currentUser?.is_admin ? 'Crea logros para los usuarios' : 'Comienza a hacer predicciones para desbloquear logros'}</p>
                   </div>
-                )}
-              </div>
-            )}
-          </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* SECCIÓN INFERIOR: Formulario de Edición e Historial */}
@@ -1196,5 +1357,31 @@ export default function ProfilePage({ currentUser, onBack }) {
         </div>
       </div>
     </div>
-  </div>
+    {/* Modales de Administración */}
+      {showAdminAchievementsModal && (
+        <AdminAchievementsModal
+          onClose={() => {
+            setShowAdminAchievementsModal(false);
+            setEditingAchievement(null);
+          }}
+          onSave={handleSaveAchievement}
+          onDelete={handleDeleteAchievement}
+          existingAchievement={editingAchievement}
+        />
+      )}
+
+      {showAdminTitlesModal && (
+        <AdminTitlesModal
+          onClose={() => {
+            setShowAdminTitlesModal(false);
+            setEditingTitle(null);
+          }}
+          onSave={handleSaveTitle}
+          onDelete={handleDeleteTitle}
+          existingTitle={editingTitle}
+        />
+      )}
+    </div>
+  );
+</div>
 )}
