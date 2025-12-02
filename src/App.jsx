@@ -1,65 +1,63 @@
 // src/App.jsx
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { supabase } from "./utils/supabaseClient";
 
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+
+// Importaciones de Rutas Públicas
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import VegaScorePage from "./pages/VegaScorePage";
+
+// Importaciones de las Vistas Principales (Las nuevas páginas)
+import MainLayout from "./components/MainLayout";
+import Dashboard from "./pages/Dashboard"; // La antigua VegaScorePage limpia
+import RankingPage from "./pages/Ranking";  // Nueva página de Ranking (Paso 6A)
+import AdminPanel from "./pages/AdminPanel"; // Nueva página de Administración (Paso 6B)
+
+// Componente para proteger rutas
+const ProtectedRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return null; // O un spinner
+  if (!user) return <Navigate to="/" />;
+  return children;
+};
+
+// Pequeño helper para no dejar entrar a login si ya estás logueado
+const PublicRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (!loading && user) return <Navigate to="/app" />;
+  return children;
+};
+
 
 export default function App() {
-  const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Obtener sesión inicial
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data?.session || null);
-      setLoading(false);
-    });
-
-    // Escuchar cambios de sesión
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => setSession(session)
-    );
-
-    // Limpiar el listener al desmontar
-    return () => {
-      listener.subscription.unsubscribe();
-    };
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="auth-wrapper">
-        <div className="auth-card" style={{ textAlign: "center" }}>
-          <p style={{ color: "#fff" }}>Cargando...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Si está logueado → redirigir a /app */}
-        <Route
-          path="/"
-          element={session ? <Navigate to="/app" /> : <LoginPage />}
-        />
+    <AuthProvider> {/* 1. Todo envuelto en el proveedor */}
+      <BrowserRouter>
+        <Routes>
+          {/* Rutas Públicas */}
+          <Route path="/" element={<PublicRoute><LoginPage /></PublicRoute>} />
+          <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
 
-        {/* Si está logueado → no mostrar registro */}
-        <Route
-          path="/register"
-          element={session ? <Navigate to="/app" /> : <RegisterPage />}
-        />
+          {/* ---------------------------------------------------- */}
+          {/* Rutas Privadas (Nesting dentro de MainLayout) */}
+          <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
+            
+            {/* 1. DASHBOARD (HOME) */}
+            <Route path="/app" element={<Dashboard />} />
+            
+            {/* 2. RANKING DEDICADO */}
+            <Route path="/ranking" element={<RankingPage />} />
+            
+            {/* 3. PANEL DE ADMINISTRACIÓN DEDICADO */}
+            <Route path="/admin" element={<AdminPanel />} />
+            
+          </Route>
+          {/* ---------------------------------------------------- */}
 
-        {/* Página principal protegida */}
-        <Route
-          path="/app"
-          element={session ? <VegaScorePage /> : <Navigate to="/" />}
-        />
-      </Routes>
-    </BrowserRouter>
+          {/* Redirección por defecto */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
