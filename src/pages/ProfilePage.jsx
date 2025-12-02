@@ -52,6 +52,8 @@ export default function ProfilePage({ currentUser, onBack }) {
   const [showAdminTitlesModal, setShowAdminTitlesModal] = useState(false);
   const [editingAchievement, setEditingAchievement] = useState(null);
   const [editingTitle, setEditingTitle] = useState(null);
+  const [showAllHistory, setShowAllHistory] = useState(false);
+  const [showAllTitles, setShowAllTitles] = useState(false);
   const [userRanking, setUserRanking] = useState({
     position: 0,
     totalUsers: 0,
@@ -336,6 +338,13 @@ export default function ProfilePage({ currentUser, onBack }) {
   const handleAvatarUpload = (newUrl) => {
     setUserData({ ...userData, avatar_url: newUrl });
     showNotification('¡Foto de perfil actualizada!', 'success');
+  };
+  const handleViewAllHistory = () => {
+    setShowAllHistory(prev => !prev);
+  };
+
+  const handleViewAllTitles = () => {
+    setShowAllTitles(prev => !prev);
   };
 
   const getPredictionResult = (pred) => {
@@ -1061,9 +1070,11 @@ const handleDeleteTitle = async (titleId) => {
                     <Plus size={16} />
                   </button>
                 )}
-                <button className="view-all-btn">
-                  <span>Ver Todos</span>
-                  <ArrowLeft size={16} className="rotate-180" />
+                <button className="view-all-button" 
+                  onClick={handleViewAllTitles}> 
+                    <span>{showAllTitles ? 'Ver Menos' : 'Ver Todos'}</span> 
+                      <ArrowLeft size={16} 
+                  className={showAllTitles ? '' : 'rotate-180'} /> 
                 </button>
               </div>
             </div>
@@ -1085,7 +1096,7 @@ const handleDeleteTitle = async (titleId) => {
               </div>
             ) : (
               <div className="titles-grid">
-                {(currentUser?.is_admin ? availableTitles : userTitles).slice(0, 4).map((title) => {
+                {(currentUser?.is_admin ? availableTitles : userTitles).slice(0, 3).map((title) => {
                   const isUnlocked = userTitles.some(ut => ut.id === title.id);
                   return (
                     <div 
@@ -1266,10 +1277,7 @@ const handleDeleteTitle = async (titleId) => {
                 <Activity size={24} />
                 <h3>Historial Reciente</h3>
               </div>
-              <button className="view-all-button">
-                <span>Ver Todo</span>
-                <ArrowLeft size={16} className="rotate-180" />
-              </button>
+              <button className="view-all-button" onClick={handleViewAllHistory}> <span>{showAllHistory ? 'Ver Menos' : 'Ver Todo'}</span> <ArrowLeft size={16} className={showAllHistory ? '' : 'rotate-180'} /> </button>
             </div>
 
             {historyLoading ? (
@@ -1285,7 +1293,7 @@ const handleDeleteTitle = async (titleId) => {
               </div>
             ) : (
               <div className="history-list">
-                {predictionHistory.map((pred) => {
+                {(showAllHistory ? predictionHistory : predictionHistory.slice(0, 5)).map((pred) => {
                   const result = getPredictionResult(pred);
                   const match = pred.matches;
 
