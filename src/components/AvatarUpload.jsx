@@ -170,10 +170,6 @@ export default function AvatarUpload({ currentUrl, userId, onUploadComplete }) {
           )}
         </div>
       </div>
-      
-      {/* Pista de formato y tamaño */}
-      <p className="avatar-hint"> JPG, PNG o GIF. Máximo 2MB. </p>
-      
     </div>
   );
 }
