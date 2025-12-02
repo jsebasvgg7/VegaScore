@@ -4,6 +4,7 @@ import { supabase } from "../utils/supabaseClient";
 export default function useRanking(filter = "global") {
   const [ranking, setRanking] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     loadRanking();
@@ -11,23 +12,35 @@ export default function useRanking(filter = "global") {
 
   const loadRanking = async () => {
     setLoading(true);
+    setError(null);
+    
+    try {
+      let query = supabase
+        .from("users")
+        .select("*")
+        .order("points", { ascending: false });
 
-    let query = supabase.from("profiles").select("*");
+      // Si el filtro es mensual, podrías agregar lógica adicional aquí
+      // Por ahora, simplemente cargamos todos los usuarios ordenados por puntos
 
-    if (filter === "monthly") {
-      const now = new Date();
-      const month = now.getMonth() + 1;
-      const year = now.getFullYear();
+      const { data, error: fetchError } = await query;
 
-      query = supabase
-        .rpc("ranking_mensual", { mes: month, ano: year }); // Necesita función SQL
+      if (fetchError) throw fetchError;
+
+      setRanking(data || []);
+    } catch (err) {
+      console.error("Error loading ranking:", err);
+      setError(err.message);
+      setRanking([]); // Array vacío en caso de error
+    } finally {
+      setLoading(false);
     }
-
-    const { data, error } = await query.order("points", { ascending: false });
-
-    if (!error) setRanking(data || []);
-    setLoading(false);
   };
 
-  return { ranking, loading };
+  return { 
+    ranking: ranking || [], // Siempre retornar un array
+    loading, 
+    error,
+    reload: loadRanking 
+  };
 }

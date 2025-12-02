@@ -562,3 +562,60 @@
     font-size: 9px;
   }
 }
+.ranking-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ranking-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #60519b, #8b7fc7);
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.ranking-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+}
+
+.ranking-stat-item {
+  display: block;
+}
+
+.ranking-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .ranking-card {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .ranking-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .ranking-stats {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}

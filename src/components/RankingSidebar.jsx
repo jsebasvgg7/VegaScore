@@ -1,9 +1,30 @@
+// src/components/RankingSidebar.jsx
 import React, { useState } from "react";
 import { Medal, Crown, Award, Trophy, Flame, TrendingUp, Star } from "lucide-react";
 import "../styles/RankingSidebar.css";
 
-export default function RankingSidebar({ users }) {
+export default function RankingSidebar({ users = [] }) { // ← Valor por defecto
   const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  // Validación temprana
+  if (!users || users.length === 0) {
+    return (
+      <div className="ranking-premium">
+        <div className="ranking-header-premium">
+          <div className="ranking-title-premium">
+            <Trophy size={22} className="trophy-icon-animated" />
+            <div>
+              <h3>Ranking Global</h3>
+              <p className="ranking-subtitle">0 competidores</p>
+            </div>
+          </div>
+        </div>
+        <div style={{ padding: '40px 20px', textAlign: 'center', color: '#999' }}>
+          <p>No hay usuarios registrados aún</p>
+        </div>
+      </div>
+    );
+  }
 
   const getIcon = (index) => {
     if (index === 0) return <Crown size={20} className="rank-icon gold" />;
@@ -50,13 +71,13 @@ export default function RankingSidebar({ users }) {
                 <span className="podium-position">#{index + 1}</span>
               </div>
               <div className="podium-avatar">
-                {user.name.charAt(0).toUpperCase()}
+                {(user.name || 'U').charAt(0).toUpperCase()}
               </div>
               <div className="podium-info">
-                <span className="podium-name">{user.name}</span>
+                <span className="podium-name">{user.name || 'Usuario'}</span>
                 <div className="podium-points">
                   <Star size={14} />
-                  <span>{user.points} pts</span>
+                  <span>{user.points || 0} pts</span>
                 </div>
               </div>
               {badge && (
@@ -79,6 +100,10 @@ export default function RankingSidebar({ users }) {
           
           {users.slice(3).map((user, idx) => {
             const index = idx + 3;
+            const predictions = user.predictions || 0;
+            const correct = user.correct || 0;
+            const accuracy = predictions > 0 ? Math.round((correct / predictions) * 100) : 0;
+            
             return (
               <div
                 key={user.id}
@@ -90,20 +115,20 @@ export default function RankingSidebar({ users }) {
                 
                 <div className="rank-user-info">
                   <div className="rank-avatar-small">
-                    {user.name.charAt(0).toUpperCase()}
+                    {(user.name || 'U').charAt(0).toUpperCase()}
                   </div>
                   <div className="rank-details">
-                    <span className="rank-name-text">{user.name}</span>
+                    <span className="rank-name-text">{user.name || 'Usuario'}</span>
                     <span className="rank-stats-text">
-                      {user.predictions > 0 
-                        ? `${Math.round((user.correct / user.predictions) * 100)}% precisión`
+                      {predictions > 0 
+                        ? `${accuracy}% precisión`
                         : 'Sin predicciones'}
                     </span>
                   </div>
                 </div>
 
                 <div className="rank-points-premium">
-                  <span className="points-number">{user.points}</span>
+                  <span className="points-number">{user.points || 0}</span>
                   <span className="points-label">pts</span>
                 </div>
 
@@ -112,7 +137,7 @@ export default function RankingSidebar({ users }) {
                     className="rank-progress-bar"
                     style={{ 
                       width: users[0]?.points > 0 
-                        ? `${(user.points / users[0].points) * 100}%` 
+                        ? `${((user.points || 0) / users[0].points) * 100}%` 
                         : '0%' 
                     }}
                   ></div>
@@ -127,11 +152,11 @@ export default function RankingSidebar({ users }) {
       <div className="ranking-footer">
         <div className="ranking-stat">
           <Award size={16} />
-          <span>{users.reduce((acc, u) => acc + u.predictions, 0)} predicciones</span>
+          <span>{users.reduce((acc, u) => acc + (u.predictions || 0), 0)} predicciones</span>
         </div>
         <div className="ranking-stat">
           <TrendingUp size={16} />
-          <span>{users.reduce((acc, u) => acc + u.points, 0)} pts totales</span>
+          <span>{users.reduce((acc, u) => acc + (u.points || 0), 0)} pts totales</span>
         </div>
       </div>
     </div>

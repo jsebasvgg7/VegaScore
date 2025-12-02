@@ -1,13 +1,32 @@
+import { useState } from "react";
+import "../styles/RankingPage.css";
 import useRanking from "../hooks/useRanking";
 import RankingSidebar from "../components/RankingSidebar";
-import { useState } from "react";
 
 export default function RankingPage() {
   const [filter, setFilter] = useState("global");
-  const { ranking, loading } = useRanking(filter);
+  const { ranking, loading, error } = useRanking(filter);
 
   if (loading) {
-    return <p className="ranking-loading">Cargando ranking...</p>;
+    return (
+      <div className="ranking-root">
+        <div className="ranking-content">
+          <p className="ranking-loading">Cargando ranking...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="ranking-root">
+        <div className="ranking-content">
+          <p className="ranking-error" style={{ color: '#ef4444', textAlign: 'center', padding: '20px' }}>
+            Error al cargar el ranking: {error}
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -15,7 +34,7 @@ export default function RankingPage() {
 
       {/* SIDEBAR SOLO PC */}
       <aside className="ranking-sidebar-desktop">
-        <RankingSidebar />
+        <RankingSidebar users={ranking} />
       </aside>
 
       {/* CONTENIDO PRINCIPAL */}
@@ -41,25 +60,45 @@ export default function RankingPage() {
         </div>
 
         {/* ================= LISTA ================= */}
-        {ranking.length === 0 ? (
+        {!ranking || ranking.length === 0 ? (
           <p className="ranking-empty">No hay jugadores registrados.</p>
         ) : (
           <div className="ranking-list">
-            {ranking.map((u, index) => (
-              <div key={u.id} className="ranking-card">
+            {ranking.map((user, index) => (
+              <div key={user.id} className="ranking-card">
 
                 <span className="ranking-position">
                   {index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1}
                 </span>
 
-                <img
-                  src={u.avatar_url || "/default-avatar.png"}
-                  className="ranking-avatar"
-                />
+                <div className="ranking-avatar">
+                  {user.avatar_url ? (
+                    <img 
+                      src={user.avatar_url} 
+                      alt={user.name}
+                      className="ranking-avatar-img"
+                    />
+                  ) : (
+                    <div className="ranking-avatar-placeholder">
+                      {(user.name || 'U').charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                </div>
 
                 <div className="ranking-info">
-                  <h4>{u.username}</h4>
-                  <p>{u.points} pts</p>
+                  <h4>{user.name || user.email || 'Usuario'}</h4>
+                  <p>{user.points || 0} pts</p>
+                </div>
+
+                <div className="ranking-stats">
+                  <span className="ranking-stat-item">
+                    {user.predictions || 0} predicciones
+                  </span>
+                  {user.predictions > 0 && (
+                    <span className="ranking-stat-item">
+                      {Math.round(((user.correct || 0) / user.predictions) * 100)}% precisión
+                    </span>
+                  )}
                 </div>
 
               </div>
