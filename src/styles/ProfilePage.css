@@ -2110,3 +2110,36 @@ to{box-shadow: 0 0 30px rgba(124, 58, 237, 0.2);}
     to { transform: rotate(360deg);}
 }
 
+/* ICONOS DE ESTADÍSTICAS EN BLANCO */
+.stat-icon svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+/* CUADRADOS PERFECTOS PARA TODAS LAS STATS */
+.stat-item {
+  aspect-ratio: 1 / 1;        /* Hace que siempre sea cuadrado */
+  display: flex;
+  flex-direction: column;     /* Ícono arriba, texto abajo */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Centrar texto dentro del stat-info */
+.stat-info {
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .stat-item {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .stat-value {
+    font-size: 28px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+}
