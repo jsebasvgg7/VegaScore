@@ -1,4 +1,4 @@
-// src/hooks/useDashboardData.js (Código FINAL Sincronizado)
+// src/hooks/useDashboardData.js (Código FINAL y Corregido)
 
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "../utils/supabaseClient";
@@ -44,13 +44,15 @@ export function useDashboardData() {
       
       // =========================================================
       // ---- A. PARTIDOS (Tabla: predictions) ----
+      // AJUSTE CRÍTICO: CAMBIAR 'points' a 'points_earned'
       // =========================================================
       const { data: matchesData, error: matchesError } = await supabase
         .from('matches')
         .select(`
           *,
           predictions!predictions_match_id_fkey( 
-            id, user_id, home_score_pred, away_score_pred, status, points
+            id, user_id, home_score_pred, away_score_pred, status, 
+            points_earned // <--- ¡CORRECCIÓN!
           )
         `)
         .order('date', { ascending: true });
@@ -62,7 +64,7 @@ export function useDashboardData() {
 
       // =========================================================
       // ---- B. LIGAS (Tabla: league_predictions) ----
-      // AJUSTANDO COLUMNAS CON EL ESQUEMA QUE ENVIASTE
+      // Ya usa points_earned (Correcto)
       // =========================================================
       const { data: leaguesData, error: leaguesError } = await supabase
         .from('leagues')
@@ -74,7 +76,7 @@ export function useDashboardData() {
             predicted_top_scorer, 
             predicted_top_assist, 
             predicted_mvp, 
-            points_earned // <-- Columna Corregida
+            points_earned 
           )
         `)
         .order('name', { ascending: true });
@@ -86,7 +88,7 @@ export function useDashboardData() {
 
       // =========================================================
       // ---- C. PREMIOS (Tabla: award_predictions) ----
-      // Asumimos que también usa 'points_earned'
+      // Ya usa points_earned (Correcto)
       // =========================================================
       const { data: awardsData, error: awardsError } = await supabase
         .from('awards')
@@ -94,7 +96,7 @@ export function useDashboardData() {
           *,
           award_predictions!award_predictions_award_id_fkey( 
             id, user_id, winner_pred, status, 
-            points_earned // <-- Columna Asumida
+            points_earned 
           )
         `)
         .order('name', { ascending: true });
@@ -116,13 +118,15 @@ export function useDashboardData() {
 
     } catch (error) {
       console.error("Error al cargar los datos del Dashboard y Predicciones:", error);
+      // Muestra el error en la consola para depuración
+      // El dashboard seguirá mostrando "Cargando datos..."
       throw error; 
     } finally {
       setLoading(false);
     }
-  }, []); 
+  }, [currentUser?.id]); // Dependencia agregada para asegurar fetchAllData es estable
 
-  
+
   // EFECTO PRINCIPAL y retorno
   useEffect(() => {
     if (currentUser?.id) { 
