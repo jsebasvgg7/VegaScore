@@ -1072,7 +1072,6 @@ const handleDeleteTitle = async (titleId) => {
                 )}
                 <button className="view-all-button" 
                   onClick={handleViewAllTitles}> 
-                    <span>{showAllTitles ? 'Ver Menos' : 'Ver Todos'}</span> 
                       <ArrowLeft size={16} 
                   className={showAllTitles ? '' : 'rotate-180'} /> 
                 </button>
