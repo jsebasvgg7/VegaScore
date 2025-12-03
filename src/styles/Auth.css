@@ -7,13 +7,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent; /* Sin fondo, lo defines tú */
+  background: #f0f0f0; /* <= CAMBIO A: Fondo Gris Claro */
   padding: 20px;
   position: relative;
   overflow: hidden;
 }
 
-/* Esquinas decorativas */
+/* Esquinas decorativas SUPERIORES */
 .auth-wrapper::before,
 .auth-wrapper::after {
   content: '';
@@ -40,37 +40,14 @@
   border-radius: 0 20px 0 0;
 }
 
-/* Esquinas inferiores */
-.auth-card::before,
-.auth-card::after {
-  content: '';
-  position: fixed;
-  width: 120px;
-  height: 120px;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  pointer-events: none;
-}
+/* ** BLOQUE ELIMINADO: Esquinas inferiores de .auth-card ** */
 
-.auth-card::before {
-  bottom: 30px;
-  left: 30px;
-  border-right: none;
-  border-top: none;
-  border-radius: 0 0 0 20px;
-}
-
-.auth-card::after {
-  bottom: 30px;
-  right: 30px;
-  border-left: none;
-  border-top: none;
-  border-radius: 0 0 20px 0;
-}
 
 .auth-card {
   position: relative;
   width: 100%;
   max-width: 380px;
+  /* El fondo de la tarjeta es semi-transparente para el efecto "vidrio esmerilado" */
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -190,9 +167,7 @@
 /* Responsive */
 @media (max-width: 768px) {
   .auth-wrapper::before,
-  .auth-wrapper::after,
-  .auth-card::before,
-  .auth-card::after {
+  .auth-wrapper::after {
     width: 80px;
     height: 80px;
   }
@@ -202,19 +177,12 @@
     top: 20px;
   }
 
-  .auth-wrapper::before,
-  .auth-card::before {
+  .auth-wrapper::before {
     left: 20px;
   }
 
-  .auth-wrapper::after,
-  .auth-card::after {
+  .auth-wrapper::after {
     right: 20px;
-  }
-
-  .auth-card::before,
-  .auth-card::after {
-    bottom: 20px;
   }
 
   .auth-card {
@@ -243,9 +211,7 @@
   }
 
   .auth-wrapper::before,
-  .auth-wrapper::after,
-  .auth-card::before,
-  .auth-card::after {
+  .auth-wrapper::after {
     width: 60px;
     height: 60px;
   }
@@ -255,19 +221,12 @@
     top: 16px;
   }
 
-  .auth-wrapper::before,
-  .auth-card::before {
+  .auth-wrapper::before {
     left: 16px;
   }
 
-  .auth-wrapper::after,
-  .auth-card::after {
+  .auth-wrapper::after {
     right: 16px;
-  }
-
-  .auth-card::before,
-  .auth-card::after {
-    bottom: 16px;
   }
 
   .auth-card {
