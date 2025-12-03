@@ -24,11 +24,12 @@ export default function LoginPage() {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        <h2>Login</h2>
+        {/* TITULO MEJORADO */}
+        <h2>El Marcador te Espera</h2> 
 
         <input
           type="email"
-          placeholder="Username"
+          placeholder="Email" 
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -36,19 +37,19 @@ export default function LoginPage() {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Contraseña" 
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
 
         <button className="btn" onClick={login} disabled={loading}>
-          {loading ? "Cargando..." : "Entrar"}
+          {loading ? "Cargando..." : "Entrar a la Cancha"} 
         </button>
 
         <div className="auth-alt">
-          <Link to="/forgot-password">Forgot Password?</Link>
-          <Link to="/register">Signup</Link>
+          <Link to="/forgot-password">Olvidé mi Contraseña</Link> 
+          <Link to="/register">Crear mi Cuenta</Link>
         </div>
       </div>
     </div>

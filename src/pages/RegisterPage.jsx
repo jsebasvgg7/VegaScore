@@ -46,11 +46,12 @@ export default function RegisterPage() {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        <h2>Signup</h2>
+        {/* TITULO MEJORADO */}
+        <h2>Crea tu Estrategia</h2>
 
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Tu Nombre de Usuario" 
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -67,7 +68,7 @@ export default function RegisterPage() {
 
         <input
           type="password"
-          placeholder="Password (min. 6 characters)"
+          placeholder="Contraseña (mín. 6 caracteres)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -75,7 +76,7 @@ export default function RegisterPage() {
         />
 
         <button className="btn" onClick={register} disabled={loading}>
-          {loading ? "Creando cuenta..." : "Crear Cuenta"}
+          {loading ? "Creando cuenta..." : "Crear mi Cuenta"}
         </button>
 
         {message && <p className="success-message">{message}</p>}
