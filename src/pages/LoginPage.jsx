@@ -25,11 +25,13 @@ export default function LoginPage() {
     <div className="auth-wrapper">
       <div className="auth-card">
         {/* TITULO MOTIVACIONAL */}
-        <h2>Ready to Predict?</h2> 
+        <h2>Login</h2> 
+        <p className="auth-subtitle">Welcome back! Ready to make your predictions?
+        </p>
 
         <input
           type="email"
-          placeholder="Your Email (The key to the stadium)"
+          placeholder="Your Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -37,19 +39,19 @@ export default function LoginPage() {
 
         <input
           type="password"
-          placeholder="Password (Your winning strategy)"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
 
         <button className="btn" onClick={login} disabled={loading}>
-          {loading ? "Loading..." : "Enter the Pitch"} {/* Botón temático */}
+          {loading ? "Loading..." : "Enter"} {/* Botón temático */}
         </button>
 
         <div className="auth-alt">
           <Link to="/forgot-password">Forgot Your Strategy?</Link>
-          <Link to="/register">Join the League</Link> {/* Enlace motivacional */}
+          <Link to="/register">Sign Up</Link> {/* Enlace motivacional */}
         </div>
       </div>
     </div>

@@ -47,11 +47,11 @@ export default function RegisterPage() {
     <div className="auth-wrapper">
       <div className="auth-card">
         {/* TITULO MOTIVACIONAL */}
-        <h2>Become a Top Predictor</h2>
+        <h2>Create Account</h2>
 
         <input
           type="text"
-          placeholder="Username (Your Squad Name)"
+          placeholder="Full Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -60,7 +60,7 @@ export default function RegisterPage() {
 
         <input
           type="email"
-          placeholder="Email (To receive the final whistle)"
+          placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -68,7 +68,7 @@ export default function RegisterPage() {
 
         <input
           type="password"
-          placeholder="Password (min. 6 characters for security)"
+          placeholder="Password (min 6 characters)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -76,7 +76,7 @@ export default function RegisterPage() {
         />
 
         <button className="btn" onClick={register} disabled={loading}>
-          {loading ? "Creating Profile..." : "Sign Up and Start Scoring"}
+          {loading ? "Creating Profile..." : "Sign Up"}
         </button>
 
         {/* CAMBIO: Se ajusta el mensaje de éxito a inglés */}
@@ -84,7 +84,7 @@ export default function RegisterPage() {
 
         <div className="auth-alt">
           <span></span>
-          <Link to="/">Already in the Game?</Link>
+          <Link to="/">Sign In</Link>
         </div>
       </div>
     </div>
