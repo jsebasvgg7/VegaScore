@@ -255,6 +255,114 @@
 }
 
 /* ================================
+   LOGO BUTTON - Clicable
+================================ */
+
+.logo-box-button {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #60519b 0%, #8b7fc7 100%);
+  color: white;
+  border-radius: 16px;
+  border: none;
+  font-size: 28px;
+  box-shadow: 
+    0 8px 20px rgba(96, 81, 155, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+}
+
+.logo-box-button svg {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.logo-box-button::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #60519b, #8b7fc7, #60519b);
+  background-size: 200% 200%;
+  border-radius: 16px;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  animation: logo-gradient 3s ease infinite;
+}
+
+@keyframes logo-gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.logo-box-button:hover {
+  transform: scale(1.05) translateY(-2px);
+}
+
+.logo-box-button:active {
+  transform: scale(0.98) translateY(0);
+}
+
+.logo-box-button:hover::before {
+  opacity: 1;
+}
+
+/* Animación de clic */
+.logo-box-button:active svg {
+  transform: scale(0.9);
+}
+
+/* Responsive para logo button */
+@media (max-width: 1024px) {
+  .logo-box-button {
+    width: 56px;
+    height: 56px;
+    font-size: 26px;
+  }
+
+  .logo-box-button svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo-box-button {
+    width: 52px;
+    height: 52px;
+    font-size: 24px;
+    border-radius: 14px;
+  }
+
+  .logo-box-button svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-box-button {
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+    border-radius: 12px;
+  }
+
+  .logo-box-button svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+/* ================================
    OCULTAR BADGES
 ================================ */
 

@@ -68,6 +68,12 @@ export default function VegaScorePage() {
     finishAward: finishAwardHook
   } = useAwards(currentUser);
 
+  // ========== HANDLERS - PAGINAS ==========
+  const handleBackToHome = () => {
+    setShowProfile(false);
+    setShowRanking(false);
+    setShowAdmin(false);
+  };
   // ========== HANDLERS - MATCHES ==========
   const handleMakePrediction = async (matchId, homeScore, awayScore) => {
     const match = matches.find(m => m.id === matchId);
@@ -190,6 +196,11 @@ export default function VegaScorePage() {
   return (
     <>
       <div className="vega-root">
+        <Header
+          currentUser={currentUser}
+          users={sortedUsers}
+          onProfileClick={() => setShowProfile(true)}
+        />
         <main className="container">
           {/* --- Stats --- */}
           <section className="stats-row">

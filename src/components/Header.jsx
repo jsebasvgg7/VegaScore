@@ -21,12 +21,23 @@ export default function Header({ currentUser, users = [], onProfileClick }) {
     navigate("/admin");
   };
 
+  // NUEVO: Handler para ir al inicio
+  const handleHomeClick = () => {
+    navigate("/app");
+  };
+
   return (
     <header className="app-header">
       <div className="header-left">
-        <div className="logo-box">
+        {/* MODIFICADO: Logo ahora es un botón clicable */}
+        <button 
+          className="logo-box-button" 
+          onClick={handleHomeClick}
+          aria-label="Ir al inicio"
+          title="Volver al Inicio"
+        >
           <Trophy size={28} />
-        </div>
+        </button>
         <div className="title-wrap">
           <h1 className="app-title">GlobalScore</h1>
           <div className="app-sub">Inicio</div>
@@ -57,7 +68,6 @@ export default function Header({ currentUser, users = [], onProfileClick }) {
           <Award size={18} />
           {position > 0 && <span className="position-badge">#{position}</span>}
         </button>
-
 
         {/* Botón de perfil */}
         <button 
