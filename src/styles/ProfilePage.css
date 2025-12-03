@@ -917,6 +917,775 @@ to{opacity: 1;
 
 }
 
+/* ==========================================
+   MOBILE OPTIMIZATION - COMPACT & BEAUTIFUL
+========================================== */
+
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 16px 12px;
+  }
+
+  .profile-page::before {
+    height: 200px;
+    border-radius: 0 0 25px 25px;
+  }
+
+  .profile-header {
+    margin-bottom: 16px;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .back-button {
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+
+  .profile-page-title {
+    font-size: 28px;
+  }
+
+  .profile-container {
+    gap: 16px;
+  }
+
+  /* ========== TOP SECTION - COMPACT ========== */
+  .profile-top-section {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Avatar Card - Horizontal Compact */
+  .avatar-card.premium-layout {
+    border-radius: 20px;
+  }
+
+  .card-banner {
+    height: 80px;
+  }
+
+  .edit-icon-btn {
+    width: 36px;
+    height: 36px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .card-content-wrapper {
+    padding: 0 20px 20px 20px;
+  }
+
+  .avatar-section-new {
+    margin-top: -40px;
+    margin-bottom: 12px;
+  }
+
+  .avatar-container-new {
+    width: 80px;
+    height: 80px;
+  }
+
+  .level-badge-floating {
+    font-size: 10px;
+    padding: 3px 8px;
+    right: -8px;
+  }
+
+  .user-info-new {
+    gap: 10px;
+  }
+
+  .user-name-new {
+    font-size: 20px;
+  }
+
+  .user-email-new {
+    font-size: 12px;
+  }
+
+  .user-bio-new {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .user-badges-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .info-badge {
+    padding: 8px;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .badge-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .badge-label {
+    font-size: 9px;
+  }
+
+  .badge-value {
+    font-size: 11px;
+  }
+
+  /* Stats Card - 2 Columns */
+  .stats-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .stats-header {
+    margin-bottom: 12px;
+  }
+
+  .stats-header h3 {
+    font-size: 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .stat-item {
+    padding: 12px;
+    border-radius: 12px;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    margin: 0 auto;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  /* ========== MIDDLE SECTION - COMPACT ========== */
+  .profile-middle-section {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Level Card Compact */
+  .level-card,
+  .streaks-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .level-header {
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+
+  .level-title {
+    font-size: 20px;
+  }
+
+  .level-subtitle {
+    font-size: 11px;
+  }
+
+  .level-points {
+    align-items: flex-end;
+  }
+
+  .current-points {
+    font-size: 18px;
+  }
+
+  .next-level-points {
+    font-size: 11px;
+  }
+
+  .progress-container {
+    margin-bottom: 16px;
+  }
+
+  .progress-bar {
+    height: 12px;
+    margin-bottom: 6px;
+  }
+
+  .progress-label {
+    font-size: 11px;
+  }
+
+  /* Mini Achievements - 2 Columns */
+  .mini-achievements-section {
+    padding-top: 12px;
+  }
+
+  .section-header h4 {
+    font-size: 14px;
+  }
+
+  .mini-achievements-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .mini-achievement {
+    padding: 10px;
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .achievement-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .achievement-label {
+    font-size: 10px;
+  }
+
+  .achievement-value {
+    font-size: 16px;
+  }
+
+  /* Streaks Compact */
+  .streaks-header {
+    margin-bottom: 12px;
+  }
+
+  .streaks-header h3 {
+    font-size: 16px;
+  }
+
+  .streaks-content {
+    gap: 10px;
+  }
+
+  .streak-item {
+    padding: 12px;
+    border-radius: 12px;
+    gap: 10px;
+    flex-direction: row;
+  }
+
+  .streak-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .streak-value {
+    font-size: 28px;
+  }
+
+  .streak-subtext {
+    font-size: 11px;
+  }
+
+  .streak-badge,
+  .record-badge {
+    position: static;
+    margin-top: 6px;
+    align-self: flex-start;
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  /* ========== TITLES & ACHIEVEMENTS - COMPACT ========== */
+  .titles-achievements-section {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .active-title-card,
+  .titles-container,
+  .achievements-container {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .active-title-header h3,
+  .section-header h3 {
+    font-size: 14px;
+  }
+
+  .count-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .title-main-info {
+    gap: 10px;
+    flex-direction: row;
+  }
+
+  .title-icon-large {
+    width: 48px;
+    height: 48px;
+  }
+
+  .title-name {
+    font-size: 18px;
+  }
+
+  .title-description {
+    font-size: 12px;
+  }
+
+  .title-stats {
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 12px;
+  }
+
+  .title-stat {
+    font-size: 12px;
+  }
+
+  .no-title-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .no-title-text h4 {
+    font-size: 14px;
+  }
+
+  .no-title-text p {
+    font-size: 12px;
+  }
+
+  /* Achievements Grid - 2 Columns */
+  .achievements-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    max-height: none;
+  }
+
+  .achievement-card {
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .achievement-icon-wrapper {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 8px;
+  }
+
+  .achievement-emoji {
+    font-size: 24px;
+  }
+
+  .achievement-name {
+    font-size: 12px;
+  }
+
+  .achievement-desc {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .achievement-category {
+    font-size: 9px;
+    padding: 3px 8px;
+  }
+
+  /* Titles Grid Compact */
+  .titles-grid {
+    gap: 8px;
+  }
+
+  .title-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .title-icon-small {
+    width: 36px;
+    height: 36px;
+  }
+
+  .title-card-name {
+    font-size: 14px;
+  }
+
+  .title-card-desc {
+    font-size: 11px;
+  }
+
+  /* ========== FORM COMPACT ========== */
+  .edit-form-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .form-header h3 {
+    font-size: 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .form-input,
+  .form-textarea {
+    padding: 10px 14px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .save-button,
+  .cancel-button-secondary {
+    padding: 12px 18px;
+    font-size: 13px;
+  }
+
+  /* ========== HISTORY COMPACT ========== */
+  .history-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .history-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .history-title-section h3 {
+    font-size: 16px;
+  }
+
+  .view-all-button {
+    padding: 8px 14px;
+    font-size: 12px;
+    align-self: stretch;
+    justify-content: center;
+  }
+
+  .history-list {
+    gap: 10px;
+  }
+
+  .history-item {
+    padding: 12px;
+    border-radius: 14px;
+    gap: 10px;
+  }
+
+  .league-badge {
+    padding: 4px 8px;
+    font-size: 9px;
+    border-radius: 6px;
+  }
+
+  .teams {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .team {
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center !important;
+    align-items: center;
+  }
+
+  .team-name {
+    font-size: 13px;
+    order: 0;
+  }
+
+  .team-logo {
+    font-size: 24px;
+    order: -1;
+  }
+
+  .home-team .team-name {
+    order: 0;
+  }
+
+  .home-team .team-logo {
+    order: -1;
+  }
+
+  .away-team .team-name {
+    order: 0;
+  }
+
+  .away-team .team-logo {
+    order: 1;
+  }
+
+  .vs {
+    font-size: 12px;
+    padding: 0;
+  }
+
+  .match-time {
+    font-size: 11px;
+    justify-content: center;
+  }
+
+  .prediction-result {
+    padding: 10px;
+    border-radius: 10px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .scores {
+    flex-direction: row;
+    gap: 16px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .score-label {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .score-value {
+    font-size: 20px;
+  }
+
+  .result-status {
+    padding: 8px 14px;
+    border-radius: 10px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .status-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .status-label {
+    font-size: 12px;
+  }
+
+  .status-points {
+    font-size: 11px;
+  }
+
+  /* Avatar Upload Adjustments */
+  .avatar-upload-horizontal-group {
+    gap: 12px;
+  }
+
+  .avatar-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}
+
+/* ==========================================
+   EXTRA SMALL MOBILE (< 480px)
+========================================== */
+
+@media (max-width: 480px) {
+  .profile-page {
+    padding: 12px 10px;
+  }
+
+  .profile-header {
+    margin-bottom: 12px;
+  }
+
+  .back-button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .profile-page-title {
+    font-size: 24px;
+  }
+
+  .profile-container {
+    gap: 12px;
+  }
+
+  /* Avatar Card Extra Small */
+  .card-banner {
+    height: 70px;
+  }
+
+  .card-content-wrapper {
+    padding: 0 16px 16px 16px;
+  }
+
+  .avatar-section-new {
+    margin-top: -35px;
+  }
+
+  .avatar-container-new {
+    width: 70px;
+    height: 70px;
+  }
+
+  .level-badge-floating {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .user-name-new {
+    font-size: 18px;
+  }
+
+  .user-email-new {
+    font-size: 11px;
+  }
+
+  .user-badges-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .info-badge {
+    flex-direction: row;
+    padding: 8px;
+  }
+
+  .badge-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Stats Extra Small */
+  .stats-card {
+    padding: 12px;
+  }
+
+  .stats-grid {
+    gap: 8px;
+  }
+
+  .stat-item {
+    padding: 10px;
+  }
+
+  .stat-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  /* Level Extra Small */
+  .level-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .level-title {
+    font-size: 18px;
+  }
+
+  .level-points {
+    align-items: flex-start;
+  }
+
+  .progress-bar {
+    height: 10px;
+  }
+
+  /* Mini Achievements Single Column for Very Small */
+  .mini-achievements-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-achievement {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  /* Achievements Single Column */
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* History Extra Compact */
+  .teams {
+    gap: 8px;
+  }
+
+  .team-logo {
+    font-size: 20px;
+  }
+
+  .team-name {
+    font-size: 12px;
+  }
+
+  .score-value {
+    font-size: 18px;
+  }
+
+  .result-status {
+    padding: 8px 12px;
+  }
+
+  .status-label {
+    font-size: 11px;
+  }
+}
+
+/* ==========================================
+   LANDSCAPE MODE OPTIMIZATION
+========================================== */
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .profile-top-section {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .profile-middle-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mini-achievements-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 @media (max-width: 768px){.profile-page {
     padding: 20px 16px;}
 
