@@ -2180,7 +2180,162 @@ box-shadow: none;
 border: 1px solid #ccc;
 }
 }
-/* Level Badge - Flotante en la esquina inferior derecha del avatar */
+
+/* ==================== AVATAR UPLOAD - BOTONES DE ACCIÓN ==================== */
+
+/* Contenedor horizontal del avatar + botones */
+.avatar-upload-horizontal-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 1.5rem);
+  justify-content: center;
+}
+
+/* Avatar Preview Wrapper */
+.avatar-preview-wrapper {
+  position: relative;
+  width: clamp(80px, 18vw, 120px);
+  height: clamp(80px, 18vw, 120px);
+  border-radius: 50%;
+  border: 4px solid var(--bg-card);
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--bg-tertiary);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+}
+
+.avatar-preview-wrapper:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.avatar-preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-placeholder-upload {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-gradient);
+  color: white;
+}
+
+/* Overlay de cámara */
+.camera-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  color: white;
+}
+
+.avatar-preview-wrapper:hover .camera-overlay {
+  opacity: 1;
+}
+
+/* Loading Overlay */
+.avatar-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  z-index: 10;
+}
+
+/* ========== BOTONES DE ACCIÓN (lado derecho) ========== */
+.avatar-actions-side {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
+}
+
+.avatar-btn {
+  width: clamp(40px, 10vw, 48px);
+  height: clamp(40px, 10vw, 48px);
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-md);
+  flex-shrink: 0;
+  font-size: 0;
+  padding: 0;
+}
+
+.avatar-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.avatar-btn.primary {
+  background: var(--primary-gradient);
+  color: white;
+}
+
+.avatar-btn.primary:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-glow);
+}
+
+.avatar-btn.primary:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.avatar-btn.secondary {
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  color: white;
+}
+
+.avatar-btn.secondary:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.4);
+}
+
+.avatar-btn.secondary:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.avatar-btn svg {
+  display: block;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* Animación del spinner */
+.avatar-btn .spinner,
+.avatar-loading-overlay .spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========== LEVEL BADGE FLOTANTE ========== */
 .level-badge-floating {
   position: absolute;
   bottom: 0;
@@ -2197,10 +2352,22 @@ border: 1px solid #ccc;
   color: white;
   box-shadow: var(--shadow-sm);
   z-index: 10;
-  /* Eliminamos transform para que esté en la esquina */
 }
 
-/* Contenedor del avatar debe ser relativo */
+/* Contenedores */
+.avatar-upload-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-container-new {
+  position: relative;
+  display: inline-block;
+}
+
 .avatar-display-new {
   position: relative;
   display: inline-block;
@@ -2208,31 +2375,44 @@ border: 1px solid #ccc;
   height: clamp(80px, 18vw, 120px);
 }
 
-/* Avatar Preview Wrapper también debe ser relativo cuando está editando */
-.avatar-preview-wrapper {
-  position: relative;
-  width: clamp(80px, 18vw, 120px);
-  height: clamp(80px, 18vw, 120px);
+.avatar-image,
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   border: 4px solid var(--bg-card);
   overflow: hidden;
-  cursor: pointer;
-  background: var(--bg-tertiary);
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-base);
-  flex-shrink: 0;
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(2rem, 6vw, 2.5rem);
+  font-weight: 700;
+  object-fit: cover;
 }
 
-/* Cuando está editando, el badge debe estar sobre el preview wrapper */
-.avatar-upload-horizontal-group .level-badge-floating {
-  position: absolute;
-  bottom: 0;
-  right: -8px;
-  /* Se mantiene en la esquina del avatar */
+.avatar-placeholder {
+  background: var(--primary-gradient);
+  color: white;
 }
 
-/* Responsive */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
+  .avatar-upload-horizontal-group {
+    gap: clamp(0.75rem, 2.5vw, 1rem);
+  }
+  
+  .avatar-preview-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .avatar-btn {
+    width: 44px;
+    height: 44px;
+  }
+  
   .level-badge-floating {
     right: -6px;
     padding: 3px 8px;
@@ -2240,10 +2420,31 @@ border: 1px solid #ccc;
 }
 
 @media (max-width: 480px) {
+  .avatar-upload-horizontal-group {
+    gap: 0.75rem;
+  }
+  
+  .avatar-preview-wrapper {
+    width: 80px;
+    height: 80px;
+    border-width: 3px;
+  }
+  
+  .avatar-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .avatar-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+  
   .level-badge-floating {
     right: -4px;
     padding: 2px 6px;
     font-size: 0.65rem;
+    border-width: 2px;
   }
   
   .level-badge-floating svg {
