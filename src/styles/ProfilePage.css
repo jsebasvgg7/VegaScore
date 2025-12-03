@@ -234,7 +234,7 @@
   overflow: hidden;
   box-shadow: var(--shadow-md);
   background: var(--bg-tertiary);
-}
+  position: relative;
 
 .avatar-image {
   width: 100%;
@@ -255,9 +255,9 @@
 }
 
 .level-badge-floating {
-  position: absolute;
+  position: relative;
   bottom: 0;
-  right: -5px;
+  right: -8px;
   background: var(--primary-gradient);
   border: 3px solid var(--bg-card);
   border-radius: 20px;
@@ -269,8 +269,8 @@
   font-weight: 700;
   color: white;
   box-shadow: var(--shadow-sm);
+  z-index: 10;
 }
-
 /* User Info */
 .user-info-new {
   text-align: center;
@@ -2336,23 +2336,6 @@ border: 1px solid #ccc;
 }
 
 /* ========== LEVEL BADGE FLOTANTE ========== */
-.level-badge-floating {
-  position: absolute;
-  bottom: 0;
-  right: -8px;
-  background: var(--primary-gradient);
-  border: 3px solid var(--bg-card);
-  border-radius: 20px;
-  padding: clamp(3px, 1vw, 4px) clamp(8px, 2vw, 12px);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: clamp(0.65rem, 2vw, 0.75rem);
-  font-weight: 700;
-  color: white;
-  box-shadow: var(--shadow-sm);
-  z-index: 10;
-}
 
 /* Contenedores */
 .avatar-upload-container {
