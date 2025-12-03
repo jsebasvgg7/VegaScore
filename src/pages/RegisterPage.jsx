@@ -21,7 +21,7 @@ export default function RegisterPage() {
       });
 
       if (signUpError) throw signUpError;
-      if (!data.user) throw new Error("No se pudo crear el usuario");
+      if (!data.user) throw new Error("Could not create user");
 
       const { error: insertError } = await supabase.from("users").insert({
         auth_id: data.user.id,
@@ -33,10 +33,10 @@ export default function RegisterPage() {
 
       if (insertError) throw insertError;
 
-      setMessage("Revisa tu correo para activar tu cuenta");
+      setMessage("Check your email to activate your account");
 
     } catch (error) {
-      console.error("Error en registro:", error);
+      console.error("Registration Error:", error);
       setMessage(`Error: ${error.message}`);
     } finally {
       setLoading(false);
@@ -46,12 +46,12 @@ export default function RegisterPage() {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        {/* TITULO MEJORADO */}
-        <h2>Crea tu Estrategia</h2>
+        {/* TITULO MOTIVACIONAL */}
+        <h2>Become a Top Predictor</h2>
 
         <input
           type="text"
-          placeholder="Tu Nombre de Usuario" 
+          placeholder="Username (Your Squad Name)"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -60,7 +60,7 @@ export default function RegisterPage() {
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Email (To receive the final whistle)"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -68,7 +68,7 @@ export default function RegisterPage() {
 
         <input
           type="password"
-          placeholder="Contraseña (mín. 6 caracteres)"
+          placeholder="Password (min. 6 characters for security)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -76,14 +76,15 @@ export default function RegisterPage() {
         />
 
         <button className="btn" onClick={register} disabled={loading}>
-          {loading ? "Creando cuenta..." : "Crear mi Cuenta"}
+          {loading ? "Creating Profile..." : "Sign Up and Start Scoring"}
         </button>
 
+        {/* CAMBIO: Se ajusta el mensaje de éxito a inglés */}
         {message && <p className="success-message">{message}</p>}
 
         <div className="auth-alt">
           <span></span>
-          <Link to="/">Ya tengo cuenta</Link>
+          <Link to="/">Already in the Game?</Link>
         </div>
       </div>
     </div>

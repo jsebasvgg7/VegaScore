@@ -24,12 +24,12 @@ export default function LoginPage() {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        {/* TITULO MEJORADO */}
-        <h2>El Marcador te Espera</h2> 
+        {/* TITULO MOTIVACIONAL */}
+        <h2>Ready to Predict?</h2> 
 
         <input
           type="email"
-          placeholder="Email" 
+          placeholder="Your Email (The key to the stadium)"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -37,19 +37,19 @@ export default function LoginPage() {
 
         <input
           type="password"
-          placeholder="Contraseña" 
+          placeholder="Password (Your winning strategy)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
 
         <button className="btn" onClick={login} disabled={loading}>
-          {loading ? "Cargando..." : "Entrar a la Cancha"} 
+          {loading ? "Loading..." : "Enter the Pitch"} {/* Botón temático */}
         </button>
 
         <div className="auth-alt">
-          <Link to="/forgot-password">Olvidé mi Contraseña</Link> 
-          <Link to="/register">Crear mi Cuenta</Link>
+          <Link to="/forgot-password">Forgot Your Strategy?</Link>
+          <Link to="/register">Join the League</Link> {/* Enlace motivacional */}
         </div>
       </div>
     </div>
