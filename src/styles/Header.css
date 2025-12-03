@@ -530,3 +530,223 @@
   }
 }
 
+/* ================================
+   BOTTOM NAVIGATION BAR (Mobile Only)
+================================ */
+
+.bottom-nav {
+  display: none; /* Oculto por defecto en desktop */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: linear-gradient(135deg, #1e202c 0%, #31323e 100%);
+  border-top: 1px solid rgba(96, 81, 155, 0.2);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  padding: 8px 12px 8px;
+  z-index: 1000;
+  align-items: center;
+  justify-content: space-around;
+  gap: 4px;
+}
+
+.bottom-nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent,
+    #60519b,
+    #8b7fc7,
+    #60519b,
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: bottom-shine 3s linear infinite;
+}
+
+@keyframes bottom-shine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.bottom-nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  color: #bfc0d1;
+  cursor: pointer;
+  padding: 8px 4px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  min-width: 0;
+}
+
+.bottom-nav-btn svg {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.bottom-nav-btn span {
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Estado Activo */
+.bottom-nav-btn.active {
+  color: #ffffff;
+  background: rgba(96, 81, 155, 0.2);
+}
+
+.bottom-nav-btn.active svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(96, 81, 155, 0.6));
+}
+
+.bottom-nav-btn.active span {
+  color: #8b7fc7;
+  font-weight: 700;
+}
+
+/* Hover (para dispositivos táctiles modernos) */
+.bottom-nav-btn:active {
+  transform: scale(0.95);
+  background: rgba(96, 81, 155, 0.15);
+}
+
+/* Indicador visual de página activa */
+.bottom-nav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, #60519b, #8b7fc7);
+  border-radius: 0 0 3px 3px;
+}
+
+/* ================================
+   RESPONSIVE - Mostrar barra solo en móvil
+================================ */
+
+@media (max-width: 768px) {
+  /* Ocultar header-right en móvil */
+  .app-header .header-right {
+    display: none;
+  }
+
+  /* Mostrar bottom nav */
+  .bottom-nav {
+    display: flex;
+  }
+
+  /* Ajustar padding inferior del body para que no se superponga */
+  body {
+    padding-bottom: 70px;
+  }
+
+  /* Ajustar header superior */
+  .app-header {
+    padding: 14px 16px;
+  }
+
+  .logo-box-button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .logo-box-button svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .app-title {
+    font-size: 18px;
+  }
+
+  .app-sub {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bottom-nav {
+    height: 65px;
+    padding: 6px 8px 6px;
+  }
+
+  .bottom-nav-btn {
+    padding: 6px 2px;
+    gap: 3px;
+  }
+
+  .bottom-nav-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .bottom-nav-btn span {
+    font-size: 10px;
+  }
+
+  body {
+    padding-bottom: 65px;
+  }
+
+  /* Header más compacto */
+  .app-header {
+    padding: 12px 12px;
+  }
+
+  .logo-box-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .logo-box-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .app-title {
+    font-size: 16px;
+  }
+
+  .app-sub {
+    font-size: 11px;
+  }
+}
+
+/* ================================
+   AJUSTES PARA PÁGINAS CON BOTTOM NAV
+================================ */
+
+@media (max-width: 768px) {
+  /* Asegurar que el contenido no quede detrás de la barra */
+  .profile-page,
+  .ranking-page,
+  .admin-page,
+  .vega-score-page,
+  .notifications-page {
+    padding-bottom: 90px; /* Espacio extra para la barra inferior */
+  }
+}
