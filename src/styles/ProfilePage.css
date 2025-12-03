@@ -255,7 +255,7 @@
 }
 
 .level-badge-floating {
-  position: absolute;
+  position: relative;
   bottom: 0;
   right: -8px;
   background: var(--primary-gradient);
