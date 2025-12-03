@@ -30,12 +30,32 @@ body{
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
+/* Layout con Header permanente */
+body {
+  padding-top: 0;
+  margin: 0;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.vega-root,
+.ranking-page,
+.admin-page,
+.profile-page {
+  min-height: calc(100vh - 80px);
+}
 
 /* --------------------------------
    LAYOUT
 ----------------------------------*/
 .container{max-width:1180px; margin:28px auto; padding:0 18px}
 .centered{display:flex; align-items:center; justify-content:center; min-height:200px}
+
+
 
 .card{
   background:var(--card); 
@@ -70,13 +90,4 @@ body{
     padding: 0 10px;
     margin: 12px auto;
   }
-}
-
-/* Layout con Header */
-body.has-header {
-  padding-top: 0;
-}
-
-.vega-root {
-  min-height: calc(100vh - 80px);
 }

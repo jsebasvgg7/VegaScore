@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Trophy, TrendingUp, Target, Percent } from "lucide-react";
 
 // Components
-import Header from "../components/Header";
 import MatchCard from "../components/MatchCard";
 import LeagueCard from "../components/LeagueCard";
 import AwardCard from "../components/AwardCard";
@@ -196,11 +195,6 @@ export default function VegaScorePage() {
   return (
     <>
       <div className="vega-root">
-        <Header
-          currentUser={currentUser}
-          users={sortedUsers}
-          onProfileClick={() => setShowProfile(true)}
-        />
         <main className="container">
           {/* --- Stats --- */}
           <section className="stats-row">

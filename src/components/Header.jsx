@@ -1,16 +1,21 @@
 import React from "react";
 import { Trophy, LogOut, User2, Award, Shield } from "lucide-react";
 import { supabase } from "../utils/supabaseClient";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/Header.css";
 
 export default function Header({ currentUser, users = [], onProfileClick }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const position = currentUser ? users.findIndex((u) => u.id === currentUser.id) + 1 : 0;
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    window.location.href = "/";
+    navigate("/");
+  };
+
+  const handleHomeClick = () => {
+    navigate("/app");
   };
 
   const handleRankingClick = () => {
@@ -21,15 +26,13 @@ export default function Header({ currentUser, users = [], onProfileClick }) {
     navigate("/admin");
   };
 
-  // NUEVO: Handler para ir al inicio
-  const handleHomeClick = () => {
-    navigate("/app");
+  const handleProfileClick = () => {
+    navigate("/profile");
   };
 
   return (
     <header className="app-header">
       <div className="header-left">
-        {/* MODIFICADO: Logo ahora es un botón clicable */}
         <button 
           className="logo-box-button" 
           onClick={handleHomeClick}
@@ -40,13 +43,16 @@ export default function Header({ currentUser, users = [], onProfileClick }) {
         </button>
         <div className="title-wrap">
           <h1 className="app-title">GlobalScore</h1>
-          <div className="app-sub">Inicio</div>
+          <div className="app-sub">
+            {location.pathname === '/app' && 'Inicio'}
+            {location.pathname === '/ranking' && 'Ranking'}
+            {location.pathname === '/admin' && 'Administración'}
+            {location.pathname === '/profile' && 'Perfil'}
+          </div>
         </div>
       </div>
 
       <div className="header-right">
-        
-        {/* Botón de admin - Solo si es administrador */}
         {currentUser?.is_admin && (
           <button 
             className="icon-btn admin-btn" 
@@ -58,7 +64,6 @@ export default function Header({ currentUser, users = [], onProfileClick }) {
           </button>
         )}
 
-        {/* Botón de ranking con badge de posición */}
         <button 
           className="icon-btn ranking-btn" 
           onClick={handleRankingClick} 
@@ -69,17 +74,15 @@ export default function Header({ currentUser, users = [], onProfileClick }) {
           {position > 0 && <span className="position-badge">#{position}</span>}
         </button>
 
-        {/* Botón de perfil */}
         <button 
           className="icon-btn profile-btn" 
-          onClick={onProfileClick} 
+          onClick={handleProfileClick} 
           aria-label="Ver perfil"
           title="Ver Perfil"
         >
           <User2 size={18} />
         </button>
 
-        {/* Botón de logout */}
         <button 
           className="icon-btn" 
           onClick={handleLogout} 
