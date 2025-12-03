@@ -235,6 +235,7 @@
   box-shadow: var(--shadow-md);
   background: var(--bg-tertiary);
   position: relative;
+}
 
 .avatar-image {
   width: 100%;
