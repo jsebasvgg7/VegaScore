@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "./utils/supabaseClient";
 
@@ -7,16 +7,10 @@ import RegisterPage from "./pages/RegisterPage";
 import VegaScorePage from "./pages/VegaScorePage";
 import RankingPage from "./pages/RankingPage";
 import AdminPage from "./pages/AdminPage";
-import ProfilePage from "./pages/ProfilePage";
-import Header from "./components/Header";
 
-function AppContent() {
+export default function App() {
   const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [users, setUsers] = useState([]);
-  const [showProfile, setShowProfile] = useState(false);
-  const location = useLocation();
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     // Obtener sesión inicial
@@ -30,42 +24,11 @@ function AppContent() {
       (_event, session) => setSession(session)
     );
 
+    // Limpiar el listener al desmontar
     return () => {
       listener.subscription.unsubscribe();
     };
   }, []);
-
-  useEffect(() => {
-    if (session) {
-      loadUserData();
-    }
-  }, [session]);
-
-  const loadUserData = async () => {
-    try {
-      const { data: authUser } = await supabase.auth.getUser();
-      if (!authUser?.user) return;
-
-      // Cargar perfil del usuario
-      const { data: profile } = await supabase
-        .from("users")
-        .select("*")
-        .eq("auth_id", authUser.user.id)
-        .maybeSingle();
-
-      setCurrentUser(profile);
-
-      // Cargar todos los usuarios para el ranking
-      const { data: userList } = await supabase
-        .from("users")
-        .select("*")
-        .order("points", { ascending: false });
-
-      setUsers(userList || []);
-    } catch (err) {
-      console.error("Error loading user data:", err);
-    }
-  };
 
   if (loading) {
     return (
@@ -77,62 +40,39 @@ function AppContent() {
     );
   }
 
-  // Determinar si mostrar el Header
-  const isAuthPage = location.pathname === "/" || location.pathname === "/register";
-  const showHeader = session && !isAuthPage;
-
   return (
-    <>
-      {/* Header solo en páginas autenticadas */}
-      {showHeader && currentUser && (
-        <Header
-          currentUser={currentUser}
-          users={users}
-          onProfileClick={() => setShowProfile(true)}
-        />
-      )}
-
-      {/* Modal de Perfil */}
-      {showProfile && (
-        <ProfilePage
-          currentUser={currentUser}
-          onBack={() => setShowProfile(false)}
-        />
-      )}
-
+    <BrowserRouter>
       <Routes>
-        {/* Rutas públicas */}
+        {/* Si está logueado → redirigir a /app */}
         <Route
           path="/"
           element={session ? <Navigate to="/app" /> : <LoginPage />}
         />
+
+        {/* Si está logueado → no mostrar registro */}
         <Route
           path="/register"
           element={session ? <Navigate to="/app" /> : <RegisterPage />}
         />
 
-        {/* Rutas protegidas */}
+        {/* Página principal protegida */}
         <Route
           path="/app"
           element={session ? <VegaScorePage /> : <Navigate to="/" />}
         />
+
+        {/* Página de Ranking */}
         <Route
           path="/ranking"
-          element={session ? <RankingPage currentUser={currentUser} users={users} /> : <Navigate to="/" />}
+          element={session ? <RankingPage /> : <Navigate to="/" />}
         />
+
+        {/* Página de Admin */}
         <Route
           path="/admin"
-          element={session ? <AdminPage currentUser={currentUser} /> : <Navigate to="/" />}
+          element={session ? <AdminPage /> : <Navigate to="/" />}
         />
       </Routes>
-    </>
-  );
-}
-
-export default function App() {
-  return (
-    <BrowserRouter>
-      <AppContent />
     </BrowserRouter>
   );
 }
