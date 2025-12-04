@@ -1384,213 +1384,347 @@ transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
+
+/* AJUSTES PARA MANTENER PODIO HORIZONTAL EN MÓVILES */
+
 @media (max-width: 768px) {
-  .ranking-page {
-    padding: 20px 12px;
-  }
-
-  .ranking-page-container {
-    gap: 20px;
-  }
-
-  .hero-icon-wrapper {
-    width: 60px;
-    height: 60px;
-  }
-
-  .hero-title {
-    font-size: 28px;
-  }
-
-  .hero-subtitle {
-    font-size: 14px;
-  }
-
-  .stats-grid-modern {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .stat-card-modern {
-    padding: 18px;
-  }
-
-  .stat-icon-modern {
-    width: 48px;
-    height: 48px;
-  }
-
-  .stat-value-modern {
-    font-size: 26px;
-  }
-
-  .your-rank-modern {
-    padding: 20px;
-  }
-
-  .your-rank-content {
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    text-align: center;
-  }
-
-  .rank-stats-modern {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .badge-inner {
-    padding: 20px 28px;
-  }
-
-  .position-num {
-    font-size: 40px;
-  }
-
-  .stat-icon-circle {
-    width: 40px;
-    height: 40px;
-  }
-
-  .stat-num {
-    font-size: 22px;
-  }
-
   .podium-ultra {
-    padding: 24px 16px;
-  }
-
-  .podium-header-ultra {
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 28px;
-  }
-
-  .podium-title-ultra {
-    font-size: 24px;
+    padding: 20px 12px;
+    overflow-x: auto;
+    overflow-y: visible;
   }
 
   .podium-stage {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    min-width: 100%;
+    align-items: flex-end;
   }
 
-  .first-place,
-  .second-place,
-  .third-place {
-    order: unset;
-  }
-
+  /* MANTENER ORDEN ORIGINAL */
   .first-place {
-    order: 1;
+    order: 2;
   }
 
   .second-place {
-    order: 2;
+    order: 1;
   }
 
   .third-place {
     order: 3;
   }
 
+  /* MOSTRAR ALTURAS DEL PODIO */
   .place-height {
-    display: none;
+    display: block !important;
+  }
+
+  .place-1 {
+    height: 80px;
+  }
+
+  .place-2 {
+    height: 60px;
+  }
+
+  .place-3 {
+    height: 40px;
   }
 
   .player-card {
-    padding: 24px 16px;
+    padding: 16px 12px;
   }
 
   .player-avatar-ultra {
-    width: 80px;
-    height: 80px;
-    font-size: 32px;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
   }
 
   .champion-avatar {
-    width: 100px;
-    height: 100px;
-    font-size: 40px;
+    width: 75px;
+    height: 75px;
+    font-size: 30px;
   }
 
-  .ring-1 {
-    width: 100px;
-    height: 100px;
+  .champion-crown {
+    width: 55px;
+    height: 55px;
   }
 
-  .ring-2 {
-    width: 120px;
-    height: 120px;
+  .champion-crown svg {
+    width: 28px;
+    height: 28px;
   }
 
-  .ring-3 {
-    width: 140px;
-    height: 140px;
+  .place-medal {
+    width: 48px;
+    height: 48px;
   }
 
-  .player-stats-ultra {
-    gap: 12px;
+  .place-medal svg {
+    width: 22px;
+    height: 22px;
   }
 
-  .stat-value-ultra {
+  .medal-rank {
     font-size: 16px;
   }
 
-  .champion-stat {
-    font-size: 18px;
+  .player-name-ultra {
+    font-size: 13px;
   }
 
-  .list-header-modern,
-  .list-row-modern {
-    padding: 14px 16px;
-    gap: 12px;
-  }
-
-  .list-header-modern {
-    grid-template-columns: 50px 1fr 90px;
-  }
-
-  .list-row-modern {
-    grid-template-columns: 50px 1fr 90px;
-  }
-
-  .user-avatar-small {
-    width: 36px;
-    height: 36px;
-    font-size: 14px;
-  }
-
-  .user-name-small {
-    font-size: 14px;
-  }
-
-  .user-correct-small {
-    font-size: 12px;
-  }
-
-  .points-display {
-    padding: 6px 12px;
-  }
-
-  .points-num {
+  .champion-name {
     font-size: 15px;
   }
 
-  .points-icon-small {
-    width: 14px;
-    height: 14px;
+  .player-stats-ultra {
+    gap: 8px;
+    padding-top: 12px;
   }
 
-  .pos-number {
+  .stat-ultra svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .stat-value-ultra {
     font-size: 14px;
   }
 
-  .pos-number.top-three {
+  .champion-stat {
     font-size: 16px;
+  }
+
+  .stat-separator {
+    height: 20px;
+  }
+
+  .champion-badge {
+    font-size: 8px;
+    padding: 4px 8px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .ring-1 {
+    width: 80px;
+    height: 80px;
+  }
+
+  .ring-2 {
+    width: 95px;
+    height: 95px;
+  }
+
+  .ring-3 {
+    width: 110px;
+    height: 110px;
+  }
+
+  .crown-star {
+    display: none;
+  }
+
+  .avatar-sparkle {
+    display: none;
+  }
+
+  .podium-title-ultra {
+    font-size: 20px;
+  }
+
+  .podium-header-ultra {
+    margin-bottom: 24px;
   }
 }
 
+@media (max-width: 480px) {
+  .podium-ultra {
+    padding: 16px 8px;
+  }
+
+  .podium-stage {
+    gap: 8px;
+  }
+
+  .place-1 {
+    height: 70px;
+  }
+
+  .place-2 {
+    height: 50px;
+  }
+
+  .place-3 {
+    height: 35px;
+  }
+
+  .player-card {
+    padding: 14px 8px;
+  }
+
+  .player-avatar-ultra {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    border-width: 3px;
+  }
+
+  .champion-avatar {
+    width: 65px;
+    height: 65px;
+    font-size: 26px;
+    border-width: 4px;
+  }
+
+  .champion-crown {
+    width: 48px;
+    height: 48px;
+  }
+
+  .champion-crown svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .place-medal {
+    width: 40px;
+    height: 40px;
+  }
+
+  .place-medal svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .medal-rank {
+    font-size: 14px;
+    bottom: -6px;
+  }
+
+  .player-name-ultra {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  .champion-name {
+    font-size: 13px;
+  }
+
+  .player-stats-ultra {
+    gap: 6px;
+    padding-top: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stat-ultra {
+    gap: 4px;
+  }
+
+  .stat-ultra svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .stat-value-ultra {
+    font-size: 12px;
+  }
+
+  .champion-stat {
+    font-size: 14px;
+  }
+
+  .stat-separator {
+    height: 16px;
+    width: 1px;
+  }
+
+  .champion-badge {
+    font-size: 7px;
+    padding: 3px 6px;
+    top: 6px;
+    right: 6px;
+  }
+
+  .ring-1 {
+    width: 70px;
+    height: 70px;
+  }
+
+  .ring-2 {
+    width: 85px;
+    height: 85px;
+  }
+
+  .ring-3 {
+    display: none;
+  }
+
+  .podium-title-ultra {
+    font-size: 18px;
+  }
+
+  .podium-icon-ultra {
+    width: 24px;
+    height: 24px;
+  }
+
+  .podium-sparkle {
+    width: 20px;
+    height: 20px;
+  }
+
+  .podium-header-ultra {
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+}
+
+/* EXTRA PEQUEÑO - Optimización máxima */
+@media (max-width: 360px) {
+  .podium-stage {
+    gap: 6px;
+  }
+
+  .player-avatar-ultra {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+
+  .champion-avatar {
+    width: 58px;
+    height: 58px;
+    font-size: 24px;
+  }
+
+  .player-name-ultra {
+    font-size: 10px;
+  }
+
+  .stat-value-ultra {
+    font-size: 11px;
+  }
+
+  .champion-stat {
+    font-size: 13px;
+  }
+
+  .place-1 {
+    height: 60px;
+  }
+
+  .place-2 {
+    height: 45px;
+  }
+
+  .place-3 {
+    height: 30px;
+  }
+}
 @media (max-width: 480px) {
   .ranking-page {
     padding: 16px 8px;
