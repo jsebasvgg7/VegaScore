@@ -430,7 +430,7 @@ export default function StatsPage({ currentUser }) {
                   </div>
                   <div className="league-accuracy">
                     <div className="accuracy-circle">
-                      <svg viewBox="0 0 60 60" preserveAspectRatio="xMidYMid meet">
+                      <svg width="60" height="60">
                         <circle
                           cx="30"
                           cy="30"
