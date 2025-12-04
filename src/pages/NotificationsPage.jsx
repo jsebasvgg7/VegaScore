@@ -133,21 +133,6 @@ export default function NotificationsPage({ currentUser }) {
                 <Share2 size={18} />
               </button>
             </div>
-
-            <div className="banner-benefits">
-              <div className="benefit-item">
-                <Zap size={14} />
-                <span>Acceso instantáneo</span>
-              </div>
-              <div className="benefit-item">
-                <Bell size={14} />
-                <span>Notificaciones push</span>
-              </div>
-              <div className="benefit-item">
-                <TrendingUp size={14} />
-                <span>Modo offline</span>
-              </div>
-            </div>
           </div>
         )}
 
