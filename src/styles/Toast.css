@@ -36,7 +36,6 @@
   will-change: transform, opacity;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  z-index: 999999999 !important; /* NUEVO: Z-index más alto */
   transform: translate3d(0, 0, 1000px); /* NUEVO: Fuerza capa superior */
   -webkit-transform: translate3d(0, 0, 1000px); /* NUEVO: Safari */
 }
