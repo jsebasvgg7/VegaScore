@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* -------------------------------
    GLOBAL THEME - Purple Palette
 ---------------------------------*/
@@ -20,55 +21,96 @@
   --small-shadow: 0 4px 14px rgba(96, 81, 155, 0.1);
 }
 
-*{box-sizing:border-box}
-html,body,#root{height:100%}
-body{
-  background: linear-gradient(135deg, #f5f6fa 0%, #e8e9f3 100%);
-  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-  color:#111;
-  margin:0;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-/* Layout con Header permanente */
-body {
-  padding-top: 0;
+/* ================================
+   RESET BASICO
+================================ */
+* { 
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  /* Prevenir zoom en inputs en iOS */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, #f5f6fa 0%, #e8e9f3 100%);
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+/* ================================
+   LAYOUT CON HEADER PERMANENTE
+================================ */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 100;
+  background: white;
 }
 
 .vega-root,
 .ranking-page,
 .admin-page,
-.profile-page {
+.profile-page,
+.notifications-page,
+.stats-page {
   min-height: calc(100vh - 80px);
 }
 
-/* --------------------------------
-   LAYOUT
-----------------------------------*/
-.container{max-width:1180px; margin:28px auto; padding:0 18px}
-.centered{display:flex; align-items:center; justify-content:center; min-height:200px}
+/* ================================
+   CONTAINER
+================================ */
+.container {
+  max-width: 1180px;
+  margin: 28px auto;
+  padding: 0 18px;
+}
 
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
 
-
-.card{
-  background:var(--card); 
-  padding:16px; 
-  border-radius:var(--radius-2xl); 
-  box-shadow:var(--small-shadow); 
-  border:1px solid var(--border)
+.card {
+  background: var(--card);
+  padding: 16px;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--small-shadow);
+  border: 1px solid var(--border);
 }
 
 /* Main grid */
-.main-grid{display:grid; grid-template-columns: 2fr 1fr; gap:24px; margin-top:24px}
-.right-col{display:flex; flex-direction:column; gap:18px}
+.main-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
 
+.right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ================================
+   RESPONSIVE TABLET
+================================ */
 @media (max-width: 1024px) {
   .main-grid {
     grid-template-columns: 1fr;
@@ -78,59 +120,46 @@ body {
   }
 }
 
+/* ================================
+   RESPONSIVE MOBILE
+================================ */
 @media (max-width: 768px) {
+  body {
+    padding-bottom: 0;
+  }
+
   .container {
     padding: 0 12px;
     margin: 16px auto;
   }
-}
 
-@media (max-width: 480px) {
-  .container {
-    padding: 0 10px;
-    margin: 12px auto;
-  }
-}
-/* ================================
-   AJUSTES GLOBALES PARA BOTTOM NAV
-================================ */
-
-@media (max-width: 768px) {
-  /* Asegurar que el body tenga padding inferior */
-  body {
-    padding-bottom: 0 !important; /* Resetear el padding del body */
-  }
-
-  /* Contenedor principal de la app */
-  #root {
-    padding-bottom: 0;
-  }
-
-  /* TODOS los contenedores principales de páginas */
+  /* Contenedores principales */
   .page-container,
   .vega-score-page,
+  .vega-root,
   .ranking-page,
   .admin-page,
   .profile-page,
   .notifications-page,
+  .stats-page,
   .profile-container,
   .ranking-container,
   .admin-container {
-    padding-bottom: 100px !important;
-    min-height: calc(100vh - 140px); /* Header + Bottom Nav */
+    padding-bottom: 100px;
+    min-height: calc(100vh - 140px);
   }
 
-  /* Contenedores de listas scrolleables */
+  /* Contenedores scrolleables */
   .matches-container,
   .ranking-list-premium,
   .admin-content,
   .profile-bottom-section,
   .history-card,
   .notifications-list {
-    padding-bottom: 40px !important;
+    padding-bottom: 40px;
   }
 
-  /* Botones de acción que están al final */
+  /* Botones de acción */
   .floating-action-btn,
   .save-predictions-btn,
   .submit-button,
@@ -139,14 +168,14 @@ body {
   .form-actions,
   .button-group,
   .match-actions {
-    margin-bottom: 30px !important;
+    margin-bottom: 30px;
   }
 
-  /* Cards individuales de match */
+  /* Último elemento en listas */
   .match-card-premium:last-child,
   .ranking-item-premium:last-child,
   .history-item:last-child {
-    margin-bottom: 30px !important;
+    margin-bottom: 30px;
   }
 
   /* Modales y overlays */
@@ -156,25 +185,54 @@ body {
     overflow-y: auto;
   }
 
-  /* Asegurar que los scrolls funcionen bien */
+  /* Contenido scrolleable */
   .scrollable-content {
     max-height: calc(100vh - 140px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
+
+  /* Scroll suave */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Bottom Nav */
+  .bottom-nav {
+    pointer-events: auto;
+  }
+
+  .bottom-nav ~ * {
+    position: relative;
+    z-index: 1;
+  }
 }
 
+/* ================================
+   RESPONSIVE SMALL MOBILE
+================================ */
 @media (max-width: 480px) {
+  .container {
+    padding: 0 10px;
+    margin: 12px auto;
+  }
+
   .page-container,
   .vega-score-page,
+  .vega-root,
   .ranking-page,
   .admin-page,
   .profile-page,
   .notifications-page,
+  .stats-page,
   .profile-container,
   .ranking-container,
   .admin-container {
-    padding-bottom: 90px !important;
+    padding-bottom: 90px;
     min-height: calc(100vh - 130px);
   }
 
@@ -184,7 +242,7 @@ body {
   .profile-bottom-section,
   .history-card,
   .notifications-list {
-    padding-bottom: 35px !important;
+    padding-bottom: 35px;
   }
 
   .floating-action-btn,
@@ -195,18 +253,22 @@ body {
   .form-actions,
   .button-group,
   .match-actions {
-    margin-bottom: 25px !important;
+    margin-bottom: 25px;
   }
 
   .match-card-premium:last-child,
   .ranking-item-premium:last-child,
   .history-item:last-child {
-    margin-bottom: 25px !important;
+    margin-bottom: 25px;
   }
 }
-/* Override para asegurar que los toasts sean visibles */
+
+/* ================================
+   TOAST FIX
+================================ */
 .toast-container {
   pointer-events: none !important;
+  z-index: 10000;
 }
 
 .toast-notification {
@@ -214,28 +276,39 @@ body {
 }
 
 /* ================================
-   SCROLL SUAVE Y PERFORMANCE
+   PREVENIR PROBLEMAS DE LOADING
 ================================ */
-
 @media (max-width: 768px) {
-  /* Mejorar el scroll en móviles */
-  html {
-    scroll-behavior: smooth;
+  /* Asegurar que el loader no cause problemas */
+  .page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
   }
 
+  /* Prevenir scroll mientras carga */
+  body.loading {
+    overflow: hidden;
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+}
+
+/* ================================
+   IOS SAFARI FIXES
+================================ */
+@supports (-webkit-touch-callout: none) {
+  /* iOS-specific fixes */
   body {
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
+    min-height: -webkit-fill-available;
   }
 
-  /* Prevenir que la barra inferior bloquee contenido */
-  .bottom-nav {
-    pointer-events: auto;
-  }
-
-  /* Asegurar que el contenido debajo sea clickeable */
-  .bottom-nav ~ * {
-    position: relative;
-    z-index: 1;
+  .vega-root,
+  .ranking-page,
+  .admin-page,
+  .profile-page,
+  .notifications-page,
+  .stats-page {
+    min-height: -webkit-fill-available;
   }
 }

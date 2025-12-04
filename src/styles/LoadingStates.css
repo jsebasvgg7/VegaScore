@@ -1,12 +1,12 @@
-/* ============================================
-   LOADING STATES & SKELETONS - Minimalista
-============================================ */
+/* ================================
+   LOADING STATES - FIXED MOBILE
+================================ */
 
-/* Spinner principal con anillo */
+/* Spinner Base */
 .spinner-wrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 20px;
 }
 
@@ -19,363 +19,282 @@
   to { transform: rotate(360deg); }
 }
 
-/* Page Loader Minimalista */
+/* ================================
+   PAGE LOADER - FIXED
+================================ */
 .page-loader {
   position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, #1e202c 0%, #2d2d30 100%);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f6fa 0%, #e8e9f3 100%);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 9999;
   overflow: hidden;
 }
 
-.page-loader::before {
-  content: '';
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(96, 81, 155, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: pulse-glow 4s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% { 
-    transform: scale(1); 
-    opacity: 0.2; 
-  }
-  50% { 
-    transform: scale(1.2); 
-    opacity: 0.4; 
-  }
-}
-
 .page-loader-content {
-  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  gap: 20px;
 }
 
-/* Logo loader minimalista con doble anillo */
+/* Logo Loader Animation */
 .logo-loader {
   width: 80px;
   height: 80px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #60519b 0%, #8b7fc7 100%);
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
-/* Anillo exterior */
 .logo-loader::before {
-  content: '';
+  content: '🏆';
   position: absolute;
-  width: 80px;
-  height: 80px;
-  border: 3px solid transparent;
-  border-top-color: #60519b;
-  border-right-color: #60519b;
-  border-radius: 50%;
-  animation: spin 1.2s linear infinite;
-  filter: drop-shadow(0 0 8px rgba(96, 81, 155, 0.4));
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  animation: bounce 1s ease-in-out infinite;
 }
 
-/* Anillo interior */
-.logo-loader::after {
-  content: '';
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  border: 3px solid transparent;
-  border-bottom-color: #8b7fc7;
-  border-left-color: #8b7fc7;
-  border-radius: 50%;
-  animation: spin 1s linear infinite reverse;
-  filter: drop-shadow(0 0 6px rgba(139, 127, 199, 0.4));
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
 }
 
-/* Skeleton base mejorado */
-.skeleton {
-  background: linear-gradient(90deg, 
-    #f0f0f0 0%, 
-    #f0f0f0 40%, 
-    #e8e8e8 50%, 
-    #f0f0f0 60%, 
-    #f0f0f0 100%
-  );
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 2s ease-in-out infinite;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
+@keyframes bounce {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-5px);
+  }
 }
 
-.skeleton::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.5), 
-    transparent
-  );
-  animation: skeleton-shine 2s ease-in-out infinite;
+/* ================================
+   MOBILE FIXES
+================================ */
+@media (max-width: 768px) {
+  .page-loader {
+    /* Asegurar que cubra toda la pantalla en móviles */
+    position: fixed;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .logo-loader {
+    width: 70px;
+    height: 70px;
+  }
+
+  .logo-loader::before {
+    font-size: 35px;
+  }
 }
 
-@keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+@media (max-width: 480px) {
+  .logo-loader {
+    width: 60px;
+    height: 60px;
+  }
+
+  .logo-loader::before {
+    font-size: 30px;
+  }
 }
 
-@keyframes skeleton-shine {
-  0% { left: -100%; }
-  100% { left: 200%; }
-}
-
+/* ================================
+   SKELETON LOADING CARDS
+================================ */
 .skeleton-card {
   pointer-events: none;
   user-select: none;
-  animation: skeleton-fade-in 0.3s ease;
 }
 
-@keyframes skeleton-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0%,
+    #e0e0e0 50%,
+    #f0f0f0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 /* Match Card Skeleton */
 .skeleton-badge {
-  width: 120px;
+  width: 80px;
   height: 24px;
   border-radius: 12px;
 }
 
 .skeleton-datetime {
-  width: 150px;
-  height: 20px;
+  width: 120px;
+  height: 18px;
 }
 
 .skeleton-logo {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
 }
 
 .skeleton-team-name {
-  width: 140px;
-  height: 18px;
+  width: 100px;
+  height: 20px;
   margin-bottom: 8px;
 }
 
 .skeleton-team-label {
-  width: 80px;
+  width: 60px;
   height: 14px;
 }
 
 .skeleton-score {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
+  width: 60px;
+  height: 48px;
+  border-radius: 12px;
 }
 
 .skeleton-button {
-  margin: 0 24px 24px;
-  height: 48px;
-  border-radius: 14px;
+  width: 100%;
+  height: 44px;
+  margin-top: 16px;
+  border-radius: 12px;
 }
 
-/* Ranking Skeleton */
+/* Ranking Item Skeleton */
 .skeleton-rank-number {
   width: 40px;
-  height: 24px;
-  border-radius: 6px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .skeleton-avatar {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
 }
 
 .skeleton-rank-name {
   width: 120px;
-  height: 16px;
+  height: 18px;
   margin-bottom: 6px;
 }
 
 .skeleton-rank-stats {
-  width: 100px;
-  height: 12px;
+  width: 80px;
+  height: 14px;
 }
 
 .skeleton-points {
-  width: 50px;
+  width: 60px;
   height: 24px;
-  border-radius: 6px;
+  border-radius: 12px;
 }
 
 /* Stats Card Skeleton */
 .skeleton-stat-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
-  margin: 0 auto 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-bottom: 12px;
 }
 
 .skeleton-stat-label {
   width: 80px;
   height: 14px;
-  margin: 0 auto 8px;
+  margin-bottom: 8px;
 }
 
 .skeleton-stat-value {
   width: 60px;
   height: 28px;
-  margin: 0 auto;
-  border-radius: 6px;
 }
 
-/* Loading Overlay Minimalista */
+/* ================================
+   LOADING OVERLAY
+================================ */
 .loading-overlay {
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(6px);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 9998;
-  animation: overlay-fade-in 0.2s ease;
+  animation: fadeIn 0.2s ease-in-out;
 }
 
-@keyframes overlay-fade-in {
+.loading-overlay-content {
+  background: white;
+  padding: 24px 32px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+@keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-.loading-overlay-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Spinner para overlay con doble anillo */
-.loading-overlay-content .spinner-wrapper {
-  width: 64px;
-  height: 64px;
-  position: relative;
-}
-
-.loading-overlay-content .spinner-wrapper::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 4px solid rgba(96, 81, 155, 0.2);
-  border-top-color: #60519b;
-  border-right-color: #60519b;
-  border-radius: 50%;
-  animation: spin 1.2s linear infinite;
-  filter: drop-shadow(0 0 8px rgba(96, 81, 155, 0.5));
-}
-
-.loading-overlay-content .spinner-wrapper::after {
-  content: '';
-  position: absolute;
-  width: 70%;
-  height: 70%;
-  top: 15%;
-  left: 15%;
-  border: 4px solid transparent;
-  border-bottom-color: #8b7fc7;
-  border-left-color: #8b7fc7;
-  border-radius: 50%;
-  animation: spin 1s linear infinite reverse;
-  filter: drop-shadow(0 0 6px rgba(139, 127, 199, 0.5));
-}
-
-/* Button Spinner mejorado */
+/* Button Loader */
 .button-spinner {
   animation: spin 1s linear infinite;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
 }
 
-/* Skeleton responsive */
+/* Mobile Optimization */
 @media (max-width: 768px) {
-  .logo-loader {
-    width: 72px;
-    height: 72px;
+  .loading-overlay-content {
+    padding: 20px 28px;
   }
 
-  .logo-loader::before {
-    width: 72px;
-    height: 72px;
-  }
-
-  .logo-loader::after {
-    width: 46px;
-    height: 46px;
-  }
-
-  .skeleton-team-name {
-    width: 120px;
-  }
-
-  .skeleton-badge {
-    width: 100px;
-    height: 22px;
-  }
-
-  .skeleton-datetime {
-    width: 130px;
-  }
-}
-
-@media (max-width: 480px) {
-  .page-loader::before {
-    width: 300px;
-    height: 300px;
-  }
-
-  .logo-loader {
-    width: 64px;
-    height: 64px;
-  }
-
-  .logo-loader::before {
-    width: 64px;
-    height: 64px;
-  }
-
-  .logo-loader::after {
+  .skeleton-logo {
     width: 40px;
     height: 40px;
   }
 
-  .loading-overlay-content .spinner-wrapper {
-    width: 56px;
-    height: 56px;
+  .skeleton-team-name {
+    width: 80px;
   }
 }
 
-/* Animación de entrada suave para todos los loaders */
-.page-loader,
-.loading-overlay {
-  animation: loader-appear 0.25s ease;
-}
-
-@keyframes loader-appear {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+@media (max-width: 480px) {
+  .loading-overlay-content {
+    padding: 18px 24px;
   }
 }

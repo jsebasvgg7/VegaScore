@@ -22,28 +22,52 @@ export default function App() {
   const [showProfile, setShowProfile] = useState(false);
 
   useEffect(() => {
+    // Agregar clase al body durante carga
+    if (loading && initialLoad) {
+      document.body.classList.add('loading');
+    } else {
+      document.body.classList.remove('loading');
+    }
+
+    return () => {
+      document.body.classList.remove('loading');
+    };
+  }, [loading, initialLoad]);
+
+  useEffect(() => {
+    let mounted = true;
+
     // Obtener sesión inicial
     supabase.auth.getSession().then(({ data }) => {
+      if (!mounted) return;
+
       setSession(data?.session || null);
+      
       if (data?.session) {
         loadUserData(data.session.user.id);
       } else {
         setLoading(false);
-        setInitialLoad(false); // NUEVO
+        setInitialLoad(false);
       }
     });
 
     // Escuchar cambios de sesión
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
+        if (!mounted) return;
+
         setSession(session);
         if (session) {
           loadUserData(session.user.id);
+        } else {
+          setLoading(false);
+          setCurrentUser(null);
         }
       }
     );
 
     return () => {
+      mounted = false;
       listener.subscription.unsubscribe();
     };
   }, []);
@@ -91,12 +115,15 @@ export default function App() {
     } catch (err) {
       console.error("Error loading user data:", err);
     } finally {
-      setLoading(false);
-      setInitialLoad(false); // NUEVO
+      // Pequeño delay para evitar flash en móviles
+      setTimeout(() => {
+        setLoading(false);
+        setInitialLoad(false);
+      }, 300);
     }
   };
 
-  // Solo mostrar PageLoader en la carga inicial, no en recargas
+  // Solo mostrar PageLoader en la carga inicial
   if (loading && initialLoad) {
     return <PageLoader />;
   }
@@ -116,39 +143,39 @@ export default function App() {
         {/* Rutas públicas */}
         <Route
           path="/"
-          element={session ? <Navigate to="/app" /> : <LoginPage />}
+          element={session ? <Navigate to="/app" replace /> : <LoginPage />}
         />
         <Route
           path="/register"
-          element={session ? <Navigate to="/app" /> : <RegisterPage />}
+          element={session ? <Navigate to="/app" replace /> : <RegisterPage />}
         />
 
         {/* Rutas protegidas */}
         <Route
           path="/app"
-          element={session ? <VegaScorePage /> : <Navigate to="/" />}
+          element={session ? <VegaScorePage /> : <Navigate to="/" replace />}
         />
         <Route
           path="/notifications"
-          element={session ? <NotificationsPage currentUser={currentUser} /> : <Navigate to="/" />}
+          element={session ? <NotificationsPage currentUser={currentUser} /> : <Navigate to="/" replace />}
         />
         <Route
           path="/ranking"
-          element={session ? <RankingPage currentUser={currentUser} users={users} /> : <Navigate to="/" />}
+          element={session ? <RankingPage currentUser={currentUser} users={users} /> : <Navigate to="/" replace />}
         />
         <Route
           path="/admin"
-          element={session ? <AdminPage currentUser={currentUser} users={users} /> : <Navigate to="/" />}
+          element={session ? <AdminPage currentUser={currentUser} users={users} /> : <Navigate to="/" replace />}
         />
         <Route
           path="/profile"
-          element={session ? <ProfilePage currentUser={currentUser} onBack={() => window.history.back()} /> : <Navigate to="/" />}
+          element={session ? <ProfilePage currentUser={currentUser} onBack={() => window.history.back()} /> : <Navigate to="/" replace />}
         />
-        <Route path="/stats"
-          element={session ? <StatsPage currentUser={currentUser} /> : <Navigate to="/" />}
+        <Route 
+          path="/stats"
+          element={session ? <StatsPage currentUser={currentUser} /> : <Navigate to="/" replace />}
         />
       </Routes>
-
     </BrowserRouter>
   );
 }
