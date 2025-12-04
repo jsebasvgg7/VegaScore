@@ -137,7 +137,7 @@ export default function RankingPage({ currentUser, onBack }) {
               </div>
               <div className="stat-data">
                 <div className="stat-value-modern">{globalStats.totalUsers}</div>
-                <div className="stat-label-modern">Competidores</div>
+                <div className="stat-label-modern">Usuarios</div>
               </div>
             </div>
             <div className="stat-card-glow users-glow"></div>
@@ -150,7 +150,7 @@ export default function RankingPage({ currentUser, onBack }) {
               </div>
               <div className="stat-data">
                 <div className="stat-value-modern">{globalStats.totalPredictions}</div>
-                <div className="stat-label-modern">Predicciones</div>
+                <div className="stat-label-modern">Predics</div>
               </div>
             </div>
             <div className="stat-card-glow predictions-glow"></div>
@@ -309,7 +309,6 @@ export default function RankingPage({ currentUser, onBack }) {
                 
                 <div className="player-card gold-card">
                   <div className="card-shine gold-shine"></div>
-                  <div className="champion-badge">CAMPEÓN</div>
                   
                   <div className="player-avatar-wrap">
                     <div className="avatar-rings gold-rings">
