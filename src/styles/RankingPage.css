@@ -1,86 +1,106 @@
-/* ==========================================
-   ⚡ AJUSTES DE TEXTO PARA FONDO BLANCO
-   ⚡ PERO MANTENIENDO LEGIBILIDAD EN TARJETAS
-========================================== */
+/* ============================================================
+   🔮 SISTEMA AUTOMÁTICO DE COLORES PARA FONDO BLANCO
+   ============================================================ */
 
-/* Texto global morado */
+/* Texto global en morado cuando el fondo es claro */
+body,
 .ranking-page,
 .ranking-page * {
-  color: #6D28D9 !important; /* morado */
+  color: #6D28D9;
 }
 
-/* ---------------------------
-   FIX: TARJETAS COLORIDAS
---------------------------- */
+/* -----------------------------------------
+   TEXTO BLANCO AUTOMÁTICO EN FONDOS OSCUROS
+------------------------------------------ */
 
-/* Los elementos con fondos intensos necesitan texto blanco */
-.stat-card-modern .stat-value-modern,
-.stat-card-modern .stat-label-modern,
+/* Tarjetas con fondos saturados */
+.stat-card-modern *,
 .stat-icon-modern *,
-.stat-icon-modern,
-.points-num,
-.points-display *,
+.users-gradient *,
+.predictions-gradient *,
+.points-gradient *,
+.accuracy-gradient *,
+.rank-badge-modern *,
+.badge-inner *,
 .stat-icon-circle *,
-.stat-icon-circle,
-.your-rank-modern *,
-.rank-stat-item *,
-.points-display,
-.accuracy-display *,
-.podium-ultra *:not(.podium-title-ultra),
 .player-card *,
+.podium-ultra *,
 .place-medal *,
-.position-num.top-three,
-.pos-number.top-three {
+.champion-crown *,
+.player-avatar-ultra *,
+.user-avatar-small,
+.points-display *,
+.accuracy-display *,
+.acc-fill-modern,
+.clear-search-btn,
+.you-tag {
   color: white !important;
 }
 
-/* Icons dentro de los cuadraditos de stats: blanco para que no se vean raros */
-.stat-icon-modern svg {
-  color: white !important;
-}
-
-/* Ajuste especial para los iconos de la 1ra fila que se ven extraños */
-.users-gradient,
-.predictions-gradient,
-.points-gradient,
-.accuracy-gradient {
-  border: none !important;
-}
-
-.users-gradient svg,
-.predictions-gradient svg,
-.points-gradient svg,
-.accuracy-gradient svg {
-  filter: none !important;
-  opacity: 1 !important;
-}
-
-/* ---------------------------
-   FIX: Labels pequeños
---------------------------- */
+/* Labels pequeños sobre fondos oscuros */
 .stat-label-modern,
-.user-correct-small,
-.stat-lab {
-  color: rgba(255,255,255,0.85) !important;
+.stat-lab,
+.user-correct-small {
+  color: rgba(255, 255, 255, 0.75) !important;
 }
 
-/* ---------------------------
-   FIX: FILAS DEL RANKING
---------------------------- */
-.list-row-modern .user-name-small,
-.list-row-modern .pos-number {
-  color: #6D28D9 !important;
-}
+/* -----------------------------------------
+   COLORES TEMÁTICOS QUE DEBEN MANTENERSE
+------------------------------------------ */
 
-/* Los valores dentro de los chips coloridos deben ser blancos */
-.points-display * {
+/* Oro */
+.points-num,
+.points-icon-small,
+.place-medal.bronze-medal *,
+.rank-icon.gold,
+.podium-title-ultra,
+.champion-name,
+.champion-stat {
   color: #F59E0B !important;
 }
 
-.acc-percent {
+/* Verde */
+.accuracy-color,
+.acc-percent,
+.accuracy-circle * {
   color: #10B981 !important;
 }
 
+/* Azul / gris neutro */
+.user-correct-small {
+  color: #64748B !important;
+}
+
+/* -----------------------------------------
+   ELEMENTOS DE INPUT / FILTROS (CLAROS)
+------------------------------------------ */
+
+.search-modern *,
+.filters-modern *,
+.sorts-modern * {
+  color: #6D28D9 !important;
+}
+
+.search-input-modern::placeholder {
+  color: #A78BFA !important;
+}
+
+/* -----------------------------------------
+   TEXTO BLANCO SOLO CUANDO SE REQUIERE
+------------------------------------------ */
+
+.user-name-small,
+.position-num,
+.preds-num {
+  color: white !important;
+}
+
+/* -----------------------------------------
+   POSICIONES ESPECIALES
+------------------------------------------ */
+.pos-number.top-three {
+  color: #F59E0B !important;
+}
 
 .ranking-page {
   min-height: 100vh;
