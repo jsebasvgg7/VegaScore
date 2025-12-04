@@ -260,7 +260,7 @@
   color: #7C3AED;
 }
 
-/* ========== FILTROS ========== */
+/* ========== FILTROS MEJORADOS ========== */
 .notifications-filters {
   display: flex;
   gap: 12px;
@@ -268,6 +268,7 @@
   padding: 8px;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
 }
 
 .filter-chip {
@@ -511,10 +512,22 @@
   margin: 0;
 }
 
-/* ========== RESPONSIVE ========== */
+/* ========== RESPONSIVE TABLETS ========== */
+@media (max-width: 1024px) {
+  .notifications-page {
+    padding: 24px 16px;
+  }
+
+  .page-title {
+    font-size: 32px;
+  }
+}
+
+/* ========== RESPONSIVE MÓVILES ========== */
 @media (max-width: 768px) {
   .notifications-page {
     padding: 20px 12px;
+    padding-bottom: 90px; /* Espacio para bottom nav */
   }
 
   .page-title {
@@ -525,12 +538,14 @@
     font-size: 14px;
   }
 
+  /* Banner más compacto */
   .install-banner {
     padding: 20px;
+    border-radius: 20px;
   }
 
   .install-banner.pinned {
-    top: 60px;
+    top: 90px; /* Debajo del header móvil */
   }
 
   .banner-content {
@@ -543,6 +558,7 @@
     width: 64px;
     height: 64px;
     margin: 0 auto;
+    border-radius: 16px;
   }
 
   .banner-title {
@@ -563,91 +579,230 @@
     height: 48px;
   }
 
-  .banner-benefits {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .benefit-item {
-    justify-content: center;
-  }
-
+  /* ========== FILTROS HORIZONTALES CON SCROLL ========== */
   .notifications-filters {
-    flex-direction: column;
+    padding: 6px;
     gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Ocultar scrollbar */
+  .notifications-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Indicador visual de más contenido */
+  .notifications-filters::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    bottom: 6px;
+    width: 30px;
+    background: linear-gradient(to left, white 50%, transparent);
+    pointer-events: none;
+    border-radius: 0 12px 12px 0;
   }
 
   .filter-chip {
-    width: 100%;
+    flex: 0 0 auto;
+    min-width: fit-content;
+    padding: 10px 16px;
+    gap: 6px;
+    font-size: 13px;
+    border-radius: 10px;
+    scroll-snap-align: start;
+    white-space: nowrap;
   }
 
-  /* Notificaciones compactas estilo móvil */
+  .filter-chip svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .chip-count {
+    padding: 2px 6px;
+    font-size: 11px;
+    border-radius: 8px;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .filter-chip.active {
+    box-shadow: 0 3px 12px rgba(124, 58, 237, 0.4);
+  }
+
+  /* Notificaciones compactas */
   .notification-card {
-    padding: 12px;
+    padding: 14px;
     gap: 12px;
     border-radius: 16px;
-    flex-direction: row;
+  }
+
+  .notif-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+  }
+
+  .notif-title {
+    font-size: 15px;
+  }
+
+  .notif-time {
+    font-size: 11px;
+  }
+
+  .notif-description {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .detail-item {
+    font-size: 12px;
+    padding: 3px 8px;
+    gap: 5px;
+  }
+
+  .detail-item svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .notif-result {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .result-score {
+    font-size: 15px;
+  }
+
+  .notif-badge {
+    top: 12px;
+    right: 12px;
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+}
+
+/* ========== MÓVILES PEQUEÑOS ========== */
+@media (max-width: 480px) {
+  .notifications-page {
+    padding: 16px 12px;
+    padding-bottom: 85px;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  .bell-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .install-banner {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .install-banner.pinned {
+    top: 80px;
+  }
+
+  .banner-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+  }
+
+  .banner-title {
+    font-size: 16px;
+  }
+
+  .banner-description {
+    font-size: 13px;
+  }
+
+  /* Filtros más compactos */
+  .notifications-filters {
+    padding: 5px;
+    gap: 6px;
+    border-radius: 12px;
+  }
+
+  .notifications-filters::after {
+    width: 25px;
+    top: 5px;
+    right: 5px;
+    bottom: 5px;
+  }
+
+  .filter-chip {
+    padding: 8px 14px;
+    gap: 5px;
+    font-size: 12px;
+    border-radius: 9px;
+  }
+
+  .filter-chip svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .chip-count {
+    padding: 1px 5px;
+    font-size: 10px;
+    min-width: 18px;
+  }
+
+  /* Notificaciones más compactas */
+  .notification-card {
+    padding: 12px;
+    gap: 10px;
+    border-radius: 14px;
   }
 
   .notif-icon-wrapper {
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    flex-shrink: 0;
   }
 
-  .notif-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .notif-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4px;
-    gap: 8px;
+  .notif-icon-wrapper svg {
+    width: 18px;
+    height: 18px;
   }
 
   .notif-title {
     font-size: 14px;
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .notif-time {
-    font-size: 11px;
-    flex-shrink: 0;
   }
 
   .notif-description {
     font-size: 13px;
-    margin: 0 0 8px 0;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  .notif-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 0;
+    margin-bottom: 8px;
   }
 
   .detail-item {
     font-size: 11px;
-    padding: 3px 8px;
-    background: #F9FAFB;
-    border-radius: 6px;
-    white-space: nowrap;
+    padding: 2px 7px;
+  }
+
+  .detail-item svg {
+    width: 12px;
+    height: 12px;
   }
 
   .notif-result {
-    padding: 6px 10px;
-    border-radius: 8px;
-    margin-top: 6px;
+    padding: 7px 10px;
     font-size: 13px;
   }
 
@@ -656,55 +811,35 @@
   }
 
   .notif-badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 10px;
+    right: 10px;
     padding: 4px 8px;
     font-size: 9px;
-    border-radius: 8px;
   }
 }
 
-
-@media (max-width: 480px) {
+/* ========== LANDSCAPE MÓVIL ========== */
+@media (max-height: 600px) and (orientation: landscape) {
   .notifications-page {
-    padding: 16px 12px;
-  }
-
-  .page-title {
-    font-size: 24px;
-  }
-
-  .install-banner {
-    padding: 16px;
-  }
-
-  .banner-icon {
-    width: 56px;
-    height: 56px;
-  }
-
-  .banner-title {
-    font-size: 16px;
-  }
-
-  .banner-benefits {
     padding: 12px;
   }
 
-  .benefit-item {
-    font-size: 12px;
+  .install-banner.pinned {
+    top: 70px;
+    padding: 12px;
+  }
+
+  .banner-icon {
+    width: 48px;
+    height: 48px;
   }
 
   .notification-card {
-    padding: 14px;
+    padding: 10px;
   }
 
-  .notif-title {
-    font-size: 15px;
-  }
-
-  .notif-description {
-    font-size: 14px;
+  .notif-icon-wrapper {
+    width: 36px;
+    height: 36px;
   }
 }
