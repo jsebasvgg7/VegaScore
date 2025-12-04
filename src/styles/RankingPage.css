@@ -1,7 +1,13 @@
 /* ==========================================
    RANKING PAGE - ULTRA PREMIUM DESIGN
 ========================================== */
-
+/* Fondo general blanco */
+.ranking-page {
+background: #ffffff !important;
+}
+.ranking-page-loading {
+background: #ffffff !important;
+}
 .ranking-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
@@ -1892,11 +1898,5 @@ transition-duration: 0.01ms !important;
 background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 50%, #CBD5E1 100%);
 }
 }
-/* Fondo general blanco */
-.ranking-page {
-background: #ffffff !important;
-}
-.ranking-page-loading {
-background: #ffffff !important;
-}
+
 }
