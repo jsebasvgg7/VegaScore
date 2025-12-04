@@ -1328,7 +1328,7 @@
 }
 
 /* ==========================================
-   RESPONSIVE DESIGN - COMPACTO
+   RESPONSIVE DESIGN - COMPACTO Y FUNCIONAL
 ========================================== */
 
 @media (max-width: 1200px) {
@@ -1401,6 +1401,11 @@
     padding: 20px;
   }
   
+  .rank-stats-modern {
+    flex-wrap: nowrap;
+    gap: 16px;
+  }
+  
   .badge-inner {
     padding: 16px 24px;
   }
@@ -1410,9 +1415,15 @@
   }
   
   .stat-num {
-    font-size: 20px;
+    font-size: 18px;
+  }
+  
+  .stat-icon-circle {
+    width: 40px;
+    height: 40px;
   }
 
+  /* PODIO EN VERTICAL */
   .podium-ultra {
     padding: 24px 16px;
   }
@@ -1422,57 +1433,87 @@
   }
 
   .podium-stage {
-    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+  
+  .podium-player {
+    order: 0 !important;
+  }
+  
+  .first-place {
+    animation-delay: 0s;
+  }
+
+  .second-place {
+    animation-delay: 0.2s;
+  }
+
+  .third-place {
+    animation-delay: 0.4s;
+  }
+  
+  .place-height {
+    display: none;
+  }
+  
+  .player-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    padding: 20px;
+    align-items: center;
+  }
+  
+  .player-avatar-wrap {
+    margin: 0;
   }
 
   .player-avatar-ultra {
-    width: 65px;
-    height: 65px;
-    font-size: 26px;
-    border-width: 3px;
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
   }
 
   .champion-avatar {
-    width: 80px;
-    height: 80px;
-    font-size: 32px;
-    border-width: 4px;
+    width: 85px;
+    height: 85px;
+    font-size: 34px;
   }
   
   .player-name-ultra {
-    font-size: 14px;
+    text-align: left;
+    margin-bottom: 8px;
   }
   
-  .champion-name {
-    font-size: 16px;
+  .player-stats-ultra {
+    border-top: none;
+    padding-top: 0;
+    justify-content: flex-start;
   }
   
-  .stat-value-ultra {
-    font-size: 15px;
-  }
-  
-  .champion-stat {
-    font-size: 16px;
-  }
-  
-  .place-1 {
-    height: 100px;
-  }
-
-  .place-2 {
-    height: 75px;
-  }
-
-  .place-3 {
-    height: 50px;
+  .place-medal,
+  .champion-crown {
+    position: absolute;
+    top: -10px;
+    right: 10px;
   }
 
   .controls-modern {
     gap: 12px;
+    flex-wrap: wrap;
   }
 
   .search-modern {
     padding: 12px 16px;
+    flex: 1 1 100%;
+  }
+  
+  .filters-modern,
+  .sorts-modern {
+    flex: 1 1 auto;
   }
   
   .filter-modern,
@@ -1481,8 +1522,14 @@
     font-size: 13px;
   }
 
+  /* TABLA CON SCROLL HORIZONTAL */
+  .ranking-list-modern {
+    overflow-x: auto;
+  }
+  
   .list-header-modern,
   .list-row-modern {
+    min-width: 600px;
     grid-template-columns: 60px 1fr 100px 100px 140px;
     gap: 10px;
     padding: 14px 16px;
@@ -1553,22 +1600,16 @@
     font-size: 20px;
   }
 
-  .podium-stage {
-    gap: 10px;
-  }
-
   .player-avatar-ultra {
-    width: 55px;
-    height: 55px;
-    font-size: 22px;
-    border-width: 3px;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
   }
 
   .champion-avatar {
-    width: 70px;
-    height: 70px;
-    font-size: 28px;
-    border-width: 3px;
+    width: 75px;
+    height: 75px;
+    font-size: 30px;
   }
   
   .champion-crown {
@@ -1583,7 +1624,6 @@
   
   .player-name-ultra {
     font-size: 13px;
-    margin-bottom: 12px;
   }
   
   .champion-name {
@@ -1597,18 +1637,6 @@
   .champion-stat {
     font-size: 15px;
   }
-
-  .place-1 {
-    height: 85px;
-  }
-
-  .place-2 {
-    height: 65px;
-  }
-
-  .place-3 {
-    height: 45px;
-  }
   
   .controls-modern {
     gap: 10px;
@@ -1616,12 +1644,10 @@
   
   .search-modern {
     padding: 10px 14px;
-    min-width: 100%;
   }
   
   .filters-modern,
   .sorts-modern {
-    width: 100%;
     overflow-x: auto;
     justify-content: flex-start;
   }
@@ -1630,10 +1656,12 @@
   .sort-modern {
     padding: 8px 14px;
     font-size: 12px;
+    white-space: nowrap;
   }
 
   .list-header-modern,
   .list-row-modern {
+    min-width: 550px;
     grid-template-columns: 55px 1fr 90px 80px 120px;
     gap: 8px;
     padding: 12px 14px;
@@ -1658,7 +1686,7 @@
   }
   
   .points-display {
-    padding: 6px 12px;
+    padding: 6px 10px;
   }
   
   .points-num {
@@ -1693,20 +1721,23 @@
   }
   
   .stat-card-inner {
-    gap: 10px;
+    gap: 8px;
+    flex-direction: column;
+    text-align: center;
   }
   
   .stat-icon-modern {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
   }
   
   .stat-value-modern {
-    font-size: 16px;
+    font-size: 18px;
   }
   
   .stat-label-modern {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .hero-title {
@@ -1717,6 +1748,11 @@
     padding: 16px;
   }
   
+  .your-rank-content {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
   .badge-inner {
     padding: 14px 20px;
   }
@@ -1724,14 +1760,28 @@
   .position-num {
     font-size: 32px;
   }
+  
+  .rank-stats-modern {
+    width: 100%;
+    justify-content: space-around;
+  }
+  
+  .stat-num {
+    font-size: 16px;
+  }
+  
+  .stat-icon-circle {
+    width: 36px;
+    height: 36px;
+  }
 
   .podium-ultra {
     padding: 16px 10px;
   }
   
   .podium-header-ultra {
-    gap: 10px;
-    margin-bottom: 24px;
+    gap: 8px;
+    margin-bottom: 20px;
   }
   
   .podium-icon-ultra {
@@ -1747,38 +1797,41 @@
     width: 20px;
     height: 20px;
   }
+  
+  .podium-stage {
+    gap: 16px;
+  }
 
   .player-card {
-    padding: 20px 14px;
+    padding: 16px;
+    gap: 12px;
   }
 
   .player-avatar-ultra {
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
-    border-width: 2px;
+    width: 55px;
+    height: 55px;
+    font-size: 22px;
   }
 
   .champion-avatar {
-    width: 62px;
-    height: 62px;
-    font-size: 25px;
-    border-width: 3px;
+    width: 68px;
+    height: 68px;
+    font-size: 28px;
   }
   
   .champion-crown {
-    width: 54px;
-    height: 54px;
+    width: 50px;
+    height: 50px;
   }
   
   .place-medal {
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
   }
   
   .player-name-ultra {
-    font-size: 12px;
-    margin-bottom: 10px;
+    font-size: 13px;
+    margin-bottom: 6px;
   }
   
   .champion-name {
@@ -1786,8 +1839,8 @@
   }
   
   .player-stats-ultra {
-    gap: 10px;
-    padding-top: 12px;
+    gap: 8px;
+    flex-wrap: wrap;
   }
   
   .stat-ultra {
@@ -1795,8 +1848,8 @@
   }
   
   .stat-icon-color {
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
   }
   
   .stat-value-ultra {
@@ -1806,24 +1859,42 @@
   .champion-stat {
     font-size: 14px;
   }
-
-  .place-1 {
-    height: 75px;
+  
+  .stat-separator {
+    display: none;
   }
-
-  .place-2 {
-    height: 55px;
+  
+  .controls-modern {
+    gap: 8px;
   }
-
-  .place-3 {
-    height: 40px;
+  
+  .search-modern {
+    padding: 10px 12px;
+  }
+  
+  .filters-modern,
+  .sorts-modern {
+    width: 100%;
+  }
+  
+  .filter-modern,
+  .sort-modern {
+    padding: 8px 10px;
+    font-size: 12px;
+    flex: 1;
+  }
+  
+  .filter-modern span,
+  .sort-modern span {
+    display: none;
   }
 
   .list-header-modern,
   .list-row-modern {
-    grid-template-columns: 50px 1fr 85px 75px 110px;
+    min-width: 500px;
+    grid-template-columns: 45px 1fr 80px 70px 100px;
     gap: 6px;
-    padding: 10px 12px;
+    padding: 10px 10px;
   }
   
   .header-cell {
@@ -1831,22 +1902,21 @@
   }
   
   .pos-number {
-    font-size: 14px;
+    font-size: 13px;
   }
   
   .pos-number.top-three {
-    font-size: 15px;
+    font-size: 14px;
   }
   
   .user-avatar-small {
     width: 32px;
     height: 32px;
     font-size: 12px;
-    border-width: 2px;
   }
   
   .user-display {
-    gap: 10px;
+    gap: 8px;
   }
   
   .user-name-small {
@@ -1858,21 +1928,21 @@
   }
   
   .you-tag {
-    padding: 2px 6px;
-    font-size: 9px;
+    padding: 2px 5px;
+    font-size: 8px;
   }
   
   .points-display {
-    padding: 5px 10px;
+    padding: 4px 8px;
   }
   
   .points-icon-small {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
   }
   
   .points-num {
-    font-size: 13px;
+    font-size: 12px;
   }
   
   .preds-num {
@@ -1885,6 +1955,6 @@
   
   .acc-percent {
     font-size: 11px;
-    min-width: 40px;
+    min-width: 38px;
   }
 }
