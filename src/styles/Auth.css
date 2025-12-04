@@ -1,5 +1,5 @@
 /* ===================================
-   AUTH PAGES - Minimal Design
+   AUTH PAGES - Purple Theme Design
 =================================== */
 
 .auth-wrapper {
@@ -7,57 +7,56 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0a0a0a; /* <= CAMBIO: Fondo Negro Oscuro */
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
   padding: 20px;
   position: relative;
   overflow: hidden;
 }
 
+/* Patrón de fondo sutil */
+.auth-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(96, 81, 155, 0.03) 10px, rgba(96, 81, 155, 0.03) 20px);
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* Esquinas decorativas SUPERIORES */
-.auth-wrapper::before,
 .auth-wrapper::after {
   content: '';
   position: absolute;
   width: 120px;
   height: 120px;
-  /* Mantengo el blanco semi-transparente para el contraste con el fondo oscuro */
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(96, 81, 155, 0.25);
   pointer-events: none;
-}
-
-.auth-wrapper::before {
-  top: 30px;
-  left: 30px;
-  border-right: none;
-  border-bottom: none;
-  border-radius: 20px 0 0 0;
-}
-
-.auth-wrapper::after {
   top: 30px;
   right: 30px;
   border-left: none;
   border-bottom: none;
   border-radius: 0 20px 0 0;
+  z-index: 0;
 }
-
-/* ** BLOQUE ELIMINADO: Esquinas inferiores de .auth-card ** */
-
 
 .auth-card {
   position: relative;
   width: 100%;
   max-width: 380px;
-  /* El fondo de la tarjeta es semi-transparente para el efecto "vidrio esmerilado" */
-  /* Lo mantengo semi-transparente pero puedes probar con rgba(0, 0, 0, 0.6) para más oscuridad si quieres. */
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(96, 81, 155, 0.2);
   border-radius: 24px;
   padding: 40px 36px;
   z-index: 10;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); /* Sombra un poco más oscura para el fondo negro */
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(96, 81, 155, 0.1) inset;
 }
 
 .auth-card h2 {
@@ -73,7 +72,7 @@
   width: 100%;
   padding: 14px 24px;
   margin-bottom: 20px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border: 1.5px solid rgba(96, 81, 155, 0.3);
   border-radius: 50px;
   background: transparent;
   font-size: 14px;
@@ -83,8 +82,10 @@
 }
 
 .auth-card input:focus {
-  border-color: #6a11cb; /* Bordes morados al enfocar */
-  background: rgba(106, 17, 203, 0.1); /* Fondo morado muy ligero al enfocar */
+  outline: none;
+  border-color: #60519b;
+  background: rgba(96, 81, 155, 0.1);
+  box-shadow: 0 0 0 3px rgba(96, 81, 155, 0.15);
 }
 
 .auth-card input::placeholder {
@@ -99,8 +100,7 @@
   margin-top: 10px;
   border: none;
   border-radius: 50px;
-  /* CAMBIO: Gradiente de Morado a Azul Púrpura */
-  background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+  background: linear-gradient(135deg, #60519b 0%, #8b7fc7 100%);
   color: white;
   font-size: 15px;
   font-weight: 500;
@@ -109,12 +109,27 @@
   position: relative;
   overflow: hidden;
   letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(96, 81, 155, 0.3);
+}
+
+.auth-card .btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.auth-card .btn:hover:not(:disabled)::before {
+  left: 100%;
 }
 
 .auth-card .btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  /* CAMBIO: Sombra Morada */
-  box-shadow: 0 8px 20px rgba(106, 17, 203, 0.5);
+  box-shadow: 0 8px 20px rgba(96, 81, 155, 0.5);
 }
 
 .auth-card .btn:active:not(:disabled) {
@@ -148,13 +163,13 @@
 
 .auth-alt a:hover,
 .auth-alt button:hover {
-  color: #6a11cb; /* Enlaces morados al hacer hover */
+  color: #8b7fc7;
 }
 
 .success-message {
   margin-top: 16px;
   font-size: 13px;
-  color: #4ade80; /* Mantengo el verde para éxito */
+  color: #4ade80;
   text-align: center;
   font-weight: 400;
 }
@@ -162,29 +177,17 @@
 .error-message {
   margin-top: 16px;
   font-size: 13px;
-  color: #ff6b9d; /* Mantengo el color de error que es un rosa fuerte */
+  color: #ff6b9d;
   text-align: center;
   font-weight: 400;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .auth-wrapper::before,
   .auth-wrapper::after {
     width: 80px;
     height: 80px;
-  }
-
-  .auth-wrapper::before,
-  .auth-wrapper::after {
     top: 20px;
-  }
-
-  .auth-wrapper::before {
-    left: 20px;
-  }
-
-  .auth-wrapper::after {
     right: 20px;
   }
 
@@ -213,22 +216,10 @@
     padding: 16px;
   }
 
-  .auth-wrapper::before,
   .auth-wrapper::after {
     width: 60px;
     height: 60px;
-  }
-
-  .auth-wrapper::before,
-  .auth-wrapper::after {
     top: 16px;
-  }
-
-  .auth-wrapper::before {
-    left: 16px;
-  }
-
-  .auth-wrapper::after {
     right: 16px;
   }
 
