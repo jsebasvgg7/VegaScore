@@ -18,6 +18,7 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
   const [showProfile, setShowProfile] = useState(false);
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function App() {
         loadUserData(data.session.user.id);
       } else {
         setLoading(false);
+        setInitialLoad(false); // NUEVO
       }
     });
 
@@ -90,10 +92,12 @@ export default function App() {
       console.error("Error loading user data:", err);
     } finally {
       setLoading(false);
+      setInitialLoad(false); // NUEVO
     }
   };
 
-  if (loading) {
+  // Solo mostrar PageLoader en la carga inicial, no en recargas
+  if (loading && initialLoad) {
     return <PageLoader />;
   }
 
