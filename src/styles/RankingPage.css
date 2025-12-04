@@ -1,6 +1,54 @@
-/* ==========================================
-   RANKING PAGE - ULTRA PREMIUM DESIGN
-========================================== */
+.ranking-page,
+.ranking-page * {
+  color: #111827 !important; /* texto principal */
+}
+
+.hero-subtitle,
+.stat-label-modern,
+.user-correct-small,
+.position-hash,
+.badge-total,
+.stat-lab,
+.header-cell,
+.user-name-small,
+.preds-num,
+.acc-percent,
+.loading-text {
+  color: #4B5563 !important; /* gris medio */
+}
+
+.user-correct-small,
+.stat-label-modern,
+.stat-lab {
+  color: #6B7280 !important; /* gris suave */
+}
+
+/* etiquetas especiales */
+.you-tag {
+  background: #7C3AED !important;
+  color: white !important;
+}
+
+/* valores que deben seguir siendo coloridos */
+.points-num,
+.points-icon-small {
+  color: #F59E0B !important;
+}
+
+.pos-number.top-three {
+  color: #F59E0B !important;
+}
+
+.accuracy-color,
+.acc-fill-modern {
+  color: #10B981 !important;
+}
+
+/* botones activos */
+.filter-modern.active,
+.sort-modern.active {
+  color: white !important;
+}
 
 .ranking-page {
   min-height: 100vh;
