@@ -130,12 +130,7 @@ export default function MatchCard({ match, userPred, onPredict }) {
     <div className="match-card-light">
       
       <div className="match-header-light">
-        {/* Fecha del partido */}
-        <div className="match-date-badge">
-          <Calendar size={12} />
-          <span>{formatMatchDate(match.date)}</span>
-        </div>
-        
+        {/* Liga y Hora */}
         <div className="match-league-info-light">
           <Zap size={14} className="league-icon" />
           <span className="league-name">{match.league}</span>
@@ -144,6 +139,12 @@ export default function MatchCard({ match, userPred, onPredict }) {
             <Clock size={12} />
             {match.time}
           </span>
+        </div>
+        
+        {/* Fecha del partido en la esquina */}
+        <div className="match-date-badge">
+          <Calendar size={12} />
+          <span>{formatMatchDate(match.date)}</span>
         </div>
       </div>
 
