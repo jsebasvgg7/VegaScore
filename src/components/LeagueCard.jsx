@@ -1,3 +1,4 @@
+// src/components/LeagueCard.jsx
 import React, { useState } from 'react';
 import { Trophy, Target, Award, Star, CheckCircle2, Calendar, Shield } from 'lucide-react';
 import '../styles/LeagueCard.css';
@@ -22,6 +23,7 @@ export default function LeagueCard({ league, userPrediction, onPredict }) {
     // Si no hay URL, usar emoji
     return <span className="league-logo-emoji-display">{fallbackEmoji || '🏆'}</span>;
   };
+
   const [champion, setChampion] = useState(userPrediction?.predicted_champion ?? '');
   const [topScorer, setTopScorer] = useState(userPrediction?.predicted_top_scorer ?? '');
   const [topAssist, setTopAssist] = useState(userPrediction?.predicted_top_assist ?? '');
@@ -59,26 +61,10 @@ export default function LeagueCard({ league, userPrediction, onPredict }) {
       <div className="league-header-light">
         <div className="league-info-section">
           <div className="league-logo-container">
-            {league.logo_url && league.logo_url.startsWith('http') ? (
-              <>
-                <img 
-                  src={league.logo_url} 
-                  alt={`${league.name} logo`}
-                  className="league-logo-img"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextElementSibling.style.display = 'flex';
-                  }}
-                />
-                <span className="league-logo-emoji-display" style={{ display: 'none' }}>
-                  {league.logo || '🏆'}
-                </span>
-              </>
-            ) : (
-              <span className="league-logo-emoji-display">
-                {league.logo || '🏆'}
-              </span>
-            )}
+            {renderLeagueLogo(league.logo_url, league.logo)}
+            <span className="league-logo-emoji-display" style={{ display: 'none' }}>
+              {league.logo}
+            </span>
           </div>
           <div className="league-text-info">
             <h3 className="league-name-light">{league.name}</h3>
