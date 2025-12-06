@@ -114,121 +114,7 @@ export default function RankingPage({ currentUser, onBack }) {
       </div>
 
       <div className="ranking-page-container">
-        {/* Stats Cards Grid */}
-        <div className="stats-grid-modern">
-          <div className="stat-card-modern">
-            <div className="stat-card-inner">
-              <div className="stat-icon-modern users-gradient">
-                <Users size={24} />
-              </div>
-              <div className="stat-data">
-                <div className="stat-value-modern">{globalStats.totalUsers}</div>
-                <div className="stat-label-modern">Usuarios</div>
-              </div>
-            </div>
-            <div className="stat-card-glow users-glow"></div>
-          </div>
-
-          <div className="stat-card-modern">
-            <div className="stat-card-inner">
-              <div className="stat-icon-modern predictions-gradient">
-                <Target size={24} />
-              </div>
-              <div className="stat-data">
-                <div className="stat-value-modern">{globalStats.totalPredictions}</div>
-                <div className="stat-label-modern">Predics</div>
-              </div>
-            </div>
-            <div className="stat-card-glow predictions-glow"></div>
-          </div>
-
-          <div className="stat-card-modern">
-            <div className="stat-card-inner">
-              <div className="stat-icon-modern points-gradient">
-                <Zap size={24} />
-              </div>
-              <div className="stat-data">
-                <div className="stat-value-modern">{globalStats.totalPoints}</div>
-                <div className="stat-label-modern">Puntos Totales</div>
-              </div>
-            </div>
-            <div className="stat-card-glow points-glow"></div>
-          </div>
-
-          <div className="stat-card-modern">
-            <div className="stat-card-inner">
-              <div className="stat-icon-modern accuracy-gradient">
-                <BarChart3 size={24} />
-              </div>
-              <div className="stat-data">
-                <div className="stat-value-modern">{globalStats.avgAccuracy}%</div>
-                <div className="stat-label-modern">Precisión Media</div>
-              </div>
-            </div>
-            <div className="stat-card-glow accuracy-glow"></div>
-          </div>
-        </div>
-
-        {/* Tu Posición - Modernizado */}
-        {currentUserData && (
-          <div className="your-rank-modern">
-            <div className="your-rank-content">
-              <div className="rank-badge-modern">
-                <div className="badge-inner">
-                  <Shield className="badge-icon" size={24} />
-                  <div className="badge-position">
-                    <span className="position-hash">#</span>
-                    <span className="position-num">{currentUserPosition}</span>
-                  </div>
-                  <div className="badge-total">de {users.length}</div>
-                </div>
-              </div>
-              
-              <div className="rank-stats-modern">
-                <div className="rank-stat-item">
-                  <div className="stat-icon-circle points-circle">
-                    <Zap size={18} />
-                  </div>
-                  <div className="stat-text">
-                    <div className="stat-num">{currentUserData.points}</div>
-                    <div className="stat-lab">Puntos</div>
-                  </div>
-                </div>
-
-                <div className="stat-divider-modern"></div>
-
-                <div className="rank-stat-item">
-                  <div className="stat-icon-circle accuracy-circle">
-                    <Target size={18} />
-                  </div>
-                  <div className="stat-text">
-                    <div className="stat-num">
-                      {currentUserData.predictions > 0 
-                        ? Math.round((currentUserData.correct / currentUserData.predictions) * 100) 
-                        : 0}%
-                    </div>
-                    <div className="stat-lab">Precisión</div>
-                  </div>
-                </div>
-
-                <div className="stat-divider-modern"></div>
-
-                <div className="rank-stat-item">
-                  <div className="stat-icon-circle predictions-circle">
-                    <Flame size={18} />
-                  </div>
-                  <div className="stat-text">
-                    <div className="stat-num">{currentUserData.predictions}</div>
-                    <div className="stat-lab">Predicciones</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="your-rank-shine"></div>
-          </div>
-        )}
-
-        {/* PODIO TOP 3 - Ultra Mejorado */}
+                {/* PODIO TOP 3 - Ultra Mejorado */}
         {users.length >= 3 && (
           <div className="podium-ultra">
             <div className="podium-header-ultra">
@@ -383,6 +269,121 @@ export default function RankingPage({ currentUser, onBack }) {
             </div>
           </div>
         )}
+        
+        {/* Tu Posición - Modernizado */}
+        {currentUserData && (
+          <div className="your-rank-modern">
+            <div className="your-rank-content">
+              <div className="rank-badge-modern">
+                <div className="badge-inner">
+                  <Shield className="badge-icon" size={24} />
+                  <div className="badge-position">
+                    <span className="position-hash">#</span>
+                    <span className="position-num">{currentUserPosition}</span>
+                  </div>
+                  <div className="badge-total">de {users.length}</div>
+                </div>
+              </div>
+              
+              <div className="rank-stats-modern">
+                <div className="rank-stat-item">
+                  <div className="stat-icon-circle points-circle">
+                    <Zap size={18} />
+                  </div>
+                  <div className="stat-text">
+                    <div className="stat-num">{currentUserData.points}</div>
+                    <div className="stat-lab">Puntos</div>
+                  </div>
+                </div>
+
+                <div className="stat-divider-modern"></div>
+
+                <div className="rank-stat-item">
+                  <div className="stat-icon-circle accuracy-circle">
+                    <Target size={18} />
+                  </div>
+                  <div className="stat-text">
+                    <div className="stat-num">
+                      {currentUserData.predictions > 0 
+                        ? Math.round((currentUserData.correct / currentUserData.predictions) * 100) 
+                        : 0}%
+                    </div>
+                    <div className="stat-lab">Precisión</div>
+                  </div>
+                </div>
+
+                <div className="stat-divider-modern"></div>
+
+                <div className="rank-stat-item">
+                  <div className="stat-icon-circle predictions-circle">
+                    <Flame size={18} />
+                  </div>
+                  <div className="stat-text">
+                    <div className="stat-num">{currentUserData.predictions}</div>
+                    <div className="stat-lab">Predicciones</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="your-rank-shine"></div>
+          </div>
+        )}
+
+        {/* Stats Cards Grid */}
+        <div className="stats-grid-modern">
+          <div className="stat-card-modern">
+            <div className="stat-card-inner">
+              <div className="stat-icon-modern users-gradient">
+                <Users size={24} />
+              </div>
+              <div className="stat-data">
+                <div className="stat-value-modern">{globalStats.totalUsers}</div>
+                <div className="stat-label-modern">Usuarios</div>
+              </div>
+            </div>
+            <div className="stat-card-glow users-glow"></div>
+          </div>
+
+          <div className="stat-card-modern">
+            <div className="stat-card-inner">
+              <div className="stat-icon-modern predictions-gradient">
+                <Target size={24} />
+              </div>
+              <div className="stat-data">
+                <div className="stat-value-modern">{globalStats.totalPredictions}</div>
+                <div className="stat-label-modern">Predics</div>
+              </div>
+            </div>
+            <div className="stat-card-glow predictions-glow"></div>
+          </div>
+
+          <div className="stat-card-modern">
+            <div className="stat-card-inner">
+              <div className="stat-icon-modern points-gradient">
+                <Zap size={24} />
+              </div>
+              <div className="stat-data">
+                <div className="stat-value-modern">{globalStats.totalPoints}</div>
+                <div className="stat-label-modern">Puntos Totales</div>
+              </div>
+            </div>
+            <div className="stat-card-glow points-glow"></div>
+          </div>
+
+          <div className="stat-card-modern">
+            <div className="stat-card-inner">
+              <div className="stat-icon-modern accuracy-gradient">
+                <BarChart3 size={24} />
+              </div>
+              <div className="stat-data">
+                <div className="stat-value-modern">{globalStats.avgAccuracy}%</div>
+                <div className="stat-label-modern">Precisión Media</div>
+              </div>
+            </div>
+            <div className="stat-card-glow accuracy-glow"></div>
+          </div>
+        </div>
+
 
         {/* Controls Section */}
         <div className="controls-modern">
