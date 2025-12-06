@@ -89,6 +89,27 @@ body {
   background: linear-gradient(135deg, #0f1015 0%, #1a1c24 100%);
 }
 
+/* ==========================================
+   HEADER - FIX MÓVIL NO DEBE CAMBIAR
+========================================== */
+
+/* Desktop header - modo oscuro */
+@media (min-width: 769px) {
+  [data-theme="dark"] .app-header {
+    background: linear-gradient(135deg, #1e202c 0%, #31323e 100%);
+    border-bottom-color: rgba(124, 107, 184, 0.2);
+  }
+}
+
+/* Mobile header - NO cambia (se mantiene igual en ambos modos) */
+@media (max-width: 768px) {
+  .app-header {
+    background: linear-gradient(135deg, #1e202c 0%, #31323e 100%) !important;
+    border-bottom-color: rgba(96, 81, 155, 0.2) !important;
+  }
+}
+
+
 /* ================================
    LAYOUT CON HEADER PERMANENTE
 ================================ */
@@ -1200,33 +1221,88 @@ button {
   color: var(--text-secondary);
 }
 
+
 /* ==========================================
-   NOTIFICATIONS PAGE - DETALLES ADICIONALES
+   FILTROS Y NOTIFICACIONES - COMPLETOS
 ========================================== */
 
-[data-theme="dark"] .notifications-header h1,
-[data-theme="dark"] .page-title {
-  color: var(--text-primary);
+/* Filtros Modern */
+[data-theme="dark"] .filters-modern,
+[data-theme="dark"] .sorts-modern {
+  background: var(--card);
+  border-color: var(--border);
 }
 
-[data-theme="dark"] .page-subtitle {
+[data-theme="dark"] .filter-modern,
+[data-theme="dark"] .sort-modern {
   color: var(--text-secondary);
 }
 
-[data-theme="dark"] .notif-description {
+[data-theme="dark"] .filter-modern:hover,
+[data-theme="dark"] .sort-modern:hover {
+  background: rgba(124, 107, 184, 0.1);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .filter-modern.active,
+[data-theme="dark"] .sort-modern.active {
+  background: linear-gradient(135deg, #7c6bb8, #9988cc);
+  color: white;
+}
+
+/* Notifications Filters - IMPORTANTE */
+[data-theme="dark"] .notifications-filters {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+/* Filter Chip - ESTILOS COMPLETOS */
+[data-theme="dark"] .filter-chip {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+
+[data-theme="dark"] .filter-chip:hover {
+  background: rgba(124, 107, 184, 0.1);
+  color: var(--text-primary);
+  border-color: rgba(124, 107, 184, 0.2);
+}
+
+[data-theme="dark"] .filter-chip.active {
+  background: linear-gradient(135deg, #7c6bb8, #9988cc);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(124, 107, 184, 0.3);
+}
+
+/* Chip Count */
+[data-theme="dark"] .chip-count {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .filter-chip.active .chip-count {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+/* Notification Details */
+[data-theme="dark"] .notif-details {
   color: var(--text-secondary);
 }
 
 [data-theme="dark"] .detail-item {
+  background: rgba(26, 28, 36, 0.6);
   color: var(--text-secondary);
+  border: 1px solid var(--border);
 }
 
-[data-theme="dark"] .notif-badge {
-  background: rgba(124, 107, 184, 0.15);
-  color: var(--accent-light);
+[data-theme="dark"] .detail-item svg {
+  color: var(--muted);
 }
 
-[data-theme="dark"] .banner-description {
+[data-theme="dark"] .detail-item span {
   color: var(--text-secondary);
 }
 
@@ -1805,25 +1881,6 @@ button {
   color: var(--accent-light);
 }
 
-/* ==========================================
-   HEADER - FIX MÓVIL NO DEBE CAMBIAR
-========================================== */
-
-/* Desktop header - modo oscuro */
-@media (min-width: 769px) {
-  [data-theme="dark"] .app-header {
-    background: linear-gradient(135deg, #1e202c 0%, #31323e 100%);
-    border-bottom-color: rgba(124, 107, 184, 0.2);
-  }
-}
-
-/* Mobile header - NO cambia (se mantiene igual en ambos modos) */
-@media (max-width: 768px) {
-  .app-header {
-    background: linear-gradient(135deg, #1e202c 0%, #31323e 100%) !important;
-    border-bottom-color: rgba(96, 81, 155, 0.2) !important;
-  }
-}
 
 /* Bottom Navigation - modo oscuro */
 [data-theme="dark"] .bottom-nav {
