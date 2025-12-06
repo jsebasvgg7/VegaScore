@@ -201,7 +201,7 @@ export default function MatchCard({ match, userPred, onPredict }) {
               onClick={handleSubmit}
               style={{ marginTop: '8px', width: '100%' }}
             >
-              {isSaved ? "Update" : "Save"}
+              {isSaved ? "Update" : "   Save"}
             </button>
           )}
 
