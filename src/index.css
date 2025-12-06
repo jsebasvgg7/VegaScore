@@ -501,28 +501,26 @@ button {
 ========================================== */
 
 [data-theme="dark"] {
-  /* Dark Mode Colors - VERSIÓN MÁS CLARA Y SUAVE */
-  --bg: #1a1d2e;              /* Era #0f1015 - ahora más claro */
-  --card: #252936;            /* Era #1a1c24 - ahora más claro */
-  --text-primary: #f0f1f7;    /* Era #e8e9f3 - ahora más brillante */
-  --text-secondary: #b4b8d0;  /* Era #9ca3af - ahora más claro */
-  --muted: #8186a0;           /* Era #6b7280 - ahora más claro */
-  --accent: #8b7fc7;          /* Mantener púrpura igual */
-  --accent-light: #a599d9;    /* Era #9988cc - ahora más claro */
-  --accent-hover: #7366b3;    /* Era #6558a0 - ajustado */
-  --dark-bg: #151823;         /* Era #0a0b0f - más claro */
-  --dark-secondary: #1f2232;  /* Era #14151d - más claro */
-  --light-text: #d0d2e1;      /* Era #bfc0d1 - más brillante */
-  --glass: rgba(139, 127, 199, 0.18);  /* Era 0.15 - más visible */
-  --border: rgba(255,255,255,0.12);    /* Era 0.08 - más visible */
-  --input-bg: #252936;        /* Era #1a1c24 - más claro */
-  --input-border: rgba(255,255,255,0.15);  /* Era 0.1 - más visible */
-  --shadow: 0 8px 30px rgba(55, 35, 68, 0.377);  /* Era 0.4 - menos intenso */
-  --small-shadow: 0 4px 14px rgba(31, 23, 42, 0.923);  /* Era 0.3 - menos intenso */
+  --bg: #1a1d2e;            
+  --card: #252936;    
+  --text-primary: #f0f1f7;   
+  --text-secondary: #b4b8d0; 
+  --muted: #8186a0;        
+  --accent: #8b7fc7;         
+  --accent-light: #a599d9;   
+  --accent-hover: #7366b3;    
+  --dark-bg: #151823;        
+  --dark-secondary: #1f2232; 
+  --light-text: #d0d2e1;    
+  --glass: rgba(139, 127, 199, 0.18);  
+  --border: rgba(255,255,255,0.12);  
+  --input-bg: #252936;      
+  --input-border: rgba(255,255,255,0.15); 
+  --shadow: 0 8px 30px rgba(55, 35, 68, 0.377); 
+  --small-shadow: 0 4px 14px rgba(31, 23, 42, 0.923);  
   --radius-2xl: 20px;
 }
 
-/* Body y gradiente oscuro más suave */
 [data-theme="dark"] body {
   background: linear-gradient(135deg, #1a1d2e 0%, #252936 100%);
   color: var(--text-primary);
@@ -1020,7 +1018,7 @@ button {
 }
 
 [data-theme="dark"] .matches-header-premium {
-  background: linear-gradient(135deg, #0a0b0f 0%, #14151d 100%);
+  background: var(--small-shadow);
 }
 
 [data-theme="dark"] .matches-empty-text {
@@ -1031,9 +1029,6 @@ button {
   color: var(--text-secondary);
 }
 
-/* ==========================================
-   RANKING PAGE - DETALLES ADICIONALES
-========================================== */
 /* ==========================================
    RANKING PAGE - MODO OSCURO RELAJADO
 ========================================== */
