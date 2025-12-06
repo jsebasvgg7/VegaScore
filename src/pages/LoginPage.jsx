@@ -25,8 +25,8 @@ export default function LoginPage() {
     <div className="auth-wrapper">
       <div className="auth-card">
         {/* TITULO MOTIVACIONAL */}
-        <h2>Login</h2> 
-        
+        <h2>Bienvenido a GlobalScore</h2>
+        <p>Login</p>
         <input
           type="email"
           placeholder="Your Email"
