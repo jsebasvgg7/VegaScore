@@ -586,6 +586,12 @@ button {
 [data-theme="dark"] .match-footer-light {
   border-top-color: var( --accent-hover)
 }
+[data-theme="dark"] .league-footer-light {
+  border-top-color: var(--accent-hover);
+}
+[data-theme="dark"] .award-footer-light {
+  border-top-color: var(--accent-hover);
+}
 
 /* Scrollbar */
 [data-theme="dark"] ::-webkit-scrollbar-track {
@@ -1836,11 +1842,6 @@ button {
 
 [data-theme="dark"] .match-time-center svg {
   color: var(--muted);
-}
-
-/* Footer */
-[data-theme="dark"] .match-footer-light {
-  border-top-color: var(--border);
 }
 
 [data-theme="dark"] .prediction-status-light {
