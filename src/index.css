@@ -426,3 +426,536 @@ button {
   scrollbar-width: thin;
   scrollbar-color: var(--muted) var(--bg);
 }
+/* ==========================================
+   MODO OSCURO - Variables y Estilos Base
+   Agregar al final de index.css
+========================================== */
+
+[data-theme="dark"] {
+  /* Colores de fondo - MODO OSCURO */
+  --bg: #0f1015;
+  --card: #1a1c24;
+  --text-primary: #e8e9f3;
+  --text-secondary: #9ca3af;
+  --muted: #6b7280;
+  --accent: #7c6bb8;
+  --accent-light: #9988cc;
+  --accent-hover: #6558a0;
+  --dark-bg: #0a0b0f;
+  --dark-secondary: #14151d;
+  --light-text: #bfc0d1;
+  --glass: rgba(124, 107, 184, 0.15);
+  --border: rgba(255,255,255,0.08);
+  --input-bg: #1a1c24;
+  --input-border: rgba(255,255,255,0.1);
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  --small-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* Body y elementos base */
+[data-theme="dark"] body {
+  background: linear-gradient(135deg, #0f1015 0%, #1a1c24 100%);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .stats-card,
+[data-theme="dark"] .level-card,
+[data-theme="dark"] .streaks-card,
+[data-theme="dark"] .history-card,
+[data-theme="dark"] .avatar-card,
+[data-theme="dark"] .active-title-card,
+[data-theme="dark"] .titles-container,
+[data-theme="dark"] .achievements-container {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+/* Inputs y forms */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select,
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-textarea,
+[data-theme="dark"] .modal-input,
+[data-theme="dark"] .modal-textarea,
+[data-theme="dark"] .modal-select {
+  background: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Botones */
+[data-theme="dark"] .icon-btn {
+  background: rgba(124, 107, 184, 0.15);
+  border-color: rgba(124, 107, 184, 0.3);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .icon-btn:hover {
+  background: rgba(124, 107, 184, 0.25);
+  border-color: rgba(124, 107, 184, 0.5);
+}
+
+/* Toast notifications */
+[data-theme="dark"] .toast-notification {
+  background: var(--card);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+/* Loading states */
+[data-theme="dark"] .page-loader {
+  background: var(--bg);
+}
+
+/* Scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--muted);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Bottom Navigation */
+[data-theme="dark"] .bottom-nav {
+  background: var(--card);
+  border-top-color: var(--border);
+}
+
+[data-theme="dark"] .bottom-nav-btn {
+  color: var(--light-text);
+}
+
+[data-theme="dark"] .bottom-nav-btn.active {
+  color: var(--accent-light);
+}
+
+/* ==========================================
+   HEADER - Botón de Tema con Color
+========================================== */
+
+/* Botón de tema - Estilo especial */
+.icon-btn.theme-btn {
+  background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+  border: none;
+  color: #78350F;
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-btn.theme-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.icon-btn.theme-btn:hover::before {
+  width: 100px;
+  height: 100px;
+}
+
+.icon-btn.theme-btn:hover {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  transform: translateY(-2px) rotate(15deg);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+}
+
+.icon-btn.theme-btn:active {
+  transform: translateY(0) rotate(0deg);
+}
+
+.icon-btn.theme-btn svg {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.icon-btn.theme-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* Modo oscuro - Botón de tema púrpura */
+[data-theme="dark"] .icon-btn.theme-btn {
+  background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+  color: white;
+}
+
+[data-theme="dark"] .icon-btn.theme-btn:hover {
+  background: linear-gradient(135deg, #6D28D9 0%, #4C1D95 100%);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+}
+
+/* Animación de rotación al cambiar tema */
+@keyframes themeSwitch {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.icon-btn.theme-btn.switching {
+  animation: themeSwitch 0.6s ease-in-out;
+}
+
+/* ==========================================
+   PAGINAS ESPECÍFICAS - MODO OSCURO
+========================================== */
+
+/* ADMIN PAGE */
+[data-theme="dark"] .admin-page {
+  background: var(--bg);
+}
+
+[data-theme="dark"] .admin-page::before {
+  opacity: 0.08;
+}
+
+[data-theme="dark"] .admin-stat-card,
+[data-theme="dark"] .admin-item-card {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .admin-stat-card .stat-value,
+[data-theme="dark"] .item-title,
+[data-theme="dark"] .item-teams {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .admin-nav-tabs {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .admin-nav-tab {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .admin-nav-tab:hover {
+  background: rgba(124, 107, 184, 0.1);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .search-bar {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .search-bar input {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .filter-buttons {
+  background: var(--card);
+}
+
+[data-theme="dark"] .admin-content-area {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+/* RANKING PAGE */
+[data-theme="dark"] .ranking-page {
+  background: linear-gradient(135deg, #0F1015 0%, #1a1c24 100%);
+}
+
+[data-theme="dark"] .podium-ultra,
+[data-theme="dark"] .your-rank-modern,
+[data-theme="dark"] .stat-card-modern,
+[data-theme="dark"] .ranking-list-modern {
+  background: rgba(26, 28, 36, 0.6);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .hero-title,
+[data-theme="dark"] .podium-title-ultra {
+  text-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
+}
+
+[data-theme="dark"] .player-card,
+[data-theme="dark"] .list-row-modern {
+  background: rgba(26, 28, 36, 0.4);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .player-name-ultra,
+[data-theme="dark"] .user-name-small,
+[data-theme="dark"] .stat-value-modern,
+[data-theme="dark"] .stat-num {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .search-modern,
+[data-theme="dark"] .filters-modern,
+[data-theme="dark"] .sorts-modern {
+  background: rgba(26, 28, 36, 0.6);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .search-input-modern {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .filter-modern,
+[data-theme="dark"] .sort-modern {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .filter-modern:hover,
+[data-theme="dark"] .sort-modern:hover {
+  color: var(--text-primary);
+}
+
+/* PROFILE PAGE */
+[data-theme="dark"] .profile-page {
+  background: var(--bg);
+}
+
+[data-theme="dark"] .avatar-card.premium-layout,
+[data-theme="dark"] .edit-form-card {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .user-name-new,
+[data-theme="dark"] .stat-value,
+[data-theme="dark"] .title-name,
+[data-theme="dark"] .achievement-name {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .user-email-new,
+[data-theme="dark"] .user-bio-new,
+[data-theme="dark"] .stat-label,
+[data-theme="dark"] .title-description {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .info-badge,
+[data-theme="dark"] .stat-item {
+  background: rgba(26, 28, 36, 0.6);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .badge-value,
+[data-theme="dark"] .title-card-name {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .history-item {
+  background: rgba(26, 28, 36, 0.6);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .team-name,
+[data-theme="dark"] .score-value {
+  color: var(--text-primary);
+}
+
+/* STATS PAGE */
+[data-theme="dark"] .stats-page {
+  background: var(--bg);
+}
+
+[data-theme="dark"] .stats-page::before {
+  opacity: 0.06;
+}
+
+[data-theme="dark"] .overview-card,
+[data-theme="dark"] .stats-section,
+[data-theme="dark"] .additional-stat-card {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .card-value,
+[data-theme="dark"] .result-value,
+[data-theme="dark"] .league-name,
+[data-theme="dark"] .additional-stat-value {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .card-label,
+[data-theme="dark"] .result-label,
+[data-theme="dark"] .league-details {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .result-item,
+[data-theme="dark"] .league-stat-item,
+[data-theme="dark"] .day-stat-card {
+  background: rgba(26, 28, 36, 0.6);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .time-range-selector {
+  background: var(--card);
+}
+
+/* NOTIFICATIONS PAGE */
+[data-theme="dark"] .notifications-page {
+  background: var(--bg);
+}
+
+[data-theme="dark"] .install-banner,
+[data-theme="dark"] .notification-card {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .notif-title,
+[data-theme="dark"] .notif-description {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .filters-modern {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+/* MATCH, LEAGUE, AWARD CARDS */
+[data-theme="dark"] .match-card-light,
+[data-theme="dark"] .league-card-light,
+[data-theme="dark"] .award-card-light {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .team-name-light,
+[data-theme="dark"] .league-name-light,
+[data-theme="dark"] .award-name-light {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .match-league-info-light,
+[data-theme="dark"] .league-season-light,
+[data-theme="dark"] .award-season-light {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .score-cell-light {
+  background: rgba(26, 28, 36, 0.6);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .prediction-input-light,
+[data-theme="dark"] .prediction-input-award {
+  background: rgba(26, 28, 36, 0.6);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .match-time-center {
+  background: rgba(26, 28, 36, 0.6);
+  border-color: var(--border);
+}
+
+/* MODALES */
+[data-theme="dark"] .modal-backdrop-premium {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .modal-premium,
+[data-theme="dark"] .modal-container {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .modal-header-premium {
+  background: linear-gradient(135deg, #0a0b0f 0%, #14151d 100%);
+}
+
+[data-theme="dark"] .modal-body-premium {
+  background: var(--card);
+}
+
+[data-theme="dark"] .form-input-premium,
+[data-theme="dark"] .modal-input {
+  background: rgba(26, 28, 36, 0.6);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+/* NAVIGATION TABS */
+[data-theme="dark"] .navigation-tabs,
+[data-theme="dark"] .navigation-tabs-two {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .nav-tab,
+[data-theme="dark"] .nav-tab-two {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .nav-tab:hover,
+[data-theme="dark"] .nav-tab-two:hover {
+  color: var(--text-primary);
+}
+
+/* VEGA SCORE PAGE */
+[data-theme="dark"] .matches-section-premium {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .matches-header-premium {
+  background: linear-gradient(135deg, #0a0b0f 0%, #14151d 100%);
+}
+
+[data-theme="dark"] .matches-empty-text {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .matches-empty-subtext {
+  color: var(--text-secondary);
+}
+
+/* RESPONSIVE - Ajustes para móvil */
+@media (max-width: 768px) {
+  [data-theme="dark"] .bottom-nav {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+  }
+  
+  [data-theme="dark"] .bottom-nav-btn {
+    color: var(--text-secondary);
+  }
+  
+  [data-theme="dark"] .bottom-nav-btn.active {
+    color: var(--accent-light);
+    background: rgba(124, 107, 184, 0.15);
+  }
+}
+
+/* Transiciones suaves */
+[data-theme="dark"] * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
