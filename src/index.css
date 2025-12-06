@@ -28,30 +28,30 @@
 }
 
 [data-theme="dark"] {
-  /* Dark Mode Colors*/
-  --bg: #1a1d2e;             
-  --card: #252936;            
-  --text-primary: #f0f1f7;    
-  --text-secondary: #b4b8d0;  
-  --muted: #8186a0;           
-  --accent: #8b7fc7;          
-  --accent-light: #a599d9;    
-  --accent-hover: #7366b3;    
-  --dark-bg: #151823;        
-  --dark-secondary: #1f2232;  
-  --light-text: #d0d2e1;      
-  --glass: rgba(139, 127, 199, 0.18); 
-  --border: rgba(255,255,255,0.12);   
-  --input-bg: #252936;  
-  --input-border: rgba(255,255,255,0.15);  
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);  
-  --small-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);  
+  /* Dark Mode Colors - VERSIÓN RELAJADA Y SUAVE */
+  --bg: #2a2f3f;              /* Mucho más claro - gris azulado */
+  --card: #353b4d;            /* Cards visibles pero suaves */
+  --text-primary: #f5f6fa;    /* Texto casi blanco pero suave */
+  --text-secondary: #c5c9d9;  /* Secondary muy legible */
+  --muted: #9ca3b8;           /* Muted más claro */
+  --accent: #8b7fc7;          /* Púrpura mantener */
+  --accent-light: #a599d9;    /* Púrpura claro */
+  --accent-hover: #7366b3;    /* Hover púrpura */
+  --dark-bg: #252a38;         /* Fondos oscuros más claros */
+  --dark-secondary: #2f3544;  /* Secondary backgrounds */
+  --light-text: #dfe1ea;      /* Textos claros muy legibles */
+  --glass: rgba(139, 127, 199, 0.2);   /* Efecto glass más visible */
+  --border: rgba(255,255,255,0.18);    /* Bordes bien visibles */
+  --input-bg: #3a4052;        /* Inputs más claros */
+  --input-border: rgba(255,255,255,0.2);  /* Bordes inputs visibles */
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.2);  
+  --small-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);  
   --radius-2xl: 20px;
 }
 
-/* Body y gradiente oscuro más suave */
+/* Body con gradiente más relajado */
 [data-theme="dark"] body {
-  background: linear-gradient(135deg, #1a1d2e 0%, #252936 100%);
+  background: linear-gradient(135deg, #2a2f3f 0%, #353b4d 100%);
   color: var(--text-primary);
 }
 
