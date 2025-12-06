@@ -517,8 +517,8 @@ button {
   --border: rgba(255,255,255,0.12);    /* Era 0.08 - más visible */
   --input-bg: #252936;        /* Era #1a1c24 - más claro */
   --input-border: rgba(255,255,255,0.15);  /* Era 0.1 - más visible */
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);  /* Era 0.4 - menos intenso */
-  --small-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);  /* Era 0.3 - menos intenso */
+  --shadow: 0 8px 30px rgba(55, 35, 68, 0.377);  /* Era 0.4 - menos intenso */
+  --small-shadow: 0 4px 14px rgba(31, 23, 42, 0.923);  /* Era 0.3 - menos intenso */
   --radius-2xl: 20px;
 }
 
