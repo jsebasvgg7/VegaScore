@@ -39,6 +39,9 @@ export default function LeagueCard({ league, userPrediction, onPredict }) {
       {/* Header */}
       <div className="league-header-light">
         <div className="league-info-section">
+          <div className="league-logo-container">
+            <span className="league-logo-emoji">{league.logo}</span>
+          </div>
           <div className="league-text-info">
             <h3 className="league-name-light">{league.name}</h3>
             <span className="league-season-light">{league.season}</span>
