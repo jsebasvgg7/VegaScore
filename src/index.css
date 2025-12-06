@@ -501,29 +501,30 @@ button {
 ========================================== */
 
 [data-theme="dark"] {
-  /* Colores de fondo - MODO OSCURO */
-  --bg: #0f1015;
-  --card: #1a1c24;
-  --text-primary: #e8e9f3;
-  --text-secondary: #9ca3af;
-  --muted: #6b7280;
-  --accent: #7c6bb8;
-  --accent-light: #9988cc;
-  --accent-hover: #6558a0;
-  --dark-bg: #0a0b0f;
-  --dark-secondary: #14151d;
-  --light-text: #bfc0d1;
-  --glass: rgba(124, 107, 184, 0.15);
-  --border: rgba(255,255,255,0.08);
-  --input-bg: #1a1c24;
-  --input-border: rgba(255,255,255,0.1);
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-  --small-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  /* Dark Mode Colors - VERSIÓN RELAJADA Y SUAVE */
+  --bg: #2a2f3f;              /* Mucho más claro - gris azulado */
+  --card: #353b4d;            /* Cards visibles pero suaves */
+  --text-primary: #f5f6fa;    /* Texto casi blanco pero suave */
+  --text-secondary: #c5c9d9;  /* Secondary muy legible */
+  --muted: #9ca3b8;           /* Muted más claro */
+  --accent: #8b7fc7;          /* Púrpura mantener */
+  --accent-light: #a599d9;    /* Púrpura claro */
+  --accent-hover: #7366b3;    /* Hover púrpura */
+  --dark-bg: #252a38;         /* Fondos oscuros más claros */
+  --dark-secondary: #2f3544;  /* Secondary backgrounds */
+  --light-text: #dfe1ea;      /* Textos claros muy legibles */
+  --glass: rgba(139, 127, 199, 0.2);   /* Efecto glass más visible */
+  --border: rgba(255,255,255,0.18);    /* Bordes bien visibles */
+  --input-bg: #3a4052;        /* Inputs más claros */
+  --input-border: rgba(255,255,255,0.2);  /* Bordes inputs visibles */
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.2);  
+  --small-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);  
+  --radius-2xl: 20px;
 }
 
-/* Body y elementos base */
+/* Body con gradiente más relajado */
 [data-theme="dark"] body {
-  background: linear-gradient(135deg, #0f1015 0%, #1a1c24 100%);
+  background: linear-gradient(135deg, #2a2f3f 0%, #353b4d 100%);
   color: var(--text-primary);
 }
 
@@ -582,6 +583,10 @@ button {
 /* Loading states */
 [data-theme="dark"] .page-loader {
   background: var(--bg);
+}
+/* Match Card Footer */
+[data-theme="dark"] .match-footer-light {
+  border-top-color: var( --accent-hover)
 }
 
 /* Scrollbar */
