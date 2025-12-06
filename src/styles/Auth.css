@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-  padding: 40px 20px;
+  padding: 20px;
   position: relative;
   overflow: hidden;
 }
@@ -30,13 +30,13 @@
 .auth-card {
   position: relative;
   width: 100%;
-  max-width: 460px;
+  max-width: 380px;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(96, 81, 155, 0.2);
   border-radius: 24px;
-  padding: 50px 45px;
+  padding: 40px 36px;
   z-index: 10;
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.5),
@@ -44,17 +44,16 @@
 }
 
 .auth-card h2 {
-  margin: 0 0 15px 0;
-  font-size: 28px;
+  margin: 0 0 50px 0;
+  font-size: 24px;
   font-weight: 300;
   color: #ffffff;
   text-align: center;
   letter-spacing: 1px;
 }
-
 .auth-card p {
-  margin: 0 0 35px 0;
-  font-size: 15px;
+  margin: 0 0 20px 0;
+  font-size: 14px;
   font-weight: 400;
   color: #dddddd;
   text-align: center;
