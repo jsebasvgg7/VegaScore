@@ -1,6 +1,8 @@
 // src/components/AdminLeagueModal.jsx
 import React, { useState } from 'react';
 import { X, Plus, Trophy, Calendar, Award, Target } from 'lucide-react';
+import { getLogoUrlByLeagueName } from '../utils/logoHelper.js';
+import { supabase } from '../utils/supabaseClient';
 import '../styles/AdminModal.css';
 
 export default function AdminLeagueModal({ onAdd, onClose }) {
@@ -14,7 +16,16 @@ export default function AdminLeagueModal({ onAdd, onClose }) {
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    
+    // Auto-generar URL del logo cuando se ingresa el nombre de la liga
+    if (name === 'name' && value) {
+      const logoUrl = getLogoUrlByLeagueName(supabase, value);
+      if (logoUrl) {
+        setForm(prev => ({ ...prev, logo_url: logoUrl }));
+      }
+    }
   };
 
   const submit = () => {
@@ -26,11 +37,15 @@ export default function AdminLeagueModal({ onAdd, onClose }) {
     // Combinar fecha y hora en formato ISO
     const deadlineISO = `${form.deadline}T${form.deadline_time}:00`;
 
+    // Generar URL del logo automáticamente
+    const logoUrl = getLogoUrlByLeagueName(supabase, form.name);
+
     onAdd({
       id: form.id,
       name: form.name,
       season: form.season,
-      logo: form.logo,
+      logo: form.logo,       // Emoji como fallback
+      logo_url: logoUrl,     // URL del logo real
       status: 'active',
       deadline: deadlineISO
     });
@@ -69,7 +84,7 @@ export default function AdminLeagueModal({ onAdd, onClose }) {
             <input 
               className="form-input-premium" 
               name="id" 
-              placeholder="Ej: epl-2024, ucl-2025" 
+              placeholder="Ej: epl-2024, ucl-2025, laliga-2025" 
               value={form.id}
               onChange={handleChange}
             />
@@ -90,6 +105,7 @@ export default function AdminLeagueModal({ onAdd, onClose }) {
               value={form.name}
               onChange={handleChange}
             />
+            <span className="form-hint">El logo se asignará automáticamente según el nombre</span>
           </div>
 
           {/* Temporada */}
@@ -108,10 +124,24 @@ export default function AdminLeagueModal({ onAdd, onClose }) {
             />
           </div>
 
-          {/* Logo */}
+          {/* Vista previa del logo */}
+          {form.name && (
+            <div className="logo-preview-section">
+              <div className="logo-preview-item">
+                <span className="logo-preview-label">Vista previa del logo:</span>
+                {form.logo_url ? (
+                  <img src={form.logo_url} alt="League logo" className="logo-preview-img" />
+                ) : (
+                  <span className="logo-preview-emoji">{form.logo}</span>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Logo emoji (fallback) */}
           <div className="form-group-premium">
             <label className="form-label-premium">
-              <span>Logo / Emoji</span>
+              <span>Emoji de Respaldo</span>
             </label>
             <div className="logo-input-wrapper">
               <input 
@@ -124,7 +154,7 @@ export default function AdminLeagueModal({ onAdd, onClose }) {
               />
               <span className="logo-preview">{form.logo}</span>
             </div>
-            <span className="form-hint">Usa emojis: ⚽🏆🇪🇸🇬🇧⭐</span>
+            <span className="form-hint">Emoji que se mostrará si no hay logo disponible: ⚽🏆🇪🇸🇬🇧⭐</span>
           </div>
 
           {/* Fecha límite */}
