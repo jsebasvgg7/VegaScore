@@ -229,7 +229,7 @@ export default function WorldCupPage({ currentUser }) {
     <>
       <div className="worldcup-page">
         <div className="worldcup-container">
-          {/* Header */}
+          {/* Header - SIN BOTÓN */}
           <div className="worldcup-header">
             <div className="worldcup-header-content">
               <div className="worldcup-icon">
@@ -240,37 +240,30 @@ export default function WorldCupPage({ currentUser }) {
                 <p className="worldcup-subtitle">FIFA World Cup - USA, Canada & Mexico</p>
               </div>
             </div>
-            <button 
-              className="save-predictions-btn"
-              onClick={savePredictions}
-              disabled={saving}
-            >
-              {saving ? 'Guardando...' : 'Guardar Predicciones'}
-            </button>
           </div>
 
-          {/* Navigation Tabs */}
+          {/* Navigation Tabs - Con clase para ocultar texto en móvil */}
           <div className="worldcup-nav-tabs">
             <button 
               className={`worldcup-nav-tab ${activeTab === 'groups' ? 'active' : ''}`}
               onClick={() => setActiveTab('groups')}
             >
               <Users size={20} />
-              <span>Fase de Grupos</span>
+              <span className="worldcup-nav-tab-text">Fase de Grupos</span>
             </button>
             <button 
               className={`worldcup-nav-tab ${activeTab === 'knockout' ? 'active' : ''}`}
               onClick={() => setActiveTab('knockout')}
             >
               <Target size={20} />
-              <span>Eliminatorias</span>
+              <span className="worldcup-nav-tab-text">Eliminatorias</span>
             </button>
             <button 
               className={`worldcup-nav-tab ${activeTab === 'awards' ? 'active' : ''}`}
               onClick={() => setActiveTab('awards')}
             >
               <Award size={20} />
-              <span>Premios</span>
+              <span className="worldcup-nav-tab-text">Premios</span>
             </button>
           </div>
 
@@ -420,6 +413,15 @@ export default function WorldCupPage({ currentUser }) {
             </div>
           )}
         </div>
+
+        {/* BOTÓN DE GUARDAR - FLOTANTE AL FINAL */}
+        <button 
+          className="save-predictions-btn"
+          onClick={savePredictions}
+          disabled={saving}
+        >
+          {saving ? 'Guardando...' : 'Guardar Predicciones'}
+        </button>
       </div>
       
       <ToastContainer toasts={toast.toasts} removeToast={toast.removeToast} />
