@@ -83,6 +83,15 @@ export default function Header({ currentUser, users = [], onProfileClick }) {
             {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </button>
 
+          <button
+          classnaem="icon-btn worldcup-btn desktop-only"
+            onClick={handleWorldCupClick}
+            aria-label="Ver sección del Mundial"
+            title="Mundial 2026"
+          >
+            <Trophy size={18} />
+          </button>
+
           <button 
             className="icon-btn notifications-btn desktop-only" 
             onClick={handleNotificationsClick} 
