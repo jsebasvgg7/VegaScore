@@ -496,21 +496,22 @@
    AWARDS SECTION - Simplificado
 ========================================== */
 .awards-section {
-  padding: 20px;
-  background: var(--card);
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  padding: 24px;
+  background: transparent;
+  border-radius: 0;
+  border: none;
 }
 
 .awards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
+  max-width: 100%;
 }
 
 .award-card {
   padding: 20px;
-  background: var(--bg);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: 10px;
   display: flex;
@@ -1047,16 +1048,20 @@
 
   .awards-section {
     padding: 20px 16px;
-    border-radius: 14px;
+    background: transparent;
+    border-radius: 0;
+    border: none;
   }
 
   .awards-grid {
     gap: 20px;
     grid-template-columns: 1fr;
+    max-width: 100%;
   }
 
   .award-card {
     padding: 24px 20px;
+    background: var(--card);
     border-radius: 12px;
     gap: 14px;
     min-height: auto;
@@ -1075,7 +1080,7 @@
   }
 
   .award-card label {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.4;
     display: block;
     font-weight: 700;
@@ -1091,6 +1096,7 @@
     box-sizing: border-box;
     font-weight: 500;
   }
+
 
   /* Save Button */
   .save-predictions-btn {
