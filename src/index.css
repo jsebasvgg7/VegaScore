@@ -54,112 +54,82 @@
   background: linear-gradient(135deg, #2a2f3f 0%, #353b4d 100%);
   color: var(--text-primary);
 }
-/* ==========================================
-   FOOTER - Solo Texto (Sin Contenedor)
-========================================== */
-.app-footer {
-  background: transparent !important;
-  border: none !important;
-  padding: 12px 18px;
-  width: 100%;
-  text-align: center;
-  margin-top: auto;
-}
+/* ================================
+   FOOTER RESPONSIVE - ACTUALIZADO  
+================================ */
 
-.footer-text {
-  color: #bfc0d1;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  opacity: 0.8;
-  transition: opacity 0.3s ease, color 0.3s ease;
-}
-
-.footer-text:hover {
-  opacity: 1;
-}
-
-/* Modo oscuro para el footer */
-[data-theme="dark"] .footer-text {
-  color: #9ca3b8;
-}
-
-/* Asegurar que las páginas usen flexbox para el footer al final */
-.vega-root,
-.ranking-page,
-.admin-page,
-.profile-page,
-.notifications-page,
-.stats-page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.container,
-.main-content-full {
-  flex: 1;
-}
-
-/* Footer responsive */
 @media (max-width: 768px) {
   .app-footer {
     padding: 10px 12px;
-    margin-bottom: 70px;
+    position: fixed;
+    bottom: 70px; /* Justo encima del bottom nav */
+    left: 0;
+    right: 0;
+    z-index: 90;
+    margin: 0;
   }
   
   .footer-text {
     font-size: 11px;
+  }
+  
+  /* Restaurar padding para que el contenido no quede oculto */
+  .page-container,
+  .vega-score-page,
+  .vega-root,
+  .ranking-page,
+  .admin-page,
+  .profile-page,
+  .notifications-page,
+  .stats-page,
+  .profile-container,
+  .ranking-container,
+  .admin-container {
+    padding-bottom: 100px !important;
+    min-height: calc(100vh - 140px);
+  }
+  
+  .matches-container,
+  .ranking-list-premium,
+  .admin-content,
+  .profile-bottom-section,
+  .history-card,
+  .notifications-list {
+    padding-bottom: 40px;
   }
 }
 
 @media (max-width: 480px) {
   .app-footer {
     padding: 8px 10px;
-    margin-bottom: 65px;
+    bottom: 65px; /* Ajustado para móviles pequeños */
   }
   
   .footer-text {
     font-size: 10px;
   }
-}
-/* Asegurar que las páginas usen flexbox para el footer al final */
-.vega-root,
-.ranking-page,
-.admin-page,
-.profile-page,
-.notifications-page,
-.stats-page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.container,
-.main-content-full {
-  flex: 1;
-}
-
-/* Footer responsive */
-@media (max-width: 768px) {
-  .app-footer {
-    padding: 10px 12px;
-    margin-bottom: 70px; /* Espacio para el bottom nav */
+  
+  .page-container,
+  .vega-score-page,
+  .vega-root,
+  .ranking-page,
+  .admin-page,
+  .profile-page,
+  .notifications-page,
+  .stats-page,
+  .profile-container,
+  .ranking-container,
+  .admin-container {
+    padding-bottom: 90px !important;
   }
   
-  .footer-text {
-    font-size: 11px;
-  }
-}
-
-@media (max-width: 480px) {
-  .app-footer {
-    padding: 8px 10px;
-    margin-bottom: 65px;
-  }
-  
-  .footer-text {
-    font-size: 10px;
+  .matches-container,
+  .ranking-list-premium,
+  .admin-content,
+  .profile-bottom-section,
+  .history-card,
+  .notifications-list {
+    padding-bottom: 35px;
   }
 }
 

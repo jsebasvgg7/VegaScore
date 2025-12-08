@@ -73,8 +73,8 @@ styleSheet.textContent = `
     .profile-container,
     .ranking-container,
     .admin-container {
-      padding-bottom: 20px !important;
-      min-height: auto !important;
+      padding-bottom: 100px !important;
+      min-height: calc(100vh - 140px) !important;
     }
     
     .matches-container,
@@ -83,13 +83,18 @@ styleSheet.textContent = `
     .profile-bottom-section,
     .history-card,
     .notifications-list {
-      padding-bottom: 20px !important;
+      padding-bottom: 40px !important;
     }
     
     .app-footer {
       padding: 10px 12px !important;
-      margin-bottom: 70px !important;
+      margin-bottom: 0 !important;
       margin-top: 0 !important;
+      position: fixed !important;
+      bottom: 70px !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 90 !important;
     }
     
     .footer-text {
@@ -109,7 +114,7 @@ styleSheet.textContent = `
     .profile-container,
     .ranking-container,
     .admin-container {
-      padding-bottom: 15px !important;
+      padding-bottom: 90px !important;
     }
     
     .matches-container,
@@ -118,12 +123,12 @@ styleSheet.textContent = `
     .profile-bottom-section,
     .history-card,
     .notifications-list {
-      padding-bottom: 15px !important;
+      padding-bottom: 35px !important;
     }
     
     .app-footer {
       padding: 8px 10px !important;
-      margin-bottom: 65px !important;
+      bottom: 65px !important;
     }
     
     .footer-text {
