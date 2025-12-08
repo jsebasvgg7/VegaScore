@@ -207,6 +207,7 @@ const GroupCard = ({ group, teams, predictions, onUpdatePrediction, expanded, on
             </tbody>
           </table>
         </div>
+        <div className="scroll-hint">👆 Desliza para ver más →</div>
       </div>
 
       {expanded && (

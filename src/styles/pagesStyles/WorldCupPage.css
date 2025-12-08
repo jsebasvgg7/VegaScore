@@ -606,64 +606,92 @@
    MEJORAS RESPONSIVE - MOBILE FIRST
 ========================================== */
 
-/* Ocultar texto largo en tabs móviles */
-@media (max-width: 768px) {
-  .worldcup-nav-tab-text {
-    display: none;
-  }
-  
-  .worldcup-nav-tab.active .worldcup-nav-tab-text {
-    display: none;
-  }
-}
-
-/* Mostrar solo íconos en tabs móviles pequeños */
-@media (max-width: 640px) {
-  .worldcup-nav-tabs {
-    justify-content: center;
-  }
-  
-  .worldcup-nav-tab {
-    flex: 0 0 auto;
-    min-width: 52px;
-    padding: 12px;
-  }
-  
-  .worldcup-nav-tab svg {
-    width: 22px;
-    height: 22px;
-  }
-}
-
-/* Scrollbar personalizado para móviles */
+/* Indicador visual de scroll horizontal */
 .group-table-container,
 .best-thirds-table-container {
+  position: relative;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: #F59E0B #E5E7EB;
 }
 
+/* Sombra que indica que hay más contenido a la derecha */
+.group-table-container::after,
+.best-thirds-table-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1));
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+/* Ocultar sombra cuando se ha scrolleado hasta el final */
+.group-table-container.scrolled-end::after,
+.best-thirds-table-container.scrolled-end::after {
+  opacity: 0;
+}
+
+/* Scrollbar más visible en móviles */
 .group-table-container::-webkit-scrollbar,
 .best-thirds-table-container::-webkit-scrollbar {
-  height: 8px;
+  height: 10px;
 }
 
 .group-table-container::-webkit-scrollbar-track,
 .best-thirds-table-container::-webkit-scrollbar-track {
   background: #E5E7EB;
   border-radius: 10px;
+  margin: 0 10px;
 }
 
 .group-table-container::-webkit-scrollbar-thumb,
 .best-thirds-table-container::-webkit-scrollbar-thumb {
   background: #F59E0B;
   border-radius: 10px;
+  border: 2px solid #E5E7EB;
 }
 
 .group-table-container::-webkit-scrollbar-thumb:hover,
 .best-thirds-table-container::-webkit-scrollbar-thumb:hover {
   background: #D97706;
+}
+
+/* Hint de scroll para móviles */
+.scroll-hint {
+  display: none;
+  text-align: center;
+  padding: 8px;
+  font-size: 11px;
+  color: #F59E0B;
+  font-weight: 600;
+  background: #FEF3C7;
+  border-radius: 8px;
+  margin-top: 8px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@media (max-width: 768px) {
+  .scroll-hint {
+    display: block;
+  }
+}
+
+/* Ocultar texto largo en tabs móviles */
+@media (max-width: 768px) {
+  .worldcup-nav-tab-text {
+    display: none;
+  }
 }
 
 /* ==========================================
@@ -700,16 +728,16 @@
   }
 
   .worldcup-title {
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.2;
   }
 
   .worldcup-subtitle {
-    font-size: 11px;
+    font-size: 10px;
     margin-top: 2px;
   }
 
-  /* Nav Tabs en móvil */
+  /* Nav Tabs en móvil - solo íconos */
   .worldcup-nav-tabs {
     gap: 8px;
     padding: 6px;
@@ -718,15 +746,15 @@
   }
 
   .worldcup-nav-tab {
-    padding: 12px 10px;
+    padding: 12px;
     border-radius: 10px;
-    min-width: 0;
-    flex: 1;
+    min-width: 48px;
+    flex: 0 0 auto;
   }
 
   .worldcup-nav-tab svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
   }
 
   /* Group Cards */
@@ -745,7 +773,7 @@
   }
 
   .group-header h3 {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .group-header svg {
@@ -754,130 +782,161 @@
   }
 
   .group-teams {
-    padding: 14px;
+    padding: 12px;
   }
 
-  /* Tabla de grupos - optimizada para móvil */
+  /* Tabla ULTRA COMPACTA para móviles */
   .group-table {
-    font-size: 11px;
-    min-width: 600px;
+    font-size: 10px;
+    min-width: 420px;
+    border-collapse: separate;
+    border-spacing: 0;
   }
 
   .group-table th {
-    padding: 10px 5px;
-    font-size: 10px;
+    padding: 8px 2px;
+    font-size: 8px;
+    letter-spacing: 0;
   }
 
   .group-table td {
-    padding: 12px 5px;
-    font-size: 11px;
+    padding: 10px 2px;
+    font-size: 10px;
   }
 
-  .group-table .team-flag {
-    width: 22px;
-    height: 15px;
-  }
-
-  .group-table .team-name {
-    font-size: 11px;
-    white-space: nowrap;
+  .group-table .pos-col {
+    width: 30px;
   }
 
   .group-table .team-col {
-    min-width: 120px;
+    min-width: 90px;
+    max-width: 90px;
+  }
+
+  .group-table .team-flag {
+    width: 18px;
+    height: 12px;
+  }
+
+  .group-table .team-name {
+    font-size: 9px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 65px;
   }
 
   .group-table .pts-col {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 900;
+    width: 35px;
   }
 
-  /* Match predictions */
+  /* Reducir columnas menos importantes */
+  .group-table th:nth-child(4),
+  .group-table th:nth-child(5),
+  .group-table th:nth-child(6),
+  .group-table td:nth-child(4),
+  .group-table td:nth-child(5),
+  .group-table td:nth-child(6) {
+    padding: 8px 1px;
+    font-size: 9px;
+  }
+
+  /* Match predictions - MÁS COMPACTOS */
   .group-predictions {
-    padding: 14px;
+    padding: 12px;
   }
 
   .group-predictions h4 {
-    font-size: 12px;
-    margin-bottom: 12px;
+    font-size: 11px;
+    margin-bottom: 10px;
   }
 
   .matches-grid {
-    gap: 8px;
+    gap: 6px;
   }
 
   .match-prediction {
-    grid-template-columns: 1fr 75px 1fr;
-    gap: 6px;
-    padding: 10px;
-    border-radius: 10px;
+    grid-template-columns: 1fr 68px 1fr;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 8px;
   }
 
   .match-team {
-    font-size: 11px;
-    gap: 6px;
-  }
-
-  .match-team img {
-    width: 22px;
-    height: 15px;
-  }
-
-  .match-scores {
+    font-size: 10px;
     gap: 4px;
   }
 
+  .match-team img {
+    width: 18px;
+    height: 12px;
+  }
+
+  .match-scores {
+    gap: 3px;
+  }
+
   .match-scores input {
-    width: 32px;
-    height: 36px;
-    font-size: 14px;
+    width: 30px;
+    height: 34px;
+    font-size: 13px;
     border-radius: 6px;
     border-width: 2px;
   }
 
   .match-scores .separator {
-    font-size: 16px;
-    font-weight: 800;
+    font-size: 14px;
+    font-weight: 700;
   }
 
-  /* Best Thirds */
+  /* Best Thirds - COMPACTA */
   .best-thirds-section {
-    padding: 16px;
+    padding: 14px;
     border-radius: 12px;
   }
 
   .best-thirds-section h3 {
-    font-size: 17px;
-    margin-bottom: 14px;
+    font-size: 16px;
+    margin-bottom: 12px;
   }
 
   .best-thirds-section h3 svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 
   .best-thirds-table {
-    font-size: 11px;
-    min-width: 600px;
+    font-size: 10px;
+    min-width: 420px;
   }
 
   .best-thirds-table th {
-    padding: 10px 5px;
-    font-size: 10px;
+    padding: 8px 2px;
+    font-size: 8px;
   }
 
   .best-thirds-table td {
-    padding: 12px 5px;
-    font-size: 11px;
+    padding: 10px 2px;
+    font-size: 10px;
+  }
+
+  .best-thirds-table .team-info {
+    min-width: 90px;
   }
 
   .best-thirds-table .team-info img {
-    width: 22px;
-    height: 15px;
+    width: 18px;
+    height: 12px;
   }
 
   .best-thirds-table .team-info span {
-    font-size: 11px;
+    font-size: 9px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 65px;
   }
 
   /* Awards */
@@ -892,65 +951,67 @@
   }
 
   .award-card {
-    padding: 18px;
+    padding: 16px;
     border-radius: 12px;
-    gap: 12px;
+    gap: 10px;
   }
 
   .award-icon {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 10px;
   }
 
   .award-icon svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
 
   .award-card label {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .award-card input {
-    padding: 12px 14px;
-    font-size: 14px;
-    border-radius: 10px;
-    min-height: 44px;
+    padding: 11px 13px;
+    font-size: 13px;
+    border-radius: 9px;
+    min-height: 42px;
   }
 
   /* Save Button */
   .save-predictions-btn {
-    margin: 24px auto 0;
-    padding: 14px 24px;
-    font-size: 15px;
+    margin: 20px auto 0;
+    padding: 13px 22px;
+    font-size: 14px;
     font-weight: 800;
     border-radius: 12px;
-    min-height: 52px;
+    min-height: 48px;
   }
 
   /* Knockout */
   .knockout-section {
-    padding: 20px;
+    padding: 18px;
     border-radius: 16px;
   }
 
   .bracket-info {
-    padding: 28px 18px;
+    padding: 24px 16px;
     border-radius: 12px;
-    gap: 14px;
+    gap: 12px;
   }
 
   .bracket-info svg {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
   }
 
   .bracket-info p {
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.4;
   }
 }
+
+/* Resto del código responsive igual... */
 
 /* ==========================================
    RESPONSIVE - SMALL (480px - 640px)
