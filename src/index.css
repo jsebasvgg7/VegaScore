@@ -84,7 +84,7 @@
 @media (max-width: 768px) {
   .app-footer {
     padding: 14px 0;
-    margin-bottom: 80px; /* Espacio para el bottom nav */
+    margin-bottom: 20px; /* Espacio para el bottom nav */
   }
   
   .footer-container {
