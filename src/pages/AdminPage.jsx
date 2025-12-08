@@ -743,6 +743,7 @@ const handleDeleteTitle = async (titleId) => {
             )}
           </div>
         </div>
+        <Footer />
       </div>
 
       {/* Modales */}
@@ -812,7 +813,6 @@ const handleDeleteTitle = async (titleId) => {
           }}
         />
       )}
-      <Footer />
       <ToastContainer toasts={toast.toasts} removeToast={toast.removeToast} />
     </>
   );
