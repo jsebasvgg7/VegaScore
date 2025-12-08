@@ -859,7 +859,7 @@
 
   .match-prediction {
     grid-template-columns: 1fr 68px 1fr;
-    gap: 4px;
+    gap: 6px;
     padding: 8px;
     border-radius: 8px;
   }
@@ -1258,9 +1258,9 @@
     gap: 5px;
   }
 
-  .match-prediction {
+.match-prediction {
     grid-template-columns: 1fr 60px 1fr;
-    gap: 3px;
+    gap: 5px;
     padding: 6px;
     border-radius: 7px;
   }
