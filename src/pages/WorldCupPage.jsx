@@ -509,7 +509,7 @@ export default function WorldCupPage({ currentUser }) {
               )}
 
               <button className="save-predictions-btn" onClick={handleSave} disabled={saving}>
-                {saving ? 'Guardando...' : '💾 Guardar Predicciones'}
+                {saving ? 'Guardando...' : 'Guardar'}
               </button>
             </div>
           )}
@@ -521,7 +521,7 @@ export default function WorldCupPage({ currentUser }) {
                 <p>Las eliminatorias se habilitarán una vez finalice la fase de grupos</p>
               </div>
               <button className="save-predictions-btn" onClick={handleSave} disabled={saving}>
-                {saving ? 'Guardando...' : '💾 Guardar Predicciones'}
+                {saving ? 'Guardando...' : 'Guardar'}
               </button>
             </div>
           )}
@@ -555,7 +555,7 @@ export default function WorldCupPage({ currentUser }) {
                 })}
               </div>
               <button className="save-predictions-btn" onClick={handleSave} disabled={saving}>
-                {saving ? 'Guardando...' : '💾 Guardar Predicciones'}
+                {saving ? 'Guardando...' : 'Guardar'}
               </button>
             </div>
           )}
