@@ -164,7 +164,10 @@ export default function KnockoutSection({
 }) {
   const { qualified, bestThirds } = useQualifiedTeams(groupPredictions);
 
-  // Función para obtener equipo según código
+  // Mantener registro de terceros ya asignados para evitar duplicados
+  const usedThirds = new Set();
+
+  // Función mejorada para obtener equipo según código
   function getTeam(code) {
     if (code.includes('-1')) {
       const group = code.charAt(0);
@@ -175,8 +178,19 @@ export default function KnockoutSection({
       return qualified[group]?.second;
     }
     if (code.includes('-3')) {
-      // Mejores terceros - buscar en grupos posibles
+      // Mejores terceros - buscar en grupos posibles sin repetir
       const possibleGroups = code.split('-')[0].split('');
+      
+      // Buscar el primer tercero disponible que no haya sido usado
+      for (let g of possibleGroups) {
+        if (bestThirds[g] && !usedThirds.has(g)) {
+          const team = bestThirds[g].team;
+          usedThirds.add(g); // Marcar como usado
+          return team;
+        }
+      }
+      
+      // Si todos están usados, buscar cualquiera que esté en bestThirds
       for (let g of possibleGroups) {
         if (bestThirds[g]) {
           return bestThirds[g].team;
@@ -184,6 +198,34 @@ export default function KnockoutSection({
       }
     }
     return null;
+  }
+
+  // Función para resetear el registro de terceros usados
+  function resetUsedThirds() {
+    usedThirds.clear();
+  }
+
+  // Obtener todos los equipos de octavos en orden para evitar duplicados
+  function getAllRound16Teams() {
+    resetUsedThirds();
+    const teams = {};
+    
+    // Procesar en el orden de las llaves
+    const allBrackets = [
+      ...ROUND_16_BRACKETS.leftTop,
+      ...ROUND_16_BRACKETS.leftBottom,
+      ...ROUND_16_BRACKETS.rightTop,
+      ...ROUND_16_BRACKETS.rightBottom
+    ].sort((a, b) => a.id - b.id);
+
+    allBrackets.forEach(match => {
+      teams[match.id] = {
+        home: getTeam(match.home),
+        away: getTeam(match.away)
+      };
+    });
+
+    return teams;
   }
 
   // Manejar predicción
@@ -222,6 +264,9 @@ export default function KnockoutSection({
     );
   }
 
+  // Obtener todos los equipos de octavos
+  const round16Teams = getAllRound16Teams();
+
   return (
     <div className="knockout-section">
       {/* ========== OCTAVOS DE FINAL ========== */}
@@ -253,8 +298,8 @@ export default function KnockoutSection({
                       home: match.homeDesc,
                       away: match.awayDesc 
                     }}
-                    homeTeam={getTeam(match.home)}
-                    awayTeam={getTeam(match.away)}
+                    homeTeam={round16Teams[match.id]?.home}
+                    awayTeam={round16Teams[match.id]?.away}
                     selectedWinner={knockoutPredictions.round16?.[match.id]}
                     onSelect={(team) => handlePrediction('round16', match.id, team)}
                   />
@@ -275,8 +320,8 @@ export default function KnockoutSection({
                       home: match.homeDesc,
                       away: match.awayDesc 
                     }}
-                    homeTeam={getTeam(match.home)}
-                    awayTeam={getTeam(match.away)}
+                    homeTeam={round16Teams[match.id]?.home}
+                    awayTeam={round16Teams[match.id]?.away}
                     selectedWinner={knockoutPredictions.round16?.[match.id]}
                     onSelect={(team) => handlePrediction('round16', match.id, team)}
                   />
@@ -302,8 +347,8 @@ export default function KnockoutSection({
                       home: match.homeDesc,
                       away: match.awayDesc 
                     }}
-                    homeTeam={getTeam(match.home)}
-                    awayTeam={getTeam(match.away)}
+                    homeTeam={round16Teams[match.id]?.home}
+                    awayTeam={round16Teams[match.id]?.away}
                     selectedWinner={knockoutPredictions.round16?.[match.id]}
                     onSelect={(team) => handlePrediction('round16', match.id, team)}
                   />
@@ -324,8 +369,8 @@ export default function KnockoutSection({
                       home: match.homeDesc,
                       away: match.awayDesc 
                     }}
-                    homeTeam={getTeam(match.home)}
-                    awayTeam={getTeam(match.away)}
+                    homeTeam={round16Teams[match.id]?.home}
+                    awayTeam={round16Teams[match.id]?.away}
                     selectedWinner={knockoutPredictions.round16?.[match.id]}
                     onSelect={(team) => handlePrediction('round16', match.id, team)}
                   />

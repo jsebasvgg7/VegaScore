@@ -38,13 +38,3 @@ export default function WorldCupNavigationTabs({ activeTab, onTabChange }) {
     </div>
   );
 }
-
-// INSTRUCCIONES PARA INTEGRAR:
-// 1. Importar en WorldCupPage.jsx:
-//    import WorldCupNavigationTabs from '../components/WorldCupNavigationTabs';
-//
-// 2. Reemplazar toda la sección .worldcup-tabs-section por:
-//    <WorldCupNavigationTabs activeTab={activeTab} onTabChange={setActiveTab} />
-//
-// 3. IMPORTANTE: No necesitas crear WorldCupNavigationTabs.css porque 
-//    reutilizamos las clases de NavigationTabs.css que ya existen
