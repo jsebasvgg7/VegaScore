@@ -525,63 +525,63 @@ export default function WorldCupPage({ currentUser }) {
           label: 'Bota de Oro', 
           category: 'Máximo Goleador',
           key: 'topScorer',
-          placeholder: 'Ej: Kylian Mbappé'
+          placeholder: 'Ingresa el nombre del ganador...'
         },
         { 
           icon: Target, 
           label: 'Mejor Asistidor', 
           category: 'Más Asistencias',
           key: 'topAssist',
-          placeholder: 'Ej: Kevin De Bruyne'
+          placeholder: 'Ingresa el nombre del ganador...'
         },
         { 
           icon: Medal, 
           label: 'Balón de Oro', 
           category: 'Mejor Jugador del Mundial',
           key: 'goldenBall',
-          placeholder: 'Ej: Lionel Messi'
+          placeholder: 'Ingresa el nombre del ganador...'
         },
         { 
           icon: User, 
           label: 'Mejor Jugador Joven', 
           category: 'Sub-21 Destacado',
           key: 'bestYoungPlayer',
-          placeholder: 'Ej: Jude Bellingham'
+          placeholder: 'Ingresa el nombre del ganador...'
         },
         { 
           icon: Award, 
           label: 'Guante de Oro', 
           category: 'Mejor Portero',
           key: 'goldenGlove',
-          placeholder: 'Ej: Emiliano Martínez'
+          placeholder: 'Ingresa el nombre del ganador...'
         },
         { 
           icon: TrendingUp, 
           label: 'Selección Sorpresa', 
           category: 'Equipo Revelación',
           key: 'surpriseTeam',
-          placeholder: 'Ej: Marruecos'
+          placeholder: 'Ingresa el nombre del ganador...'
         },
         { 
           icon: TrendingDown, 
           label: 'Selección Decepción', 
           category: 'Bajo Rendimiento',
           key: 'disappointmentTeam',
-          placeholder: 'Ej: Alemania'
+          placeholder: 'Ingresa el nombre del ganador...'
         },
         { 
           icon: Star, 
           label: 'Jugador Revelación', 
           category: 'Descubrimiento del Torneo',
           key: 'breakoutPlayer',
-          placeholder: 'Ej: Enzo Fernández'
+          placeholder: 'Ingresa el nombre del ganador...'
         },
         { 
           icon: Zap, 
           label: 'Jugador Decepción', 
           category: 'Por Debajo de Expectativas',
           key: 'disappointmentPlayer',
-          placeholder: 'Ej: Cristiano Ronaldo'
+          placeholder: 'Ingresa el nombre del ganador...'
         }
       ].map(award => (
         <WorldCupAwardCard
