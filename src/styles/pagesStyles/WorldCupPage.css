@@ -1011,7 +1011,6 @@
   }
 }
 
-
 /* ==========================================
    RESPONSIVE - EXTRA SMALL (< 480px)
 ========================================== */
@@ -1100,100 +1099,126 @@
   }
 
   .group-teams {
-    padding: 10px;
+    padding: 8px;
   }
 
-  /* Tabla ULTRA COMPACTA para móviles */
+  /* Tabla SUPER COMPACTA para móviles */
+  .group-table-container {
+    margin: 0;
+    padding: 0;
+  }
+
   .group-table {
     font-size: 9px;
-    min-width: 380px;
+    min-width: 100%;
+    width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-    width: 100%;
+  }
+
+  .group-table thead tr {
+    border-bottom: 2px solid #E5E7EB;
   }
 
   .group-table th {
-    padding: 6px 1px;
+    padding: 5px 2px;
     font-size: 7px;
-    letter-spacing: 0;
+    letter-spacing: -0.2px;
     font-weight: 800;
+    text-align: center;
+  }
+
+  .group-table tbody tr {
+    border-bottom: 1px solid #E5E7EB;
   }
 
   .group-table td {
-    padding: 8px 1px;
+    padding: 6px 2px;
     font-size: 9px;
+    text-align: center;
   }
 
-  /* Columnas con ancho fijo */
+  /* Columnas con ancho FIJO y compacto */
   .group-table th:nth-child(1),
   .group-table td:nth-child(1) {
-    width: 28px;
-    padding-left: 4px;
+    width: 22px;
+    padding-left: 3px;
+    text-align: left;
   }
 
   .group-table th:nth-child(2),
   .group-table td:nth-child(2) {
-    width: 95px;
-    text-align: left !important;
-    padding-left: 4px;
+    width: 90px;
+    text-align: left;
+    padding-left: 3px;
   }
 
   .group-table th:nth-child(3),
   .group-table td:nth-child(3) {
-    width: 24px;
+    width: 20px;
   }
 
   .group-table th:nth-child(4),
   .group-table td:nth-child(4) {
-    width: 24px;
+    width: 18px;
   }
 
   .group-table th:nth-child(5),
   .group-table td:nth-child(5) {
-    width: 24px;
+    width: 18px;
   }
 
   .group-table th:nth-child(6),
   .group-table td:nth-child(6) {
-    width: 24px;
+    width: 18px;
   }
 
   .group-table th:nth-child(7),
   .group-table td:nth-child(7) {
-    width: 30px;
+    width: 22px;
   }
 
   .group-table th:nth-child(8),
   .group-table td:nth-child(8) {
-    width: 30px;
+    width: 22px;
   }
 
   .group-table th:nth-child(9),
   .group-table td:nth-child(9) {
-    width: 30px;
+    width: 22px;
   }
 
   .group-table th:nth-child(10),
   .group-table td:nth-child(10) {
-    width: 32px;
-    padding-right: 4px;
+    width: 28px;
+    padding-right: 3px;
+    font-weight: 900;
+    font-size: 10px;
+  }
+
+  .group-table .pos-col {
+    text-align: left;
+    font-weight: 700;
   }
 
   .group-table .team-col {
-    display: flex !important;
+    display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 8px 0 8px 4px !important;
+    gap: 3px;
+    text-align: left;
+    padding: 6px 2px 6px 3px;
   }
 
   .group-table .team-flag {
-    width: 16px;
-    height: 11px;
+    width: 15px;
+    height: 10px;
     flex-shrink: 0;
+    border-radius: 1px;
   }
 
   .group-table .team-name {
     font-size: 8px;
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1202,20 +1227,21 @@
   }
 
   .group-table .pts-col {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
+    color: #1F2937;
   }
 
   .group-table .gd-col {
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 700;
   }
 
   /* Scroll hint más compacto */
   .scroll-hint {
     margin-top: 6px;
-    padding: 6px;
-    font-size: 10px;
+    padding: 5px;
+    font-size: 9px;
   }
 
   /* Match predictions - MÁS COMPACTOS */
@@ -1229,14 +1255,14 @@
   }
 
   .matches-grid {
-    gap: 6px;
+    gap: 5px;
   }
 
   .match-prediction {
-    grid-template-columns: 1fr 64px 1fr;
-    gap: 4px;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 3px;
     padding: 6px;
-    border-radius: 8px;
+    border-radius: 7px;
   }
 
   .match-team {
@@ -1245,8 +1271,8 @@
   }
 
   .match-team img {
-    width: 16px;
-    height: 11px;
+    width: 15px;
+    height: 10px;
   }
 
   .match-scores {
@@ -1254,27 +1280,27 @@
   }
 
   .match-scores input {
-    width: 28px;
-    height: 32px;
-    font-size: 12px;
+    width: 26px;
+    height: 30px;
+    font-size: 11px;
     border-radius: 5px;
-    border-width: 2px;
+    border-width: 1.5px;
   }
 
   .match-scores .separator {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
   }
 
   /* Best Thirds - COMPACTA */
   .best-thirds-section {
-    padding: 12px;
+    padding: 10px;
     border-radius: 12px;
   }
 
   .best-thirds-section h3 {
-    font-size: 15px;
-    margin-bottom: 10px;
+    font-size: 14px;
+    margin-bottom: 8px;
   }
 
   .best-thirds-section h3 svg {
@@ -1282,71 +1308,94 @@
     height: 16px;
   }
 
+  .best-thirds-table-container {
+    margin: 0;
+    padding: 0;
+  }
+
   .best-thirds-table {
     font-size: 9px;
-    min-width: 380px;
+    min-width: 100%;
+    width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .best-thirds-table thead tr {
+    border-bottom: 2px solid #E5E7EB;
   }
 
   .best-thirds-table th {
-    padding: 6px 1px;
+    padding: 5px 2px;
     font-size: 7px;
     font-weight: 800;
+    text-align: center;
+  }
+
+  .best-thirds-table tbody tr {
+    border-bottom: 1px solid #E5E7EB;
   }
 
   .best-thirds-table td {
-    padding: 8px 1px;
+    padding: 6px 2px;
     font-size: 9px;
+    text-align: center;
   }
 
   /* Anchos fijos para best thirds */
   .best-thirds-table th:nth-child(1),
   .best-thirds-table td:nth-child(1) {
-    width: 30px;
-    padding-left: 4px;
+    width: 22px;
+    padding-left: 3px;
+    text-align: left;
   }
 
   .best-thirds-table th:nth-child(2),
   .best-thirds-table td:nth-child(2) {
-    width: 50px;
+    width: 45px;
+    text-align: center;
   }
 
   .best-thirds-table th:nth-child(3),
   .best-thirds-table td:nth-child(3) {
-    width: 110px;
-    text-align: left !important;
+    width: 95px;
+    text-align: left;
+    padding-left: 3px;
   }
 
   .best-thirds-table th:nth-child(4),
   .best-thirds-table td:nth-child(4) {
-    width: 30px;
+    width: 22px;
   }
 
   .best-thirds-table th:nth-child(5),
   .best-thirds-table td:nth-child(5) {
-    width: 35px;
+    width: 28px;
+    font-weight: 900;
+    font-size: 10px;
   }
 
   .best-thirds-table th:nth-child(6),
   .best-thirds-table td:nth-child(6) {
-    width: 35px;
-    padding-right: 4px;
+    width: 28px;
+    padding-right: 3px;
   }
 
   .best-thirds-table .team-info {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
   }
 
   .best-thirds-table .team-info img {
-    width: 16px;
-    height: 11px;
+    width: 15px;
+    height: 10px;
     flex-shrink: 0;
   }
 
   .best-thirds-table .team-info span {
     font-size: 8px;
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1355,12 +1404,13 @@
   }
 
   .best-thirds-table .group-badge {
-    font-size: 8px;
+    font-size: 7px;
+    font-weight: 700;
   }
 
   /* Awards */
   .awards-section {
-    padding: 14px;
+    padding: 12px;
     border-radius: 14px;
   }
 
@@ -1376,14 +1426,14 @@
   }
 
   .award-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 9px;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
   }
 
   .award-icon svg {
-    width: 19px;
-    height: 19px;
+    width: 18px;
+    height: 18px;
   }
 
   .award-card label {
@@ -1391,37 +1441,37 @@
   }
 
   .award-card input {
-    padding: 10px 12px;
+    padding: 10px 11px;
     font-size: 12px;
     border-radius: 8px;
-    min-height: 40px;
+    min-height: 38px;
   }
 
   /* Save Button */
   .save-predictions-btn {
-    margin: 18px auto 0;
-    padding: 12px 20px;
+    margin: 16px auto 0;
+    padding: 11px 18px;
     font-size: 13px;
     font-weight: 800;
-    border-radius: 11px;
-    min-height: 46px;
+    border-radius: 10px;
+    min-height: 44px;
   }
 
   /* Knockout */
   .knockout-section {
-    padding: 16px;
+    padding: 14px;
     border-radius: 14px;
   }
 
   .bracket-info {
-    padding: 22px 14px;
-    border-radius: 11px;
+    padding: 20px 12px;
+    border-radius: 10px;
     gap: 10px;
   }
 
   .bracket-info svg {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
   }
 
   .bracket-info p {
