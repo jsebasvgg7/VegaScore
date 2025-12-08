@@ -446,8 +446,8 @@ export default function WorldCupPage({ currentUser }) {
               </button>
             </div>
           )}
+          <Footer /> 
         </div>
-        <Footer />  
       </div>
       <ToastContainer toasts={toast.toasts} removeToast={toast.removeToast} />
     </>
