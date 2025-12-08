@@ -54,13 +54,7 @@
   background: linear-gradient(135deg, #2a2f3f 0%, #353b4d 100%);
   color: var(--text-primary);
 }
-.footer {
-  text-align: center;
-  padding: 60px 20px 40px;
-  color: var(--muted);
-  font-size: 14px;
-  margin-top: 80px;
-}
+
 
 /* ==========================================
    HEADER - FIX MÓVIL NO DEBE CAMBIAR
