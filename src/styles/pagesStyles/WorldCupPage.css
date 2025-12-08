@@ -623,11 +623,103 @@
 }
 
 /* ==========================================
-   RESPONSIVE - MOBILE
+   MEJORAS RESPONSIVE - MOBILE FIRST
 ========================================== */
+
+/* Indicador visual de scroll horizontal */
+.group-table-container,
+.best-thirds-table-container {
+  position: relative;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #F59E0B #E5E7EB;
+}
+
+/* Sombra que indica que hay más contenido a la derecha */
+.group-table-container::after,
+.best-thirds-table-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1));
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+/* Ocultar sombra cuando se ha scrolleado hasta el final */
+.group-table-container.scrolled-end::after,
+.best-thirds-table-container.scrolled-end::after {
+  opacity: 0;
+}
+
+/* Scrollbar más visible en móviles */
+.group-table-container::-webkit-scrollbar,
+.best-thirds-table-container::-webkit-scrollbar {
+  height: 10px;
+}
+
+.group-table-container::-webkit-scrollbar-track,
+.best-thirds-table-container::-webkit-scrollbar-track {
+  background: #E5E7EB;
+  border-radius: 10px;
+  margin: 0 10px;
+}
+
+.group-table-container::-webkit-scrollbar-thumb,
+.best-thirds-table-container::-webkit-scrollbar-thumb {
+  background: #F59E0B;
+  border-radius: 10px;
+  border: 2px solid #E5E7EB;
+}
+
+.group-table-container::-webkit-scrollbar-thumb:hover,
+.best-thirds-table-container::-webkit-scrollbar-thumb:hover {
+  background: #D97706;
+}
+
+/* Hint de scroll para móviles */
+.scroll-hint {
+  display: none;
+  text-align: center;
+  padding: 8px;
+  font-size: 11px;
+  color: #F59E0B;
+  font-weight: 600;
+  background: #FEF3C7;
+  border-radius: 8px;
+  margin-top: 8px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 @media (max-width: 768px) {
+  .scroll-hint {
+    display: block;
+  }
+}
+
+/* Ocultar texto largo en tabs móviles */
+@media (max-width: 768px) {
+  .worldcup-nav-tab-text {
+    display: none;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE - EXTRA SMALL (< 480px)
+========================================== */
+@media (max-width: 480px) {
   .worldcup-page {
-    padding: 16px 12px 100px;
+    padding: 12px 8px 100px;
   }
 
   .worldcup-container {
@@ -636,186 +728,652 @@
 
   .worldcup-header {
     padding: 16px;
+    border-radius: 16px;
+  }
+
+  .worldcup-header-content {
+    flex-direction: row;
+    width: 100%;
   }
 
   .worldcup-icon {
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+  }
+
+  .worldcup-icon svg {
+    width: 28px;
+    height: 28px;
   }
 
   .worldcup-title {
-    font-size: 18px;
+    font-size: 17px;
+    line-height: 1.2;
   }
 
   .worldcup-subtitle {
-    font-size: 12px;
+    font-size: 10px;
+    margin-top: 2px;
   }
 
+  /* Nav Tabs en móvil - solo íconos */
   .worldcup-nav-tabs {
-    gap: 6px;
-    padding: 5px;
+    gap: 8px;
+    padding: 6px;
+    border-radius: 12px;
+    justify-content: space-around;
   }
 
   .worldcup-nav-tab {
-    padding: 10px 12px;
-    font-size: 13px;
+    padding: 12px;
+    border-radius: 10px;
+    min-width: 48px;
+    flex: 0 0 auto;
   }
 
-  .worldcup-nav-tab-text {
-    display: none;
+  .worldcup-nav-tab svg {
+    width: 22px;
+    height: 22px;
   }
 
+  /* Group Cards */
   .groups-grid {
-    grid-template-columns: 1fr;
     gap: 12px;
+    grid-template-columns: 1fr;
+  }
+
+  .group-card {
+    border-radius: 12px;
   }
 
   .group-header {
     padding: 12px 14px;
+    border-radius: 10px 10px 0 0;
   }
 
   .group-header h3 {
     font-size: 15px;
   }
 
-  .group-teams,
-  .group-predictions {
-    padding: 12px;
+  .group-header svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .group-teams {
+    padding: 8px;
+  }
+
+  /* Tabla SUPER COMPACTA para móviles */
+  .group-table-container {
+    margin: 0;
+    padding: 0;
   }
 
   .group-table {
-    font-size: 11px;
-  }
-
-  .group-table th {
-    padding: 6px 4px;
-    font-size: 10px;
-  }
-
-  .group-table td {
-    padding: 8px 4px;
-  }
-
-  .match-prediction {
-    grid-template-columns: 1fr 80px 1fr;
-    gap: 8px;
-    padding: 10px;
-  }
-
-  .match-team {
-    font-size: 11px;
-    gap: 6px;
-  }
-
-  .match-scores input {
-    width: 32px;
-    height: 32px;
-    font-size: 13px;
-  }
-
-  .best-thirds-section {
-    padding: 16px;
-  }
-
-  .best-thirds-section h3 {
-    font-size: 15px;
-  }
-
-  .awards-section {
-    padding: 16px;
-  }
-
-  .awards-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .award-card {
-    padding: 16px;
-  }
-
-  .save-predictions-btn {
-    margin: 20px auto 0;
-    padding: 12px 24px;
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .worldcup-page {
-    padding: 12px 8px 100px;
-  }
-
-  .worldcup-header {
-    padding: 14px 12px;
-  }
-
-  .worldcup-icon {
-    width: 38px;
-    height: 38px;
-  }
-
-  .worldcup-title {
-    font-size: 16px;
-  }
-
-  .worldcup-subtitle {
-    font-size: 11px;
-  }
-
-  .worldcup-nav-tab {
-    padding: 10px;
-  }
-
-  .group-header h3 {
-    font-size: 14px;
-  }
-
-  .group-table {
-    font-size: 10px;
+    font-size: 9px;
     min-width: 100%;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .group-table thead tr {
+    border-bottom: 2px solid var(--border);
   }
 
   .group-table th {
     padding: 5px 2px;
-    font-size: 9px;
+    font-size: 7px;
+    letter-spacing: -0.2px;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  .group-table tbody tr {
+    border-bottom: 1px solid var(--border);
   }
 
   .group-table td {
-    padding: 7px 2px;
+    padding: 6px 2px;
+    font-size: 9px;
+    text-align: center;
   }
 
-  .group-table .team-flag {
-    width: 16px;
-    height: 11px;
+  /* Columnas con ancho FIJO y compacto */
+  .group-table th:nth-child(1),
+  .group-table td:nth-child(1) {
+    width: 22px;
+    padding-left: 3px;
+    text-align: left;
   }
 
-  .group-table .team-name {
+  .group-table th:nth-child(2),
+  .group-table td:nth-child(2) {
+    width: 90px;
+    text-align: left;
+    padding-left: 3px;
+  }
+
+  .group-table th:nth-child(3),
+  .group-table td:nth-child(3) {
+    width: 20px;
+  }
+
+  .group-table th:nth-child(4),
+  .group-table td:nth-child(4) {
+    width: 18px;
+  }
+
+  .group-table th:nth-child(5),
+  .group-table td:nth-child(5) {
+    width: 18px;
+  }
+
+  .group-table th:nth-child(6),
+  .group-table td:nth-child(6) {
+    width: 18px;
+  }
+
+  .group-table th:nth-child(7),
+  .group-table td:nth-child(7) {
+    width: 22px;
+  }
+
+  .group-table th:nth-child(8),
+  .group-table td:nth-child(8) {
+    width: 22px;
+  }
+
+  .group-table th:nth-child(9),
+  .group-table td:nth-child(9) {
+    width: 22px;
+  }
+
+  .group-table th:nth-child(10),
+  .group-table td:nth-child(10) {
+    width: 28px;
+    padding-right: 3px;
+    font-weight: 900;
     font-size: 10px;
   }
 
+  .group-table .pos-col {
+    text-align: left;
+    font-weight: 700;
+  }
+
+  .group-table .team-col {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    text-align: left;
+    padding: 6px 2px 6px 3px;
+  }
+
+  .group-table .team-flag {
+    width: 15px;
+    height: 10px;
+    flex-shrink: 0;
+    border-radius: 1px;
+  }
+
+  .group-table .team-name {
+    font-size: 8px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .group-table .pts-col {
+    font-size: 10px;
+    font-weight: 900;
+    color: var(--text-primary);
+  }
+
+  .group-table .gd-col {
+    font-size: 8px;
+    font-weight: 700;
+  }
+
+  /* Scroll hint más compacto */
+  .scroll-hint {
+    margin-top: 6px;
+    padding: 5px;
+    font-size: 9px;
+  }
+
+  /* Match predictions - MÁS COMPACTOS */
+  .group-predictions {
+    padding: 10px;
+  }
+
+  .group-predictions h4 {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+
+  .matches-grid {
+    gap: 5px;
+  }
+
   .match-prediction {
-    grid-template-columns: 1fr 70px 1fr;
-    padding: 8px;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 7px;
+    padding: 6px;
+    border-radius: 7px;
+  }
+
+  .match-team {
+    font-size: 9px;
+    gap: 3px;
+  }
+
+  .match-team img {
+    width: 15px;
+    height: 10px;
+  }
+
+  .match-scores {
+    gap: 2px;
+  }
+
+  .match-scores input {
+    width: 26px;
+    height: 30px;
+    font-size: 11px;
+    border-radius: 5px;
+    border-width: 1.5px;
+  }
+
+  .match-scores .separator {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* Best Thirds - COMPACTA */
+  .best-thirds-section {
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .best-thirds-section h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .best-thirds-section h3 svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .best-thirds-table-container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .best-thirds-table {
+    font-size: 9px;
+    min-width: 100%;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .best-thirds-table thead tr {
+    border-bottom: 2px solid var(--border);
+  }
+
+  .best-thirds-table th {
+    padding: 5px 2px;
+    font-size: 7px;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  .best-thirds-table tbody tr {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .best-thirds-table td {
+    padding: 6px 2px;
+    font-size: 9px;
+    text-align: center;
+  }
+
+  /* Anchos fijos para best thirds */
+  .best-thirds-table th:nth-child(1),
+  .best-thirds-table td:nth-child(1) {
+    width: 22px;
+    padding-left: 3px;
+    text-align: left;
+  }
+
+  .best-thirds-table th:nth-child(2),
+  .best-thirds-table td:nth-child(2) {
+    width: 45px;
+    text-align: center;
+  }
+
+  .best-thirds-table th:nth-child(3),
+  .best-thirds-table td:nth-child(3) {
+    width: 95px;
+    text-align: left;
+    padding-left: 3px;
+  }
+
+  .best-thirds-table th:nth-child(4),
+  .best-thirds-table td:nth-child(4) {
+    width: 22px;
+  }
+
+  .best-thirds-table th:nth-child(5),
+  .best-thirds-table td:nth-child(5) {
+    width: 28px;
+    font-weight: 900;
+    font-size: 10px;
+  }
+
+  .best-thirds-table th:nth-child(6),
+  .best-thirds-table td:nth-child(6) {
+    width: 28px;
+    padding-right: 3px;
+  }
+
+  .best-thirds-table .team-info {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .best-thirds-table .team-info img {
+    width: 15px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  .best-thirds-table .team-info span {
+    font-size: 8px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .best-thirds-table .group-badge {
+    font-size: 7px;
+    font-weight: 700;
+  }
+
+  /* Awards */
+  .awards-section {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .awards-grid {
+    gap: 10px;
+    grid-template-columns: 1fr;
+  }
+
+  .award-card {
+    padding: 14px;
+    border-radius: 10px;
+    gap: 8px;
+  }
+
+  .award-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+  }
+
+  .award-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .award-card label {
+    font-size: 10px;
+  }
+
+  .award-card input {
+    padding: 10px 11px;
+    font-size: 12px;
+    border-radius: 8px;
+    min-height: 38px;
+  }
+
+  /* Save Button */
+  .save-predictions-btn {
+    margin: 16px auto 0;
+    padding: 11px 18px;
+    font-size: 13px;
+    font-weight: 800;
+    border-radius: 10px;
+    min-height: 44px;
+  }
+
+  /* Knockout */
+  .knockout-section {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .bracket-info {
+    padding: 20px 12px;
+    border-radius: 10px;
+    gap: 10px;
+  }
+
+  .bracket-info svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .bracket-info p {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE - SMALL (480px - 640px)
+========================================== */
+@media (min-width: 481px) and (max-width: 640px) {
+  .worldcup-page {
+    padding: 14px 10px 100px;
+  }
+
+  .worldcup-header {
+    padding: 18px;
+  }
+
+  .worldcup-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .worldcup-title {
+    font-size: 20px;
+  }
+
+  .worldcup-subtitle {
+    font-size: 12px;
+  }
+
+  .worldcup-nav-tab {
+    padding: 12px 14px;
+  }
+
+  .group-table {
+    font-size: 10px;
+    min-width: 450px;
+  }
+
+  .match-prediction {
+    grid-template-columns: 1fr 72px 1fr;
   }
 
   .match-team {
     font-size: 10px;
   }
 
-  .match-team img {
-    width: 18px;
-    height: 12px;
+  .best-thirds-table {
+    min-width: 450px;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE - MOBILE (640px - 768px)
+========================================== */
+@media (min-width: 641px) and (max-width: 768px) {
+  .worldcup-page {
+    padding: 16px 12px 100px;
+  }
+
+  .groups-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .awards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================
+   RESPONSIVE - LARGE (769px - 1024px)
+========================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .worldcup-page {
+    padding: 20px 16px 100px;
+  }
+
+  .groups-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .awards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .worldcup-nav-tab-text {
+    display: inline;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE - EXTRA LARGE (> 1400px)
+========================================== */
+@media (min-width: 1401px) {
+  .worldcup-container {
+    max-width: 1600px;
+  }
+
+  .groups-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .awards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ==========================================
+   LANDSCAPE ORIENTATION - MOBILE
+========================================== */
+@media (max-width: 768px) and (orientation: landscape) {
+  .worldcup-page {
+    padding: 12px 16px 80px;
+  }
+
+  .worldcup-header {
+    padding: 16px 20px;
+  }
+
+  .groups-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .group-table {
+    font-size: 10px;
+  }
+
+  .match-prediction {
+    grid-template-columns: 1fr 75px 1fr;
+  }
+}
+
+/* ==========================================
+   TOUCH OPTIMIZATIONS
+========================================== */
+@media (hover: none) and (pointer: coarse) {
+  /* Aumentar área táctil en móviles */
+  .worldcup-nav-tab {
+    min-height: 48px;
+  }
+
+  .group-header {
+    min-height: 52px;
   }
 
   .match-scores input {
-    width: 28px;
-    height: 28px;
-    font-size: 12px;
+    min-height: 36px;
+    min-width: 32px;
   }
 
-  .best-thirds-table {
-    font-size: 10px;
+  .award-card input {
+    min-height: 44px;
+  }
+
+  .save-predictions-btn {
+    min-height: 52px;
+  }
+
+  /* Mejorar feedback táctil */
+  .worldcup-nav-tab:active {
+    transform: scale(0.98);
+  }
+
+  .group-header:active {
+    opacity: 0.9;
+  }
+
+  .save-predictions-btn:active:not(:disabled) {
+    transform: translateY(-1px) scale(0.99);
+  }
+}
+
+/* ==========================================
+   PRINT STYLES
+========================================== */
+@media print {
+  .worldcup-nav-tabs,
+  .save-predictions-btn,
+  .group-header svg {
+    display: none;
+  }
+
+  .worldcup-page {
+    background: white;
+    padding: 0;
+  }
+
+  .group-card {
+    page-break-inside: avoid;
+    border: 1px solid #000;
+  }
+
+  .group-predictions {
+    display: none;
   }
 }
 
