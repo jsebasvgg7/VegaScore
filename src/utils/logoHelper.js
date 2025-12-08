@@ -115,7 +115,7 @@ export const teamSlugMap = {
   'Eintracht': 'eintrachtfrankfurt',
   'Brujas': 'clubbrugge',
   'Union SG': 'union_saint_gilloise',
-  'qabala': 'qabala',
+  'Qarabag FK': 'qarabag',
   'Olimpiakos': 'olympiacos',
   'Psv': 'psv',
   'Bodo/Glimt': 'bodo_glimt',
