@@ -1,7 +1,7 @@
 // src/components/AdminLeagueModal.jsx
 import React, { useState } from 'react';
 import { X, Plus, Trophy, Calendar, Award, Target } from 'lucide-react';
-import { getLogoUrlByLeagueName } from '../utils/logoHelper.js';
+import { getLogoUrlByLeagueName } from '../../utils/logoHelper.js';
 import { supabase } from '../utils/supabaseClient';
 import '../styles/adminStyles/AdminModal.css';
 

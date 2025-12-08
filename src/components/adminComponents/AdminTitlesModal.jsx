@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Plus, Edit2, Trash2, Crown, Award } from 'lucide-react';
-import { supabase } from '../utils/supabaseClient';
+import { supabase } from '../../utils/supabaseClient';
 import '../styles/adminStyles/AdminModal.css';
 
 export default function AdminTitlesModal({ onClose, onSave, onDelete, existingTitle = null }) {
