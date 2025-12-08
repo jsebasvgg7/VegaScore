@@ -298,7 +298,7 @@
   padding-left: 12px;
 }
 
-.group-table .team-col > div {
+.group-table .team-info-cell {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -383,9 +383,9 @@
 
 .match-prediction {
   display: grid;
-  grid-template-columns: 1fr 90px 1fr;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 14px 12px;
   background: #fafafa;
   border-radius: 12px;
@@ -407,14 +407,23 @@
   font-size: 12px;
   font-weight: 700;
   color: #1f2937;
+  min-width: 0;
+}
+
+.match-team span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .match-team.home-team {
   justify-content: flex-end;
+  text-align: right;
 }
 
 .match-team.away-team {
   justify-content: flex-start;
+  text-align: left;
 }
 
 .match-team img {
@@ -432,6 +441,7 @@
   gap: 6px;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .match-scores input {
@@ -446,6 +456,7 @@
   color: #1f2937;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
 }
 
 .match-scores input:focus {
@@ -468,6 +479,7 @@
   font-size: 18px;
   font-weight: 800;
   color: #9ca3af;
+  flex-shrink: 0;
 }
 
 /* ==========================================
@@ -946,18 +958,17 @@
   border-color: rgba(245, 158, 11, 0.4);
 }
 
-[data-theme="dark"] .bracket-info {
-  background: rgba(42, 47, 63, 0.6);
-  border-color: var(--border);
+[data-theme="dark"] .bracket-
+info {
+background: rgba(42, 47, 63, 0.6);
+border-color: var(--border);
 }
-
 [data-theme="dark"] .bracket-info p {
-  color: var(--text-secondary);
+color: var(--text-secondary);
 }
-
 [data-theme="dark"] .award-card {
-  background: rgba(42, 47, 63, 0.6);
-  border-color: var(--border);
+background: rgba(42, 47, 63, 0.6);
+border-color: var(--border);
 }
 [data-theme="dark"] .award-card label {
 color: var(--text-primary);
@@ -1077,32 +1088,41 @@ padding: 16px 12px;
 }
 .group-table {
 font-size: 11px;
-min-width: 550px;
+min-width: 100%;
 }
 .group-table th {
-padding: 10px 6px;
+padding: 10px 4px;
 font-size: 9px;
 }
 .group-table th:first-child {
-padding-left: 12px;
+padding-left: 8px;
+}
+.group-table th:nth-child(2) {
+padding-left: 8px;
 }
 .group-table td {
-padding: 12px 6px;
-font-size: 12px;
+padding: 12px 4px;
+font-size: 11px;
 }
 .group-table .pos-col {
-padding-left: 12px;
-font-size: 13px;
+padding-left: 8px;
+font-size: 12px;
+}
+.group-table .team-col {
+padding-left: 8px;
+}
+.group-table .team-info-cell {
+gap: 6px;
 }
 .group-table .team-flag {
 width: 20px;
 height: 14px;
 }
 .group-table .team-name {
-font-size: 11px;
+font-size: 10px;
 }
 .group-table .pts-col {
-font-size: 14px;
+font-size: 12px;
 }
 /* Group Predictions Mobile */
 .group-predictions {
@@ -1113,16 +1133,16 @@ font-size: 10px;
 margin-bottom: 12px;
 }
 .matches-grid {
-gap: 8px;
+gap: 10px;
 }
 .match-prediction {
-grid-template-columns: 1fr 80px 1fr;
+grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
 gap: 8px;
 padding: 12px 10px;
 border-radius: 10px;
 }
 .match-team {
-font-size: 11px;
+font-size: 10px;
 gap: 6px;
 }
 .match-team img {
@@ -1139,7 +1159,7 @@ font-size: 14px;
 border-radius: 8px;
 }
 .match-scores .separator {
-font-size: 16px;
+font-size: 14px;
 }
 /* Best Thirds Mobile */
 .best-thirds-section {
@@ -1156,35 +1176,38 @@ height: 18px;
 }
 .best-thirds-table {
 font-size: 11px;
-min-width: 550px;
+min-width: 100%;
 }
 .best-thirds-table th {
-padding: 10px 6px;
+padding: 10px 4px;
 font-size: 9px;
 }
 .best-thirds-table th:first-child {
-padding-left: 12px;
+padding-left: 8px;
 }
 .best-thirds-table td {
-padding: 12px 6px;
-font-size: 12px;
+padding: 12px 4px;
+font-size: 11px;
 }
 .best-thirds-table td:first-child {
-padding-left: 12px;
+padding-left: 8px;
 }
 .best-thirds-table .group-badge {
-font-size: 10px;
-padding: 3px 8px;
+font-size: 9px;
+padding: 3px 6px;
+}
+.best-thirds-table .team-info {
+gap: 6px;
 }
 .best-thirds-table .team-info img {
 width: 20px;
 height: 14px;
 }
 .best-thirds-table .team-info span {
-font-size: 11px;
+font-size: 10px;
 }
 .best-thirds-table .pts-col {
-font-size: 14px;
+font-size: 12px;
 }
 /* Awards Grid Mobile */
 .awards-section {
@@ -1244,242 +1267,51 @@ RESPONSIVE - SMALL MOBILE (480px)
 ========================================== */
 @media (max-width: 480px) {
 .worldcup-page {
-padding: 12px 10px 90px;
-}
-.worldcup-container {
-gap: 16px;
-}
-/* Header Small Mobile */
-.worldcup-header {
-padding: 16px;
-border-radius: 16px;
-}
-.worldcup-header-content {
-gap: 10px;
-}
-.worldcup-icon {
-width: 48px;
-height: 48px;
-border-radius: 12px;
-}
-.worldcup-icon svg {
-width: 26px;
-height: 26px;
-}
-.worldcup-title {
-font-size: 18px;
-}
-.worldcup-subtitle {
-font-size: 11px;
-}
-/* Navigation Tabs Small Mobile */
-.worldcup-nav-tabs {
-padding: 5px;
-gap: 6px;
-border-radius: 14px;
-}
-.worldcup-nav-tab {
-padding: 10px 12px;
-border-radius: 10px;
-}
-.worldcup-nav-tab svg {
-width: 20px;
-height: 20px;
-}
-/* Groups Grid Small Mobile */
-.groups-grid {
-gap: 14px;
-}
-/* Group Card Small Mobile */
-.group-card {
-border-radius: 14px;
-}
-.group-header {
-padding: 14px 16px;
-}
-.group-header h3 {
-font-size: 15px;
-}
-.group-header svg {
-width: 18px;
-height: 18px;
-}
-/* Group Table Small Mobile */
-.group-teams {
-padding: 14px 10px;
-}
-.group-table-container {
-border-radius: 10px;
-}
-.group-table {
-font-size: 10px;
-min-width: 520px;
-}
-.group-table th {
-padding: 9px 5px;
-font-size: 8px;
-}
-.group-table th:first-child {
-padding-left: 10px;
-}
-.group-table td {
-padding: 11px 5px;
-font-size: 11px;
-}
-.group-table .pos-col {
-padding-left: 10px;
-font-size: 12px;
-}
-.group-table .team-flag {
-width: 18px;
-height: 12px;
-}
-.group-table .team-name {
-font-size: 10px;
-}
-.group-table .pts-col {
-font-size: 13px;
-}
-/* Group Predictions Small Mobile */
-.group-predictions {
-padding: 14px 10px;
-}
-.group-predictions h4 {
-font-size: 9px;
-margin-bottom: 10px;
-}
-.matches-grid {
-gap: 7px;
+padding: 12px 8px 90px;
 }
 .match-prediction {
-grid-template-columns: 1fr 70px 1fr;
+grid-template-columns: minmax(80px, 1fr) auto minmax(80px, 1fr);
 gap: 6px;
 padding: 10px 8px;
-border-radius: 9px;
 }
 .match-team {
-font-size: 10px;
-gap: 5px;
+font-size: 9px;
+gap: 4px;
 }
 .match-team img {
 width: 18px;
 height: 12px;
 }
-.match-scores {
-gap: 3px;
-}
 .match-scores input {
 width: 30px;
 height: 30px;
 font-size: 13px;
-border-radius: 7px;
 }
 .match-scores .separator {
-font-size: 14px;
+font-size: 12px;
 }
-/* Best Thirds Small Mobile */
-.best-thirds-section {
-padding: 18px 14px;
-border-radius: 14px;
-}
-.best-thirds-section h3 {
-font-size: 15px;
-margin-bottom: 14px;
-gap: 8px;
-}
-.best-thirds-section h3 svg {
-width: 16px;
-height: 16px;
-}
-.best-thirds-table-container {
-border-radius: 10px;
-}
+.group-table,
 .best-thirds-table {
 font-size: 10px;
-min-width: 520px;
 }
+.group-table th,
 .best-thirds-table th {
-padding: 9px 5px;
+padding: 8px 3px;
 font-size: 8px;
 }
-.best-thirds-table th:first-child {
-padding-left: 10px;
-}
+.group-table td,
 .best-thirds-table td {
-padding: 11px 5px;
-font-size: 11px;
-}
-.best-thirds-table td:first-child {
-padding-left: 10px;
-}
-.best-thirds-table .group-badge {
-font-size: 9px;
-padding: 2px 7px;
-border-radius: 6px;
-}
-.best-thirds-table .team-info img {
-width: 18px;
-height: 12px;
-}
-.best-thirds-table .team-info span {
+padding: 10px 3px;
 font-size: 10px;
 }
-.best-thirds-table .pts-col {
-font-size: 13px;
+.group-table .team-flag,
+.best-thirds-table .team-info img {
+width: 16px;
+height: 11px;
 }
-/* Awards Section Small Mobile */
-.awards-section {
-padding: 18px 14px;
-border-radius: 14px;
-}
-.awards-grid {
-gap: 14px;
-}
-.award-card {
-padding: 18px;
-border-radius: 12px;
-gap: 10px;
-}
-.award-icon {
-width: 40px;
-height: 40px;
-border-radius: 10px;
-}
-.award-icon svg {
-width: 20px;
-height: 20px;
-}
-.award-card label {
-font-size: 11px;
-}
-.award-card input {
-padding: 10px 12px;
-font-size: 12px;
-border-radius: 8px;
-}
-/* Save Button Small Mobile */
-.save-predictions-btn {
-margin: 20px auto 0;
-padding: 12px 20px;
-font-size: 13px;
-border-radius: 12px;
-}
-/* Knockout Section Small Mobile */
-.knockout-section {
-padding: 20px 14px;
-border-radius: 14px;
-}
-.bracket-info {
-padding: 20px;
-border-radius: 12px;
-gap: 12px;
-}
-.bracket-info svg {
-width: 36px;
-height: 36px;
-}
-.bracket-info p {
-font-size: 13px;
+.group-table .team-name,
+.best-thirds-table .team-info span {
+font-size: 9px;
 }
 }
 /* ==========================================
