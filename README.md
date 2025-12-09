@@ -464,6 +464,8 @@ Usa el [issue tracker](https://github.com/tu-usuario/globalscore/issues) con:
 
 - 📧 Email: [globalscore.oficial@gmail.com](mailto:globalscore.oficial@gmail.com)
 - 🌐 Website: [https://global-score.vercel.app/](https://global-score.vercel.app/)
+- 👤 Luis Vega [https://www.instagram.com/luisd__vg?igsh=MXQweHNmcTM5Y2RkbA==](https://www.instagram.com/luisd__vg?igsh=MXQweHNmcTM5Y2RkbA==)
+- 👤 J.Sebas Vega [https://www.instagram.com/jsebas.vg?igsh=M3FlYXowMHM1MDZr](https://www.instagram.com/jsebas.vg?igsh=M3FlYXowMHM1MDZr)
 
 **Link del Proyecto**: [https://https://github.com/jsebasvgg7/GlobalScore](https://github.com/jsebasvgg7/GlobalScore)
 
@@ -476,7 +478,15 @@ Usa el [issue tracker](https://github.com/tu-usuario/globalscore/issues) con:
 - [Vite](https://vitejs.dev/) - Build tool
 - [Lucide Icons](https://lucide.dev/) - Iconografía
 - [Vercel](https://vercel.com/) - Hosting
-- [FRIEND](f_dixxz7&brainy_bh) - Cisco & Brainy
+
+---
+
+## 🙏 Agradecimientos Personales
+
+- [FRIEND](https://www.instagram.com/f_dixxz7?igsh=djlzM28yaHdwdTBs) - Francisco Diaz
+- [FRIEND](https://www.instagram.com/bry4n._tdc?igsh=ZDcwMXEwZ2V4emZ1) - Bryan Tuñon
+- [FRIEND](https://www.instagram.com/tmichael_27?igsh=am9kd2ZhYXk0NzB2) - Mahicol Hurtado
+- [FRIEND](https://www.instagram.com/brainy_bh?igsh=ZzJzZ2J1dWd6dnEw) - The Brainy 
 
 ---
 
